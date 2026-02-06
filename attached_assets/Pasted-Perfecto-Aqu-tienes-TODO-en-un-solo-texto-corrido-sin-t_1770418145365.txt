@@ -1,0 +1,24 @@
+Perfecto 👍
+Aquí tienes **TODO en un solo texto corrido**, sin títulos ni listas visibles, **listo para copiar y pegar directamente como prompt en Replit**, enfocado únicamente en **frontend con React**:
+
+---
+
+Crea un frontend en React para el sitio web oficial de la empresa Aldaba, una empresa dedicada a la gestión y promoción de servicios turísticos, culturales, patrimoniales y gastronómicos en la ciudad de Trinidad y el Valle de los Ingenios. El sitio debe ser completamente responsivo, moderno, visualmente atractivo y orientado a la promoción de servicios, sin incluir backend ni lógica de servidor. El objetivo principal del sitio es informar, promocionar y facilitar la solicitud de servicios turísticos y culturales.
+
+El sitio debe contar con una página principal (Home) con una sección hero destacando la identidad cultural de la empresa, llamados a la acción para solicitar servicios y accesos rápidos a alojamiento, gastronomía, excursiones y eventos. Debe incluir una sección “Sobre la empresa” donde se muestre la historia de Aldaba, su enfoque patrimonial, cultural y comunitario, y su vínculo con la preservación del patrimonio local.
+
+Debe existir una sección de Servicios donde se muestren claramente los servicios de alojamiento, gastronomía, excursiones, eventos, servicios culturales y otros servicios complementarios. En alojamiento se deben mostrar los hostales Hostal Académico “La Merced” y Casa de Eventos “Amargura #85”, detallando características como habitaciones climatizadas, camas personales y matrimoniales, televisión, minibar, duchas con agua fría y caliente, bañera según corresponda, servicio de lavandería, ambiente familiar y tranquilo, así como planes de hospedaje por persona, hospedaje con desayuno incluido, desayuno y cena incluidos y suplemento por habitación sencilla. Cada hostal debe mostrarse mediante tarjetas con imágenes, descripción y un botón de “Solicitar servicio”.
+
+En gastronomía se deben mostrar las instalaciones Centro Cultural Patio Bécquer, Taberna Guanahuac, Bar Cafetería Playa Ancón, Bar Cafetería San Isidro de los Destiladeros y las ofertas gastronómicas asociadas al Acuario. Se deben mostrar menús visuales con bebidas alcohólicas como ron, aguardiente y cervezas, coctelería tradicional cubana como mojito, daiquirí, cuba libre, piña colada y canchánchara, bebidas no alcohólicas como jugos naturales, refrescos y café, alimentos ligeros como aperitivos y snacks, así como platos tradicionales como el ajiaco trinitario y la ropa vieja. Cada instalación debe tener descripción, galería de imágenes, ambientación cultural y botón para solicitar el servicio.
+
+Debe incluir una sección de Excursiones donde se muestren recorridos especializados al Centro Histórico de Trinidad, al Valle de los Ingenios y a la Casa Hacienda Guáimaro, con opciones de excursiones con transporte incluido, sin transporte, con almuerzo incluido y acceso para sesiones fotográficas especiales. Cada excursión debe presentarse con iconos informativos, descripción clara y botón de solicitud.
+
+La sección de Eventos y Alquiler de Espacios debe mostrar espacios como el Centro Cultural Patio Bécquer con capacidad para 100 personas y la Casa de Eventos Amargura #85, indicando que pueden acoger bodas, cumpleaños, fiestas de 15, banquetes, eventos académicos y presentaciones de libros. Debe incluir galería de eventos, descripción del espacio y llamada a la acción para solicitar el alquiler.
+
+El sitio debe incluir también servicios culturales y patrimoniales como la Casa Hacienda Guáimaro con servicio de interpretación histórico-cultural, el Centro Cultural Patio Bécquer como espacio de música tradicional cubana en vivo, la Taberna Guanahuac con ambientación histórica y el Acuario como espacio educativo y ambiental. Además, deben mostrarse otros servicios como recorridos en coches coloniales por la ciudad, venta de papelería turística como mapas y guías, diseño y ambientación de espacios, rehabilitación de señalética, jardinería, pintura de inmuebles y servicios de construcción y mantenimiento.
+
+Debe existir una sección de Proyección Comunitaria donde se muestren actividades sociales, educativas y culturales desarrolladas por la empresa, como talleres con niños, actividades comunitarias, concursos gastronómicos, festejos tradicionales y celebraciones locales, presentadas mediante una línea de tiempo o bloques informativos.
+
+A nivel de interfaz, el frontend debe incluir un navbar claro con navegación principal, secciones organizadas por servicios, tarjetas reutilizables, galerías en grid, modales o formularios visuales para “Solicitar servicio”, una sección de contacto y un footer con información institucional. Todo el contenido debe ser informativo y promocional, utilizando datos simulados (mock data) y componentes reutilizables en React.
+
+
