@@ -67,6 +67,7 @@ aldaba-trinidad/
 |   |-- storage.ts                # Capa de almacenamiento
 |   |-- templates/
 |       |-- landing-page.html     # Pagina de aterrizaje estatica
+|       |-- admin.html            # Panel de administracion de hostales
 |
 |-- shared/                       # Tipos compartidos
 |   |-- schema.ts                 # Esquemas de datos
