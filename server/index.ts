@@ -168,6 +168,20 @@ function configureExpoAndLanding(app: express.Application) {
     "landing-page.html",
   );
   const landingPageTemplate = fs.readFileSync(templatePath, "utf-8");
+
+  const adminPath = path.resolve(
+    process.cwd(),
+    "server",
+    "templates",
+    "admin.html",
+  );
+  const adminTemplate = fs.readFileSync(adminPath, "utf-8");
+
+  app.get("/admin", (_req: Request, res: Response) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.status(200).send(adminTemplate);
+  });
+
   const appName = getAppName();
 
   log("Serving static Expo files with dynamic manifest routing");

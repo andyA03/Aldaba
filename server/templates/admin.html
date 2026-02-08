@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aldaba - Panel de Administracion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/css/ionicons.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" type="module"></script>
+  <style>
+    :root {
+      --primary: #8B2500;
+      --primary-light: #B8461B;
+      --primary-hover: #6E1D00;
+      --secondary: #1B4332;
+      --secondary-light: #2D6A4F;
+      --gold: #C17817;
+      --gold-light: #E0A84C;
+      --accent: #D4A373;
+      --bg: #FDF8F0;
+      --bg-secondary: #F5EDE0;
+      --card: #FFFFFF;
+      --text: #1A0F0A;
+      --text-secondary: #6B5B4F;
+      --text-tertiary: #9A8B7F;
+      --border: #E8DDD0;
+      --border-light: #F0E8DC;
+      --success: #2D6A4F;
+      --error: #C62828;
+      --error-light: #FFEBEE;
+      --shadow: 0 2px 12px rgba(26, 15, 10, 0.08);
+      --shadow-lg: 0 8px 32px rgba(26, 15, 10, 0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 260px;
+      background: linear-gradient(180deg, var(--secondary) 0%, #14312A 100%);
+      padding: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #FDF8F0;
+      letter-spacing: 1px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 11px;
+      color: rgba(253,248,240,0.5);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .sidebar-nav {
+      padding: 16px 12px;
+      flex: 1;
+    }
+
+    .nav-section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(253,248,240,0.35);
+      padding: 16px 12px 8px;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      color: rgba(253,248,240,0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(253,248,240,0.08);
+      color: #FDF8F0;
+    }
+
+    .nav-item.active {
+      background: rgba(253,248,240,0.12);
+      color: #FDF8F0;
+      font-weight: 600;
+    }
+
+    .nav-item ion-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer {
+      padding: 16px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-footer-text {
+      font-size: 11px;
+      color: rgba(253,248,240,0.3);
+      text-align: center;
+    }
+
+    .main {
+      margin-left: 260px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .content {
+      padding: 28px 32px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .stat-icon.primary { background: rgba(139,37,0,0.1); color: var(--primary); }
+    .stat-icon.secondary { background: rgba(27,67,50,0.1); color: var(--secondary); }
+    .stat-icon.gold { background: rgba(193,120,23,0.1); color: var(--gold); }
+    .stat-icon.accent { background: rgba(212,163,115,0.15); color: #B08050; }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .btn ion-icon { font-size: 18px; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #FDF8F0;
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--border); }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+    .btn-danger:hover { background: var(--error-light); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 8px;
+    }
+    .btn-ghost:hover { color: var(--primary); background: rgba(139,37,0,0.06); }
+
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .btn-sm ion-icon { font-size: 16px; }
+
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: rgba(253,248,240,0.5); }
+
+    .hostal-name {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .hostal-desc {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-top: 4px;
+      line-height: 1.5;
+      max-width: 360px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-primary {
+      background: rgba(139,37,0,0.1);
+      color: var(--primary);
+    }
+
+    .badge-gold {
+      background: rgba(193,120,23,0.1);
+      color: var(--gold);
+    }
+
+    .amenity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .amenity-tag {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 15, 10, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-header {
+      padding: 24px 28px 16px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      z-index: 1;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      padding: 24px 28px;
+    }
+
+    .modal-footer {
+      padding: 16px 28px 24px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      border-top: 1px solid var(--border-light);
+      position: sticky;
+      bottom: 0;
+      background: var(--card);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--primary);
+      background: var(--card);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .form-textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-input.error,
+    .form-textarea.error {
+      border-color: var(--error);
+    }
+
+    .form-error {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 4px;
+    }
+
+    .amenities-editor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .amenity-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .amenity-chip .remove-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(198, 40, 40, 0.1);
+      color: var(--error);
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      line-height: 1;
+      transition: background 0.2s;
+    }
+
+    .amenity-chip .remove-btn:hover {
+      background: rgba(198, 40, 40, 0.2);
+    }
+
+    .amenity-add-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .amenity-add-row .form-input {
+      flex: 1;
+    }
+
+    /* Delete Confirm */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 15, 10, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.15s ease;
+    }
+
+    .confirm-box {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.2s ease;
+    }
+
+    .confirm-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--error-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 28px;
+      color: var(--error);
+    }
+
+    .confirm-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .confirm-message {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      color: #FDF8F0;
+      z-index: 500;
+      animation: slideUp 0.3s ease;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast-success { background: var(--success); }
+    .toast-error { background: var(--error); }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .empty-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+      color: var(--text-tertiary);
+    }
+
+    .empty-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      color: var(--text-tertiary);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { width: 220px; }
+      .main { margin-left: 220px; }
+      .content { padding: 20px; }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .mobile-menu-btn { display: flex !important; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 600px; }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.0/babel.min.js"></script>
+
+  <script type="text/babel" data-type="module">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    const INITIAL_HOSTALES = [
+      {
+        id: '1',
+        name: 'Hostal Academico "La Merced"',
+        description: 'Ubicado en el corazon del centro historico de Trinidad, este hostal combina la elegancia colonial con el confort moderno. Un espacio ideal para quienes buscan vivir la autenticidad de la ciudad patrimonio.',
+        amenities: [
+          'Habitaciones climatizadas',
+          'Camas personales y matrimoniales',
+          'Television',
+          'Minibar',
+          'Duchas con agua fria y caliente',
+          'Servicio de lavanderia',
+          'Desayuno incluido',
+        ],
+        rooms: '8 habitaciones',
+      },
+      {
+        id: '2',
+        name: 'Casa de Eventos "Amargura #85"',
+        description: 'Una casona colonial restaurada con esmero que sirve como espacio de alojamiento y sede de eventos exclusivos. Su arquitectura y ambientacion transportan a los huespedes a la Trinidad de antano.',
+        amenities: [
+          'Habitaciones climatizadas',
+          'Banera',
+          'Television',
+          'Minibar',
+          'Servicio personalizado',
+          'Patio colonial interior',
+          'Terraza panoramica',
+        ],
+        rooms: '5 habitaciones',
+      },
+    ];
+
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    }
+
+    function Toast({ message, type, onClose }) {
+      useEffect(() => {
+        const t = setTimeout(onClose, 3000);
+        return () => clearTimeout(t);
+      }, [onClose]);
+
+      return (
+        <div className={`toast toast-${type}`}>
+          {message}
+        </div>
+      );
+    }
+
+    function ConfirmDialog({ title, message, onConfirm, onCancel }) {
+      return (
+        <div className="confirm-overlay" onClick={onCancel}>
+          <div className="confirm-box" onClick={e => e.stopPropagation()}>
+            <div className="confirm-icon">
+              <ion-icon name="warning-outline"></ion-icon>
+            </div>
+            <div className="confirm-title">{title}</div>
+            <div className="confirm-message">{message}</div>
+            <div className="confirm-actions">
+              <button className="btn btn-secondary" onClick={onCancel}>Cancelar</button>
+              <button className="btn btn-danger" onClick={onConfirm}>
+                <ion-icon name="trash-outline"></ion-icon>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function HostalModal({ hostal, onSave, onClose }) {
+      const [name, setName] = useState(hostal ? hostal.name : '');
+      const [description, setDescription] = useState(hostal ? hostal.description : '');
+      const [rooms, setRooms] = useState(hostal ? hostal.rooms : '');
+      const [amenities, setAmenities] = useState(hostal ? [...hostal.amenities] : []);
+      const [newAmenity, setNewAmenity] = useState('');
+      const [errors, setErrors] = useState({});
+
+      const validate = () => {
+        const errs = {};
+        if (!name.trim()) errs.name = 'El nombre es obligatorio';
+        if (!description.trim()) errs.description = 'La descripcion es obligatoria';
+        if (!rooms.trim()) errs.rooms = 'Indique el numero de habitaciones';
+        setErrors(errs);
+        return Object.keys(errs).length === 0;
+      };
+
+      const handleSubmit = () => {
+        if (!validate()) return;
+        onSave({
+          id: hostal ? hostal.id : generateId(),
+          name: name.trim(),
+          description: description.trim(),
+          rooms: rooms.trim(),
+          amenities,
+        });
+      };
+
+      const addAmenity = () => {
+        if (newAmenity.trim()) {
+          setAmenities([...amenities, newAmenity.trim()]);
+          setNewAmenity('');
+        }
+      };
+
+      const removeAmenity = (index) => {
+        setAmenities(amenities.filter((_, i) => i !== index));
+      };
+
+      const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addAmenity();
+        }
+      };
+
+      return (
+        <div className="modal-overlay" onClick={onClose}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="modal-title">
+                {hostal ? 'Editar Hostal' : 'Nuevo Hostal'}
+              </div>
+              <button className="btn btn-ghost" onClick={onClose}>
+                <ion-icon name="close-outline" style={{ fontSize: 24 }}></ion-icon>
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <div className="form-group">
+                <label className="form-label">Nombre del hostal</label>
+                <input
+                  className={`form-input ${errors.name ? 'error' : ''}`}
+                  type="text"
+                  placeholder="Ej: Hostal Colonial Trinidad"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+                {errors.name && <div className="form-error">{errors.name}</div>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Descripcion</label>
+                <textarea
+                  className={`form-textarea ${errors.description ? 'error' : ''}`}
+                  placeholder="Describa las caracteristicas del hostal..."
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                ></textarea>
+                {errors.description && <div className="form-error">{errors.description}</div>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Habitaciones</label>
+                <input
+                  className={`form-input ${errors.rooms ? 'error' : ''}`}
+                  type="text"
+                  placeholder="Ej: 8 habitaciones"
+                  value={rooms}
+                  onChange={e => setRooms(e.target.value)}
+                />
+                {errors.rooms && <div className="form-error">{errors.rooms}</div>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Amenidades</label>
+                <div className="form-hint">Agregue cada amenidad y presione Enter o el boton +</div>
+                <div className="amenity-add-row">
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder="Ej: Television, Minibar, WiFi..."
+                    value={newAmenity}
+                    onChange={e => setNewAmenity(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <button className="btn btn-secondary btn-sm" onClick={addAmenity} type="button">
+                    <ion-icon name="add-outline"></ion-icon>
+                  </button>
+                </div>
+                {amenities.length > 0 && (
+                  <div className="amenities-editor">
+                    {amenities.map((a, i) => (
+                      <div className="amenity-chip" key={i}>
+                        {a}
+                        <button className="remove-btn" onClick={() => removeAmenity(i)}>
+                          <ion-icon name="close" style={{ fontSize: 12 }}></ion-icon>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+              <button className="btn btn-primary" onClick={handleSubmit}>
+                <ion-icon name={hostal ? 'checkmark-outline' : 'add-outline'}></ion-icon>
+                {hostal ? 'Guardar Cambios' : 'Crear Hostal'}
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [hostales, setHostales] = useState(() => {
+        try {
+          const saved = localStorage.getItem('aldaba_hostales');
+          return saved ? JSON.parse(saved) : INITIAL_HOSTALES;
+        } catch {
+          return INITIAL_HOSTALES;
+        }
+      });
+      const [showModal, setShowModal] = useState(false);
+      const [editingHostal, setEditingHostal] = useState(null);
+      const [deleteTarget, setDeleteTarget] = useState(null);
+      const [toast, setToast] = useState(null);
+      const [sidebarOpen, setSidebarOpen] = useState(false);
+
+      useEffect(() => {
+        localStorage.setItem('aldaba_hostales', JSON.stringify(hostales));
+      }, [hostales]);
+
+      const showToast = (message, type = 'success') => {
+        setToast({ message, type });
+      };
+
+      const handleCreate = () => {
+        setEditingHostal(null);
+        setShowModal(true);
+      };
+
+      const handleEdit = (hostal) => {
+        setEditingHostal(hostal);
+        setShowModal(true);
+      };
+
+      const handleSave = (hostal) => {
+        if (editingHostal) {
+          setHostales(prev => prev.map(h => h.id === hostal.id ? hostal : h));
+          showToast(`"${hostal.name}" actualizado correctamente`);
+        } else {
+          setHostales(prev => [...prev, hostal]);
+          showToast(`"${hostal.name}" creado correctamente`);
+        }
+        setShowModal(false);
+        setEditingHostal(null);
+      };
+
+      const handleDelete = (hostal) => {
+        setDeleteTarget(hostal);
+      };
+
+      const confirmDelete = () => {
+        setHostales(prev => prev.filter(h => h.id !== deleteTarget.id));
+        showToast(`"${deleteTarget.name}" eliminado`, 'error');
+        setDeleteTarget(null);
+      };
+
+      const totalRooms = hostales.reduce((acc, h) => {
+        const match = h.rooms.match(/\d+/);
+        return acc + (match ? parseInt(match[0]) : 0);
+      }, 0);
+
+      const totalAmenities = new Set(hostales.flatMap(h => h.amenities)).size;
+
+      return (
+        <React.Fragment>
+          {/* Sidebar */}
+          <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+            <div className="sidebar-header">
+              <div className="sidebar-brand">Aldaba</div>
+              <div className="sidebar-subtitle">Administracion</div>
+            </div>
+            <nav className="sidebar-nav">
+              <div className="nav-section-label">Gestion</div>
+              <div className="nav-item active">
+                <ion-icon name="bed-outline"></ion-icon>
+                Hostales
+              </div>
+              <div className="nav-item">
+                <ion-icon name="restaurant-outline"></ion-icon>
+                Gastronomia
+              </div>
+              <div className="nav-item">
+                <ion-icon name="map-outline"></ion-icon>
+                Excursiones
+              </div>
+              <div className="nav-item">
+                <ion-icon name="calendar-outline"></ion-icon>
+                Eventos
+              </div>
+              <div className="nav-section-label">Sistema</div>
+              <div className="nav-item">
+                <ion-icon name="people-outline"></ion-icon>
+                Usuarios
+              </div>
+              <div className="nav-item">
+                <ion-icon name="settings-outline"></ion-icon>
+                Configuracion
+              </div>
+            </nav>
+            <div className="sidebar-footer">
+              <div className="sidebar-footer-text">Aldaba Trinidad &copy; 2025</div>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <div className="main">
+            <div className="topbar">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <button className="mobile-menu-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                  <ion-icon name="menu-outline"></ion-icon>
+                </button>
+                <div className="topbar-title">Gestion de Hostales</div>
+              </div>
+              <div className="topbar-actions">
+                <button className="btn btn-primary" onClick={handleCreate}>
+                  <ion-icon name="add-outline"></ion-icon>
+                  Nuevo Hostal
+                </button>
+              </div>
+            </div>
+
+            <div className="content">
+              {/* Stats */}
+              <div className="stats-row">
+                <div className="stat-card">
+                  <div className="stat-icon primary">
+                    <ion-icon name="bed-outline"></ion-icon>
+                  </div>
+                  <div className="stat-value">{hostales.length}</div>
+                  <div className="stat-label">Hostales registrados</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-icon secondary">
+                    <ion-icon name="key-outline"></ion-icon>
+                  </div>
+                  <div className="stat-value">{totalRooms}</div>
+                  <div className="stat-label">Habitaciones totales</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-icon gold">
+                    <ion-icon name="star-outline"></ion-icon>
+                  </div>
+                  <div className="stat-value">{totalAmenities}</div>
+                  <div className="stat-label">Amenidades unicas</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-icon accent">
+                    <ion-icon name="location-outline"></ion-icon>
+                  </div>
+                  <div className="stat-value">Trinidad</div>
+                  <div className="stat-label">Ubicacion</div>
+                </div>
+              </div>
+
+              {/* Table */}
+              <div className="section-header">
+                <div className="section-title">Listado de Hostales</div>
+              </div>
+
+              {hostales.length === 0 ? (
+                <div className="table-wrap">
+                  <div className="empty-state">
+                    <div className="empty-icon">
+                      <ion-icon name="bed-outline"></ion-icon>
+                    </div>
+                    <div className="empty-title">Sin hostales registrados</div>
+                    <div className="empty-desc">Comience agregando el primer hostal al sistema</div>
+                    <button className="btn btn-primary" onClick={handleCreate}>
+                      <ion-icon name="add-outline"></ion-icon>
+                      Agregar Hostal
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Hostal</th>
+                        <th>Habitaciones</th>
+                        <th>Amenidades</th>
+                        <th style={{ width: 100 }}>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {hostales.map(hostal => (
+                        <tr key={hostal.id}>
+                          <td>
+                            <div className="hostal-name">{hostal.name}</div>
+                            <div className="hostal-desc">{hostal.description}</div>
+                          </td>
+                          <td>
+                            <span className="badge badge-primary">{hostal.rooms}</span>
+                          </td>
+                          <td>
+                            <div className="amenity-tags">
+                              {hostal.amenities.slice(0, 4).map((a, i) => (
+                                <span className="amenity-tag" key={i}>{a}</span>
+                              ))}
+                              {hostal.amenities.length > 4 && (
+                                <span className="amenity-tag" style={{ color: 'var(--primary)', fontWeight: 600 }}>
+                                  +{hostal.amenities.length - 4} mas
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="actions-cell">
+                              <button className="btn btn-ghost btn-sm" onClick={() => handleEdit(hostal)} title="Editar">
+                                <ion-icon name="create-outline"></ion-icon>
+                              </button>
+                              <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(hostal)} title="Eliminar"
+                                style={{ color: 'var(--error)' }}>
+                                <ion-icon name="trash-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Modal */}
+          {showModal && (
+            <HostalModal
+              hostal={editingHostal}
+              onSave={handleSave}
+              onClose={() => { setShowModal(false); setEditingHostal(null); }}
+            />
+          )}
+
+          {/* Delete Confirm */}
+          {deleteTarget && (
+            <ConfirmDialog
+              title="Eliminar hostal"
+              message={`Esta seguro de eliminar "${deleteTarget.name}"? Esta accion no se puede deshacer.`}
+              onConfirm={confirmDelete}
+              onCancel={() => setDeleteTarget(null)}
+            />
+          )}
+
+          {/* Toast */}
+          {toast && (
+            <Toast
+              message={toast.message}
+              type={toast.type}
+              onClose={() => setToast(null)}
+            />
+          )}
+        </React.Fragment>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
+</body>
+</html>
