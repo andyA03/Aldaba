@@ -1,41 +1,11 @@
-import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
-import { NativeTabs, Icon, Label } from "expo-router/unstable-native-tabs";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet, useColorScheme, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-
 import Colors from "@/constants/colors";
 
-function NativeTabLayout() {
-  return (
-    <NativeTabs>
-      <NativeTabs.Trigger name="index">
-        <Icon sf={{ default: "house", selected: "house.fill" }} />
-        <Label>Inicio</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="services">
-        <Icon sf={{ default: "building.2", selected: "building.2.fill" }} />
-        <Label>Servicios</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="excursions">
-        <Icon sf={{ default: "map", selected: "map.fill" }} />
-        <Label>Excursiones</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="events">
-        <Icon sf={{ default: "sparkles", selected: "sparkles" }} />
-        <Label>Eventos</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="about">
-        <Icon sf={{ default: "info.circle", selected: "info.circle.fill" }} />
-        <Label>Nosotros</Label>
-      </NativeTabs.Trigger>
-    </NativeTabs>
-  );
-}
-
-function ClassicTabLayout() {
+export default function TabLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const isWeb = Platform.OS === "web";
@@ -47,17 +17,14 @@ function ClassicTabLayout() {
         headerShown: false,
         tabBarActiveTintColor: Colors.light.primary,
         tabBarInactiveTintColor: Colors.light.tabIconDefault,
-        tabBarLabelStyle: {
-          fontFamily: 'DMSans_500Medium',
-          fontSize: 11,
-        },
+        tabBarShowLabel: false,
         tabBarStyle: {
           position: "absolute" as const,
-          backgroundColor: isIOS ? "transparent" : isDark ? "#1A0F0A" : Colors.light.background,
-          borderTopWidth: isWeb ? 1 : 0,
+          backgroundColor: isIOS ? "transparent" : isDark ? "#0C1524" : Colors.light.card,
+          borderTopWidth: 1,
           borderTopColor: Colors.light.border,
           elevation: 0,
-          ...(isWeb ? { height: 84 } : {}),
+          height: isWeb ? 64 : 60,
         },
         tabBarBackground: () =>
           isIOS ? (
@@ -66,53 +33,58 @@ function ClassicTabLayout() {
               tint={isDark ? "dark" : "light"}
               style={StyleSheet.absoluteFill}
             />
-          ) : isWeb ? (
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: Colors.light.background }]} />
-          ) : null,
+          ) : (
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: Colors.light.card }]} />
+          ),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Inicio",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+              <Ionicons name={focused ? "home" : "home-outline"} size={22} color={color} />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="services"
         options={{
-          title: "Servicios",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="business" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+              <Ionicons name={focused ? "business" : "business-outline"} size={22} color={color} />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="excursions"
         options={{
-          title: "Excursiones",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="map" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+              <Ionicons name={focused ? "map" : "map-outline"} size={22} color={color} />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="events"
         options={{
-          title: "Eventos",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="sparkles" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+              <Ionicons name={focused ? "sparkles" : "sparkles-outline"} size={22} color={color} />
+            </View>
           ),
         }}
       />
       <Tabs.Screen
         name="about"
         options={{
-          title: "Nosotros",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="information-circle" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+              <Ionicons name={focused ? "information-circle" : "information-circle-outline"} size={22} color={color} />
+            </View>
           ),
         }}
       />
@@ -120,9 +92,15 @@ function ClassicTabLayout() {
   );
 }
 
-export default function TabLayout() {
-  if (isLiquidGlassAvailable()) {
-    return <NativeTabLayout />;
-  }
-  return <ClassicTabLayout />;
-}
+const styles = StyleSheet.create({
+  iconWrap: {
+    width: 44,
+    height: 36,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    borderRadius: 12,
+  },
+  iconWrapActive: {
+    backgroundColor: Colors.light.primary + '15',
+  },
+});

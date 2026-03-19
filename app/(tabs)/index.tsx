@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,8 @@ import {
   ScrollView,
   Pressable,
   Platform,
-  Dimensions,
+  useWindowDimensions,
+  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,13 +17,39 @@ import * as Haptics from "expo-haptics";
 import Colors from "@/constants/colors";
 import { companyInfo } from "@/constants/data";
 
-const { width } = Dimensions.get("window");
+const carouselSlides = [
+  {
+    uri: "https://picsum.photos/seed/plaza-mayor-trinidad/900/450",
+    caption: "Plaza Mayor de Trinidad",
+    sub: "Patrimonio de la Humanidad UNESCO",
+  },
+  {
+    uri: "https://picsum.photos/seed/colonial-street-cuba/900/450",
+    caption: "Calles Coloniales",
+    sub: "Historia viva en cada adoquin",
+  },
+  {
+    uri: "https://picsum.photos/seed/valle-ingenios-sugar/900/450",
+    caption: "Valle de los Ingenios",
+    sub: "Herencia azucarera del Caribe",
+  },
+  {
+    uri: "https://picsum.photos/seed/playa-ancon-caribbean/900/450",
+    caption: "Playa Ancon",
+    sub: "La perla del Caribe cubano",
+  },
+  {
+    uri: "https://picsum.photos/seed/trinidad-panorama/900/450",
+    caption: "Trinidad, Cuba",
+    sub: "Turismo, cultura y tradicion",
+  },
+];
 
 const quickAccessItems = [
   { title: "Alojamiento", icon: "bed-outline" as const, route: "services", color: Colors.light.primary },
   { title: "Gastronomia", icon: "restaurant-outline" as const, route: "services", color: Colors.light.secondary },
-  { title: "Excursiones", icon: "compass-outline" as const, route: "excursions", color: Colors.light.gold },
-  { title: "Eventos", icon: "sparkles-outline" as const, route: "events", color: Colors.light.primaryLight },
+  { title: "Excursiones", icon: "compass-outline" as const, route: "excursions", color: Colors.light.accent },
+  { title: "Eventos", icon: "sparkles-outline" as const, route: "events", color: Colors.light.gold },
 ];
 
 const highlights = [
@@ -33,22 +60,16 @@ const highlights = [
 
 function QuickAccessCard({ item }: { item: typeof quickAccessItems[0] }) {
   const handlePress = () => {
-    if (Platform.OS !== "web") {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
+    if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     router.push(`/${item.route}` as any);
   };
-
   return (
     <Pressable
       onPress={handlePress}
-      style={({ pressed }) => [
-        styles.quickCard,
-        { transform: [{ scale: pressed ? 0.95 : 1 }] },
-      ]}
+      style={({ pressed }) => [styles.quickCard, { transform: [{ scale: pressed ? 0.95 : 1 }] }]}
     >
-      <View style={[styles.quickCardIcon, { backgroundColor: item.color + '15' }]}>
-        <Ionicons name={item.icon} size={28} color={item.color} />
+      <View style={[styles.quickCardIcon, { backgroundColor: item.color + '18' }]}>
+        <Ionicons name={item.icon} size={26} color={item.color} />
       </View>
       <Text style={styles.quickCardTitle}>{item.title}</Text>
     </Pressable>
@@ -59,7 +80,7 @@ function HighlightCard({ item }: { item: typeof highlights[0] }) {
   return (
     <View style={styles.highlightCard}>
       <View style={styles.highlightIconWrap}>
-        <Ionicons name={item.icon} size={22} color={Colors.light.gold} />
+        <Ionicons name={item.icon} size={22} color={Colors.light.secondary} />
       </View>
       <View style={styles.highlightText}>
         <Text style={styles.highlightTitle}>{item.title}</Text>
@@ -71,27 +92,85 @@ function HighlightCard({ item }: { item: typeof highlights[0] }) {
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
-  const webTopInset = Platform.OS === "web" ? 67 : 0;
-  const topPadding = Platform.OS === "web" ? webTopInset : insets.top;
+  const { width: windowWidth } = useWindowDimensions();
+  const isWeb = Platform.OS === "web";
+  const isDesktop = windowWidth >= 768;
+  const contentMaxWidth = Math.min(windowWidth, 900);
+  const webTopInset = isWeb ? 67 : 0;
+  const topPadding = isWeb ? webTopInset : insets.top;
+  const carouselRef = useRef<ScrollView>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => {
+        const next = (prev + 1) % carouselSlides.length;
+        carouselRef.current?.scrollTo({ x: next * windowWidth, animated: true });
+        return next;
+      });
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [windowWidth]);
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: Platform.OS === "web" ? 34 : 100 }}
+      contentContainerStyle={{ paddingBottom: isWeb ? 34 : 80 }}
       showsVerticalScrollIndicator={false}
-      contentInsetAdjustmentBehavior="automatic"
     >
-      <LinearGradient
-        colors={['#8B2500', '#B8461B', '#D4A373']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.heroSection, { paddingTop: topPadding + 40 }]}
-      >
-        <View style={styles.heroOverlay}>
-          <View style={styles.heroBadge}>
-            <Ionicons name="location-outline" size={14} color={Colors.light.gold} />
-            <Text style={styles.heroBadgeText}>Trinidad, Cuba</Text>
-          </View>
+      <View style={[styles.carouselWrapper, { paddingTop: topPadding }]}>
+        <ScrollView
+          ref={carouselRef}
+          horizontal
+          pagingEnabled
+          scrollEnabled
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          onMomentumScrollEnd={(e) => {
+            const index = Math.round(e.nativeEvent.contentOffset.x / windowWidth);
+            setActiveSlide(index);
+          }}
+          style={{ width: windowWidth }}
+        >
+          {carouselSlides.map((slide, i) => (
+            <View key={i} style={[styles.carouselSlide, { width: windowWidth }]}>
+              <Image
+                source={{ uri: slide.uri }}
+                style={[styles.carouselImage, { width: windowWidth }]}
+                resizeMode="cover"
+              />
+              <LinearGradient
+                colors={["transparent", "rgba(12,21,36,0.75)"]}
+                style={styles.carouselGradient}
+              >
+                <Text style={styles.carouselCaption}>{slide.caption}</Text>
+                <Text style={styles.carouselSub}>{slide.sub}</Text>
+              </LinearGradient>
+            </View>
+          ))}
+        </ScrollView>
+
+        <View style={styles.carouselDots}>
+          {carouselSlides.map((_, i) => (
+            <Pressable
+              key={i}
+              onPress={() => {
+                carouselRef.current?.scrollTo({ x: i * windowWidth, animated: true });
+                setActiveSlide(i);
+              }}
+              style={[styles.dot, i === activeSlide && styles.dotActive]}
+            />
+          ))}
+        </View>
+
+        <View style={[styles.heroBadge, { top: topPadding + 16 }]}>
+          <Ionicons name="location-outline" size={13} color={Colors.light.secondary} />
+          <Text style={styles.heroBadgeText}>Trinidad, Cuba</Text>
+        </View>
+      </View>
+
+      <View style={[styles.content, { maxWidth: contentMaxWidth, alignSelf: "center" as const, width: "100%" }]}>
+        <View style={styles.heroTextCard}>
           <Text style={styles.heroTitle}>{companyInfo.name}</Text>
           <Text style={styles.heroSubtitle}>{companyInfo.tagline}</Text>
           <Pressable
@@ -99,20 +178,22 @@ export default function HomeScreen() {
               if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               router.push("/services" as any);
             }}
-            style={({ pressed }) => [
-              styles.heroCta,
-              { opacity: pressed ? 0.9 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
-            ]}
+            style={({ pressed }) => [styles.heroCta, { opacity: pressed ? 0.9 : 1 }]}
           >
-            <Text style={styles.heroCtaText}>Explorar Servicios</Text>
-            <Ionicons name="arrow-forward" size={18} color={Colors.light.primary} />
+            <LinearGradient
+              colors={[Colors.light.primary, Colors.light.primaryLight]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.heroCtaGradient}
+            >
+              <Text style={styles.heroCtaText}>Explorar Servicios</Text>
+              <Ionicons name="arrow-forward" size={18} color="#fff" />
+            </LinearGradient>
           </Pressable>
         </View>
-      </LinearGradient>
 
-      <View style={styles.content}>
         <Text style={styles.sectionTitle}>Acceso Rapido</Text>
-        <View style={styles.quickGrid}>
+        <View style={[styles.quickGrid, isDesktop && styles.quickGridDesktop]}>
           {quickAccessItems.map((item) => (
             <QuickAccessCard key={item.title} item={item} />
           ))}
@@ -125,7 +206,7 @@ export default function HomeScreen() {
 
         <View style={styles.welcomeCard}>
           <LinearGradient
-            colors={['#1B4332', '#2D6A4F']}
+            colors={[Colors.light.primary, Colors.light.primaryLight]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.welcomeGradient}
@@ -133,7 +214,7 @@ export default function HomeScreen() {
             <Ionicons name="heart-outline" size={32} color={Colors.light.accentLight} />
             <Text style={styles.welcomeTitle}>Bienvenidos a Trinidad</Text>
             <Text style={styles.welcomeText}>
-              Descubra la magia de una ciudad donde cada calle cuenta una historia, 
+              Descubra la magia de una ciudad donde cada calle cuenta una historia,
               cada rincon guarda un tesoro y cada experiencia se convierte en un recuerdo inolvidable.
             </Text>
             <Pressable
@@ -141,10 +222,7 @@ export default function HomeScreen() {
                 if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 router.push("/about" as any);
               }}
-              style={({ pressed }) => [
-                styles.welcomeCta,
-                { opacity: pressed ? 0.8 : 1 },
-              ]}
+              style={({ pressed }) => [styles.welcomeCta, { opacity: pressed ? 0.8 : 1 }]}
             >
               <Text style={styles.welcomeCtaText}>Conocer mas</Text>
               <Ionicons name="arrow-forward" size={16} color={Colors.light.accentLight} />
@@ -161,62 +239,121 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
   },
-  heroSection: {
-    paddingBottom: 50,
-    paddingHorizontal: 24,
+  carouselWrapper: {
+    position: "relative" as const,
+    overflow: "hidden" as const,
   },
-  heroOverlay: {
-    alignItems: "flex-start" as const,
+  carouselSlide: {
+    height: 300,
+    overflow: "hidden" as const,
+  },
+  carouselImage: {
+    height: 300,
+  },
+  carouselGradient: {
+    position: "absolute" as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    paddingTop: 60,
+  },
+  carouselCaption: {
+    fontFamily: "PlayfairDisplay_700Bold",
+    fontSize: 22,
+    color: "#FFFFFF",
+    marginBottom: 4,
+  },
+  carouselSub: {
+    fontFamily: "DMSans_400Regular",
+    fontSize: 13,
+    color: "rgba(255,255,255,0.85)",
+  },
+  carouselDots: {
+    position: "absolute" as const,
+    bottom: 12,
+    left: 0,
+    right: 0,
+    flexDirection: "row" as const,
+    justifyContent: "center" as const,
+    gap: 6,
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "rgba(255,255,255,0.45)",
+  },
+  dotActive: {
+    width: 18,
+    backgroundColor: "#FFFFFF",
   },
   heroBadge: {
+    position: "absolute" as const,
+    left: 16,
     flexDirection: "row" as const,
     alignItems: "center" as const,
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: "rgba(255,255,255,0.92)",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    gap: 6,
-    marginBottom: 16,
+    gap: 5,
   },
   heroBadgeText: {
-    fontFamily: 'DMSans_500Medium',
-    fontSize: 13,
-    color: '#F5EDE0',
-  },
-  heroTitle: {
-    fontFamily: 'PlayfairDisplay_700Bold',
-    fontSize: 48,
-    color: '#FFFFFF',
-    marginBottom: 12,
-  },
-  heroSubtitle: {
-    fontFamily: 'DMSans_400Regular',
-    fontSize: 16,
-    color: 'rgba(255,255,255,0.85)',
-    lineHeight: 24,
-    marginBottom: 28,
-    maxWidth: width * 0.8,
-  },
-  heroCta: {
-    flexDirection: "row" as const,
-    alignItems: "center" as const,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 30,
-    gap: 8,
-  },
-  heroCtaText: {
-    fontFamily: 'DMSans_600SemiBold',
-    fontSize: 15,
+    fontFamily: "DMSans_600SemiBold",
+    fontSize: 12,
     color: Colors.light.primary,
   },
   content: {
     paddingHorizontal: 20,
-    marginTop: -20,
+    paddingTop: 8,
+  },
+  heroTextCard: {
+    backgroundColor: Colors.light.card,
+    borderRadius: 20,
+    padding: 24,
+    marginTop: -28,
+    borderWidth: 1,
+    borderColor: Colors.light.borderLight,
+    shadowColor: Colors.light.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  heroTitle: {
+    fontFamily: "PlayfairDisplay_700Bold",
+    fontSize: 30,
+    color: Colors.light.primary,
+    marginBottom: 8,
+  },
+  heroSubtitle: {
+    fontFamily: "DMSans_400Regular",
+    fontSize: 14,
+    color: Colors.light.textSecondary,
+    lineHeight: 22,
+    marginBottom: 20,
+  },
+  heroCta: {
+    borderRadius: 14,
+    overflow: "hidden" as const,
+    alignSelf: "flex-start" as const,
+  },
+  heroCtaGradient: {
+    flexDirection: "row" as const,
+    alignItems: "center" as const,
+    paddingHorizontal: 22,
+    paddingVertical: 13,
+    gap: 8,
+  },
+  heroCtaText: {
+    fontFamily: "DMSans_600SemiBold",
+    fontSize: 14,
+    color: "#FFFFFF",
   },
   sectionTitle: {
-    fontFamily: 'PlayfairDisplay_600SemiBold',
+    fontFamily: "PlayfairDisplay_600SemiBold",
     fontSize: 22,
     color: Colors.light.text,
     marginTop: 28,
@@ -227,8 +364,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap" as const,
     gap: 12,
   },
+  quickGridDesktop: {
+    flexDirection: "row" as const,
+  },
   quickCard: {
-    width: (width - 52) / 2,
+    flex: 1,
+    minWidth: 130,
     backgroundColor: Colors.light.card,
     borderRadius: 16,
     padding: 20,
@@ -237,17 +378,18 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.borderLight,
   },
   quickCardIcon: {
-    width: 56,
-    height: 56,
+    width: 54,
+    height: 54,
     borderRadius: 16,
     alignItems: "center" as const,
     justifyContent: "center" as const,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   quickCardTitle: {
-    fontFamily: 'DMSans_600SemiBold',
-    fontSize: 14,
+    fontFamily: "DMSans_600SemiBold",
+    fontSize: 13,
     color: Colors.light.text,
+    textAlign: "center" as const,
   },
   highlightCard: {
     flexDirection: "row" as const,
@@ -264,7 +406,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: Colors.light.gold + '12',
+    backgroundColor: Colors.light.secondary + "15",
     alignItems: "center" as const,
     justifyContent: "center" as const,
   },
@@ -272,18 +414,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   highlightTitle: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: "DMSans_600SemiBold",
     fontSize: 15,
     color: Colors.light.text,
     marginBottom: 2,
   },
   highlightSubtitle: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: "DMSans_400Regular",
     fontSize: 13,
     color: Colors.light.textSecondary,
   },
   welcomeCard: {
     marginTop: 24,
+    marginBottom: 8,
     borderRadius: 20,
     overflow: "hidden" as const,
   },
@@ -292,16 +435,16 @@ const styles = StyleSheet.create({
     alignItems: "flex-start" as const,
   },
   welcomeTitle: {
-    fontFamily: 'PlayfairDisplay_700Bold',
+    fontFamily: "PlayfairDisplay_700Bold",
     fontSize: 24,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     marginTop: 16,
     marginBottom: 10,
   },
   welcomeText: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: "DMSans_400Regular",
     fontSize: 14,
-    color: 'rgba(255,255,255,0.8)',
+    color: "rgba(255,255,255,0.85)",
     lineHeight: 22,
     marginBottom: 20,
   },
@@ -311,7 +454,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   welcomeCtaText: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: "DMSans_600SemiBold",
     fontSize: 14,
     color: Colors.light.accentLight,
   },
