@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   Image,
+  ImageBackground,
   useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -195,15 +196,19 @@ export default function ServicesScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: isWeb ? 34 : 80 }}
       >
-        <LinearGradient
-          colors={[Colors.light.primary, Colors.light.primaryLight]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={[styles.header, { paddingTop: topPadding + 20 }]}
+        <ImageBackground
+          source={{ uri: "https://picsum.photos/seed/trinidad-hostal-colonial-hotel/1200/400" }}
+          style={styles.header}
+          resizeMode="cover"
         >
-          <Text style={styles.headerTitle}>Servicios</Text>
-          <Text style={styles.headerSubtitle}>Alojamiento y gastronomia de primera</Text>
-        </LinearGradient>
+          <LinearGradient
+            colors={["rgba(27,79,138,0.82)", "rgba(12,21,36,0.65)"]}
+            style={[styles.headerOverlay, { paddingTop: topPadding + 20 }]}
+          >
+            <Text style={styles.headerTitle}>Servicios</Text>
+            <Text style={styles.headerSubtitle}>Alojamiento y gastronomia de primera</Text>
+          </LinearGradient>
+        </ImageBackground>
 
         <View style={{ maxWidth: contentMaxWidth, alignSelf: "center" as const, width: "100%", paddingHorizontal: 20 }}>
           <View style={styles.tabContainer}>
@@ -252,9 +257,10 @@ export default function ServicesScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.light.background },
-  header: { paddingHorizontal: 24, paddingBottom: 30 },
-  headerTitle: { fontFamily: "PlayfairDisplay_700Bold", fontSize: 34, color: "#FFFFFF", marginBottom: 6 },
-  headerSubtitle: { fontFamily: "DMSans_400Regular", fontSize: 15, color: "rgba(255,255,255,0.85)" },
+  header: { overflow: "hidden" as const, minHeight: 200 },
+  headerOverlay: { paddingHorizontal: 24, paddingBottom: 36 },
+  headerTitle: { fontFamily: "PlayfairDisplay_700Bold", fontSize: 38, color: "#FFFFFF", marginBottom: 8, textShadowColor: "rgba(0,0,0,0.4)", textShadowOffset: { width: 0, height: 2 }, textShadowRadius: 6 },
+  headerSubtitle: { fontFamily: "DMSans_400Regular", fontSize: 15, color: "rgba(255,255,255,0.92)", textShadowColor: "rgba(0,0,0,0.3)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 4 },
   tabContainer: {
     flexDirection: "row" as const,
     marginTop: -15,
