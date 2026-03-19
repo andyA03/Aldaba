@@ -1,11 +1,13 @@
 # DOCUMENTACION COMPLETA - Aldaba Trinidad
-## Aplicacion Web de Servicios Turisticos, Culturales y Gastronomicos
+## Sitio Web de Servicios Turisticos, Culturales y Gastronomicos
 
 ---
 
 ## 1. DESCRIPCION GENERAL
 
-**Aldaba Trinidad** es una aplicacion web desarrollada en React con TypeScript, construida sobre el framework Expo (con soporte web completo). El sitio web oficial de la empresa Aldaba presenta y promociona los servicios turisticos, culturales, patrimoniales y gastronomicos en la ciudad de Trinidad y el Valle de los Ingenios, Cuba.
+**Aldaba Trinidad** es un sitio web responsivo desarrollado en React con TypeScript, construido sobre el framework Expo con soporte web completo. Presenta y promociona los servicios turisticos, culturales, patrimoniales y gastronomicos en la ciudad de Trinidad y el Valle de los Ingenios, Cuba.
+
+El sitio funciona correctamente tanto en **navegadores de escritorio** como en **dispositivos moviles**, con un diseno adaptativo que centra el contenido en pantallas grandes (max 900px) y ocupa el ancho completo en pantallas pequenas.
 
 ### Objetivo
 Informar, promocionar y facilitar la solicitud de servicios turisticos ofrecidos por Aldaba, incluyendo alojamiento, gastronomia, excursiones, eventos culturales y servicios complementarios.
@@ -13,10 +15,10 @@ Informar, promocionar y facilitar la solicitud de servicios turisticos ofrecidos
 ### Tecnologias Utilizadas
 - **React** (v19) - Biblioteca de interfaz de usuario
 - **TypeScript** - Tipado estatico
-- **Expo** (v54) - Framework de desarrollo con soporte web
+- **Expo** (v54) - Framework de desarrollo con soporte web completo
 - **Expo Router** (v6) - Enrutamiento basado en archivos
 - **React Native Web** - Renderizado web de componentes nativos
-- **Expo Linear Gradient** - Gradientes visuales
+- **Expo Linear Gradient** - Gradientes y overlays sobre imagenes
 - **Expo Haptics** - Retroalimentacion haptica (solo dispositivos moviles)
 - **Expo Vector Icons (Ionicons)** - Iconografia
 - **Google Fonts** - Playfair Display + DM Sans
@@ -35,12 +37,12 @@ aldaba-trinidad/
 |   |-- +not-found.tsx            # Pagina 404
 |   |-- +native-intent.tsx        # Intenciones nativas
 |   |-- (tabs)/                   # Grupo de pestanas
-|       |-- _layout.tsx           # Configuracion de pestanas (5 tabs)
-|       |-- index.tsx             # Pantalla Inicio (Home)
-|       |-- services.tsx          # Pantalla Servicios
-|       |-- excursions.tsx        # Pantalla Excursiones
+|       |-- _layout.tsx           # Barra de navegacion (iconos sin texto)
+|       |-- index.tsx             # Pantalla Inicio (Home) - carrusel + acceso rapido
+|       |-- services.tsx          # Pantalla Servicios - alojamiento y gastronomia
+|       |-- excursions.tsx        # Pantalla Excursiones - con imagenes
 |       |-- events.tsx            # Pantalla Eventos y Servicios Culturales
-|       |-- about.tsx             # Pantalla Sobre Nosotros
+|       |-- about.tsx             # Pantalla Sobre Nosotros + footer UCI
 |
 |-- assets/                       # Recursos estaticos
 |   |-- images/
@@ -55,8 +57,8 @@ aldaba-trinidad/
 |   |-- KeyboardAwareScrollViewCompat.tsx  # ScrollView adaptativo
 |
 |-- constants/                    # Constantes de la aplicacion
-|   |-- colors.ts                 # Paleta de colores del tema
-|   |-- data.ts                   # Datos mock (contenido completo)
+|   |-- colors.ts                 # Paleta de colores azules del tema
+|   |-- data.ts                   # Datos del contenido (hostales, excursiones, etc.)
 |
 |-- lib/                          # Utilidades
 |   |-- query-client.ts           # Configuracion de React Query
@@ -83,24 +85,25 @@ aldaba-trinidad/
 
 ## 3. PALETA DE COLORES
 
-La paleta esta inspirada en la arquitectura colonial cubana y los tonos calidos de Trinidad:
+La paleta esta inspirada en tonos azules agradables y modernos:
 
-| Color | Codigo Hex | Uso |
-|-------|-----------|-----|
-| Primary (Terracota) | `#8B2500` | Color principal, botones, acentos |
-| Primary Light | `#B8461B` | Variante clara del primario |
-| Secondary (Verde Colonial) | `#1B4332` | Secciones de eventos, servicios culturales |
-| Secondary Light | `#2D6A4F` | Variante clara del secundario |
-| Gold (Ambar) | `#C17817` | Excursiones, badges, acentos dorados |
-| Gold Light | `#E0A84C` | Variante clara del dorado |
-| Accent (Arena) | `#D4A373` | Elementos decorativos |
-| Background | `#FDF8F0` | Fondo general (crema calido) |
-| Background Secondary | `#F5EDE0` | Fondo secundario |
-| Text | `#1A0F0A` | Texto principal (marron oscuro) |
-| Text Secondary | `#6B5B4F` | Texto secundario |
-| Text Tertiary | `#9A8B7F` | Texto terciario/placeholders |
-| Border | `#E8DDD0` | Bordes de tarjetas |
-| Card | `#FFFFFF` | Fondo de tarjetas |
+| Variable | Codigo Hex | Uso |
+|----------|-----------|-----|
+| `primary` | `#1B4F8A` | Azul marino - botones principales, encabezados, navbar activo |
+| `primaryLight` | `#2563EB` | Azul brillante - gradientes, CTAs |
+| `secondary` | `#0EA5E9` | Azul cielo - elementos secundarios, excursiones |
+| `secondaryLight` | `#38BDF8` | Azul claro - variante clara |
+| `accent` | `#06B6D4` | Cian - acentos, eventos |
+| `accentLight` | `#A5F3FC` | Cian muy claro - textos sobre fondos azules |
+| `gold` | `#0284C7` | Azul medio - badges, detalles |
+| `goldLight` | `#BAE6FD` | Azul palido - fondos suaves |
+| `background` | `#F0F8FF` | Alice blue - fondo general |
+| `backgroundSecondary` | `#DBEEFF` | Azul muy suave - fondos secundarios |
+| `card` | `#FFFFFF` | Blanco - fondo de tarjetas |
+| `text` | `#0C1524` | Azul noche - texto principal |
+| `textSecondary` | `#4A6FA5` | Azul medio - texto secundario |
+| `textTertiary` | `#8BA7C7` | Azul gris - placeholders, texto terciario |
+| `border` | `#BFDBF7` | Azul suave - bordes de tarjetas |
 
 ---
 
@@ -109,9 +112,9 @@ La paleta esta inspirada en la arquitectura colonial cubana y los tonos calidos 
 Se utilizan dos familias tipograficas de Google Fonts:
 
 ### Playfair Display (Serif)
-- **Uso**: Titulos principales, nombres de secciones, encabezados hero
+- **Uso**: Titulos de secciones, nombres de pantallas, encabezados hero
 - **Pesos**: 600 SemiBold, 700 Bold
-- **Tamanos**: 22px (secciones), 34px (headers), 48px (hero)
+- **Tamanos**: 22px (secciones), 34-38px (headers con imagen de fondo), 30px (hero card)
 
 ### DM Sans (Sans-Serif)
 - **Uso**: Texto de cuerpo, etiquetas, botones, descripciones
@@ -125,27 +128,43 @@ Se utilizan dos familias tipograficas de Google Fonts:
 ### 5.1 Inicio (Home) - `app/(tabs)/index.tsx`
 
 **Secciones:**
-1. **Hero Section**: Gradiente terracota con nombre "Aldaba", tagline de la empresa, badge de ubicacion "Trinidad, Cuba" y boton CTA "Explorar Servicios"
-2. **Acceso Rapido**: Grid de 4 tarjetas con acceso directo a Alojamiento, Gastronomia, Excursiones y Eventos
-3. **Lo que nos distingue**: 3 tarjetas horizontales destacando Patrimonio UNESCO, Valle de los Ingenios y Cultura Viva
-4. **Tarjeta de Bienvenida**: Gradiente verde con mensaje de bienvenida y enlace a "Conocer mas"
+1. **Carrusel de imagenes** (hero): 5 slides con imagenes de Trinidad, overlay de gradiente con nombre del lugar y subtitulo. Auto-avance cada 4.5 segundos, puntos indicadores en la parte inferior, navegacion manual por toque. Badge "Trinidad, Cuba" en la esquina superior izquierda.
+2. **Tarjeta de bienvenida**: Caja blanca sobre el carrusel con el nombre "Aldaba", tagline de la empresa y boton degradado "Explorar Servicios"
+3. **Acceso Rapido**: Grid de 4 tarjetas con acceso directo a Alojamiento, Gastronomia, Excursiones y Eventos
+4. **Lo que nos distingue**: 3 tarjetas horizontales destacando Patrimonio UNESCO, Valle de los Ingenios y Cultura Viva
+5. **Tarjeta de Bienvenida**: Degradado azul marino con mensaje de bienvenida y enlace "Conocer mas"
 
-**Interacciones:**
-- Tarjetas de acceso rapido navegan a las pestanas correspondientes
-- Boton "Explorar Servicios" navega a la pestana de Servicios
-- Enlace "Conocer mas" navega a la pestana Nosotros
-- Retroalimentacion haptica en botones (dispositivos moviles)
+**Imagenes del carrusel:**
+| Slide | Lugar | URL de imagen |
+|-------|-------|--------------|
+| 1 | Plaza Mayor de Trinidad | picsum.photos/seed/plaza-mayor-trinidad |
+| 2 | Calles Coloniales | picsum.photos/seed/colonial-street-cuba |
+| 3 | Valle de los Ingenios | picsum.photos/seed/valle-ingenios-sugar |
+| 4 | Playa Ancon | picsum.photos/seed/playa-ancon-caribbean |
+| 5 | Trinidad, Cuba | picsum.photos/seed/trinidad-panorama |
+
+Para reemplazar con fotos reales: busca `picsum.photos/seed/` en `app/(tabs)/index.tsx` y cambia las URLs.
 
 ---
 
 ### 5.2 Servicios - `app/(tabs)/services.tsx`
 
 **Secciones:**
-1. **Header**: Gradiente terracota con titulo "Servicios"
-2. **Toggle Tabs**: Alternancia entre "Alojamiento" y "Gastronomia"
-3. **Tarjetas de Alojamiento**: Informacion detallada de cada hostal
-4. **Tarjetas de Gastronomia**: Informacion de cada establecimiento gastronomico
+1. **Header con imagen de fondo**: Foto de hostal colonial con overlay azul marino semitransparente, titulo "Servicios" en blanco con sombra
+2. **Toggle Tabs**: Alternancia entre "Alojamiento" (azul) y "Gastronomia" (cian)
+3. **Tarjetas de Alojamiento**: Imagen de portada + informacion expandible con amenidades
+4. **Tarjetas de Gastronomia**: Imagen de portada + informacion expandible con ofertas
 5. **Boton flotante (FAB)**: Abre modal para solicitar servicio
+
+**Imagen del header:** `picsum.photos/seed/trinidad-hostal-colonial-hotel/1200/400`
+
+**Imagenes de tarjetas de alojamiento:**
+- Hostal La Merced: `picsum.photos/seed/hostal-colonial-room/600/280`
+- Casa Amargura: `picsum.photos/seed/casa-particular-cuba/600/280`
+
+**Imagenes de tarjetas de gastronomia:**
+- Patio Becquer: `picsum.photos/seed/cocina-cubana-comedor/600/280`
+- Taberna Guanahuac: `picsum.photos/seed/paladar-trinidad/600/280`
 
 **Contenido de Alojamiento:**
 
@@ -160,193 +179,142 @@ Se utilizan dos familias tipograficas de Google Fonts:
 | Desayuno | Si | No |
 | Terraza | No | Si |
 
-**Establecimientos Gastronomicos:**
-1. Centro Cultural Patio Becquer - Musica en vivo, cocteleria cubana
-2. Taberna Guanahuac - Ambientacion historica, platos tipicos
-3. Bar Cafeteria Playa Ancon - Cocteles tropicales, vista al mar
-4. Bar Cafeteria San Isidro de los Destiladeros - Cafe regional, vista al valle
-5. Acuario - Espacio educativo ambiental con gastronomia ligera
-
-**Modal "Solicitar Servicio":**
-- Campo: Nombre (texto)
-- Campo: Servicio deseado (area de texto)
-- Boton: Enviar Solicitud
-- Validacion de campos obligatorios
-
 ---
 
 ### 5.3 Excursiones - `app/(tabs)/excursions.tsx`
 
 **Secciones:**
-1. **Header**: Gradiente dorado con titulo "Excursiones"
+1. **Header con imagen de fondo**: Foto de naturaleza/montanas con overlay cian-azul, titulo "Excursiones"
 2. **Barra informativa**: Iconos de Guias expertos, Fotos incluidas, Transporte
-3. **Tarjetas de excursiones**: 3 excursiones con detalles completos
+3. **Tarjetas de excursiones**: Imagen de portada con overlay degradado + titulo + boton "Solicitar Excursion" en degradado azul
 
-**Excursiones disponibles:**
+**Imagen del header:** `picsum.photos/seed/cuba-nature-hiking-mountains/1200/400`
 
-| Excursion | Duracion | Transporte | Almuerzo |
-|-----------|----------|------------|----------|
-| Centro Historico de Trinidad | 3-4 horas | Opcional | Opcional |
-| Valle de los Ingenios | 5-6 horas | Incluido | Disponible |
-| Casa Hacienda Guaimaro | 2-3 horas | No especificado | No |
-
-**Modal "Solicitar Excursion":**
-- Campo: Nombre (texto)
-- Campo: Numero de personas (numerico)
-- Campo: Notas adicionales (area de texto)
-- Muestra el nombre de la excursion seleccionada
-- Validacion del campo nombre
+**Imagenes de tarjetas de excursion:**
+| Excursion | Imagen |
+|-----------|--------|
+| Centro Historico | picsum.photos/seed/topes-collantes-nature |
+| Valle de los Ingenios | picsum.photos/seed/horseback-countryside |
+| Casa Hacienda Guaimaro | picsum.photos/seed/colonial-city-tour |
 
 ---
 
 ### 5.4 Eventos - `app/(tabs)/events.tsx`
 
 **Secciones:**
-1. **Header**: Gradiente verde con titulo "Eventos"
-2. **Espacios para Eventos**: Tarjetas con gradiente, capacidad e info
-3. **Servicios Culturales**: Lista de 4 servicios culturales
-4. **Otros Servicios**: Lista de 4 servicios complementarios
+1. **Header con imagen de fondo**: Foto de salon de eventos colonial con overlay azul-cian, titulo "Eventos"
+2. **Espacios para Eventos**: Tarjetas con imagen de portada + overlay azul marino, capacidad e info
+3. **Servicios Culturales**: Lista de servicios con iconos azules
+4. **Otros Servicios**: Lista de servicios complementarios
 
-**Espacios para Eventos:**
+**Imagen del header:** `picsum.photos/seed/colonial-event-hall-tropical/1200/400`
 
-| Espacio | Capacidad | Tipos de Eventos |
-|---------|-----------|-----------------|
-| Patio Becquer | 100 personas | Bodas, Cumpleanos, Fiestas de 15, Banquetes, Academicos, Presentaciones |
-| Amargura #85 | 50 personas | Reuniones privadas, Cenas de gala, Corporativos, Celebraciones, Fotografia |
-
-**Servicios Culturales:**
-1. Casa Hacienda Guaimaro - Interpretacion historico-cultural
-2. Centro Cultural Patio Becquer - Musica tradicional cubana en vivo
-3. Taberna Guanahuac - Ambientacion historica colonial
-4. Acuario - Espacio educativo y ambiental
-
-**Otros Servicios:**
-1. Recorridos en coches coloniales
-2. Papeleria turistica (mapas, guias)
-3. Artesania local
-4. Servicio de guias turisticos
-
-**Modal "Solicitar Espacio":**
-- Campo: Nombre (texto)
-- Campo: Tipo de evento (texto)
-- Campo: Fecha deseada (texto)
-- Validacion de campos obligatorios
+**Imagenes de tarjetas de espacios:**
+- Patio Becquer: `picsum.photos/seed/salon-eventos-colonial/600/240`
+- Amargura #85: `picsum.photos/seed/jardin-tropical-events/600/240`
 
 ---
 
 ### 5.5 Nosotros (About) - `app/(tabs)/about.tsx`
 
 **Secciones:**
-1. **Header**: Gradiente terracota-verde con titulo "Sobre Aldaba"
+1. **Header**: Degradado azul marino con titulo "Sobre Aldaba"
 2. **Quienes Somos**: Descripcion completa de la empresa
-3. **Nuestra Mision**: Tarjeta con gradiente dorado
-4. **Nuestros Valores**: Lista de 5 valores con iconos
-5. **Proyeccion Comunitaria**: Linea de tiempo con 5 proyectos
+3. **Nuestra Mision**: Tarjeta con degradado azul cielo a cian
+4. **Nuestros Valores**: Lista de 5 valores con iconos azules
+5. **Proyeccion Comunitaria**: Linea de tiempo con 5 proyectos, puntos azules
 6. **Contacto**: Direccion, telefono y correo electronico
-7. **Footer**: Logo, tagline y derechos reservados
-
-**Valores de la empresa:**
-1. Preservacion del patrimonio
-2. Desarrollo comunitario
-3. Excelencia en el servicio
-4. Autenticidad cultural
-5. Sostenibilidad
-
-**Proyeccion Comunitaria (Timeline):**
-
-| Ano | Proyecto | Descripcion |
-|-----|----------|-------------|
-| 2023 | Talleres con ninos | Programas educativos sobre patrimonio local |
-| 2023 | Actividades comunitarias | Actividades sociales y culturales |
-| 2024 | Concursos gastronomicos | Competencias culinarias tradicionales |
-| 2024 | Festejos tradicionales | Festividades locales |
-| 2025 | Celebraciones locales | Eventos festivos comunitarios |
-
-**Informacion de Contacto:**
-- Direccion: Centro Historico, Trinidad, Sancti Spiritus, Cuba
-- Telefono: +53 41 99 XXXX (enlace directo para llamar)
-- Email: info@aldaba.cu (enlace directo para enviar correo)
+7. **Footer**: Logo "Aldaba", tagline, ubicacion y creditos de la Universidad de las Ciencias Informaticas
 
 ---
 
-## 6. COMPONENTES REUTILIZABLES
+## 6. BARRA DE NAVEGACION
 
-### Tarjetas (Cards)
-- `QuickAccessCard` - Tarjeta de acceso rapido con icono y titulo
-- `HighlightCard` - Tarjeta de destaque horizontal
-- `AccommodationCard` - Tarjeta expandible de alojamiento
-- `GastronomyCard` - Tarjeta expandible de gastronomia
-- `ExcursionCard` - Tarjeta de excursion con caracteristicas
-- `EventSpaceCard` - Tarjeta de espacio para eventos con gradiente
-- `CulturalServiceItem` - Item de servicio cultural
-- `OtherServiceItem` - Item de servicio complementario
-- `ValueCard` - Tarjeta de valor empresarial
-- `CommunityItem` - Item de la linea de tiempo comunitaria
-- `ContactItem` - Item de contacto con accion
-
-### Modales
-- `RequestModal` (Servicios) - Solicitud general de servicios
-- `RequestModal` (Excursiones) - Solicitud de excursion especifica
-- `RequestModal` (Eventos) - Solicitud de alquiler de espacio
-
----
-
-## 7. NAVEGACION
-
-La aplicacion utiliza **Expo Router** con navegacion por pestanas (tabs):
+La barra inferior muestra **solo iconos, sin texto**. El icono activo tiene un fondo azul suave redondeado.
 
 ```
-/ (index)          -> Pantalla de Inicio
-/services          -> Pantalla de Servicios
-/excursions        -> Pantalla de Excursiones
-/events            -> Pantalla de Eventos
-/about             -> Pantalla Nosotros
+Inicio       Servicios    Excursiones  Eventos      Nosotros
+home         business     map          sparkles     info-circle
 ```
 
-### Barra de Pestanas
-- 5 pestanas con iconos Ionicons
-- Soporte para iOS 26+ con liquid glass (NativeTabs)
-- Fallback clasico con BlurView para iOS anterior y Android
-- Soporte completo para web con fondo solido
+- Activo: icono relleno con fondo `#1B4F8A + 15% opacidad`
+- Inactivo: icono lineal en `#8BA7C7`
+- Altura de la barra: 64px en web, 60px en movil
 
 ---
 
-## 8. DATOS MOCK
+## 7. PANEL DE ADMINISTRACION
 
-Todos los datos del contenido estan centralizados en `constants/data.ts`. Este archivo contiene:
+Accesible en la ruta `/admin` del servidor backend (puerto 5000).
 
-- `accommodations` - Array de alojamientos con amenidades
-- `gastronomyVenues` - Array de establecimientos gastronomicos con ofertas
-- `excursions` - Array de excursiones con caracteristicas
-- `eventSpaces` - Array de espacios para eventos con tipos de eventos
-- `culturalServices` - Array de servicios culturales
-- `otherServices` - Array de servicios complementarios
-- `communityProjects` - Array de proyectos comunitarios con anos
-- `companyInfo` - Objeto con informacion de la empresa, mision, valores y contacto
+**Funcionalidades:**
+- Ver lista de hostales con nombre, habitaciones y amenidades
+- Crear nuevo hostal con nombre, descripcion, habitaciones y amenidades
+- Editar hostal existente
+- Eliminar hostal con confirmacion
+- Estadisticas: total de hostales, habitaciones, amenidades unicas
+- Notificaciones toast para confirmar acciones
 
-### Interfaces TypeScript
-Cada tipo de dato tiene su interfaz definida:
-- `Accommodation`
-- `GastronomyVenue`
-- `Excursion`
-- `EventSpace`
-- `CulturalService`
-- `CommunityProject`
+**Datos:** persistidos en `localStorage` del navegador bajo la clave `aldaba_hostales`
+
+**Diseno:** paleta azul identica al sitio principal (azul marino, azul cielo, fondo alice blue)
 
 ---
 
-## 9. SERVIDOR BACKEND
+## 8. DATOS DEL CONTENIDO
+
+Todos los textos estan centralizados en `constants/data.ts`:
+
+- `accommodations` - Alojamientos con amenidades
+- `gastronomyVenues` - Establecimientos gastronomicos con ofertas
+- `excursions` - Excursiones con caracteristicas
+- `eventSpaces` - Espacios para eventos con tipos de eventos
+- `culturalServices` - Servicios culturales
+- `otherServices` - Servicios complementarios
+- `communityProjects` - Proyectos comunitarios con anos
+- `companyInfo` - Informacion de la empresa, mision, valores y contacto
+
+---
+
+## 9. RESPONSIVIDAD
+
+| Pantalla | Comportamiento |
+|----------|---------------|
+| Movil (< 768px) | Contenido a ancho completo, tarjetas apiladas |
+| Tablet / Desktop (>= 768px) | Contenido centrado con max-width 900px |
+| Carrusel | Siempre ocupa el ancho completo de la ventana |
+| Tab bar | 64px de alto en web, fondo blanco con borde azul suave |
+
+---
+
+## 10. COMO REEMPLAZAR LAS IMAGENES
+
+Actualmente las imagenes provienen de `picsum.photos` (imagenes de archivo aleatorias). Para usar fotos reales de Trinidad:
+
+1. Busca `picsum.photos/seed/` en los archivos de cada pantalla
+2. Reemplaza la URL completa por la URL de tu imagen real
+3. Las imagenes deben ser accesibles publicamente (URL https)
+
+**Archivos con imagenes:**
+- `app/(tabs)/index.tsx` → carrusel (5 imagenes, busca `carouselSlides`)
+- `app/(tabs)/services.tsx` → header + tarjetas (busca `accommodationImages`, `gastronomyImages`)
+- `app/(tabs)/excursions.tsx` → header + tarjetas (busca `excursionImages`)
+- `app/(tabs)/events.tsx` → header + tarjetas (busca `eventSpaceImages`)
+
+---
+
+## 11. SERVIDOR BACKEND
 
 El servidor Express (puerto 5000) proporciona:
 - **CORS** configurado para dominios Replit y localhost
+- **Ruta `/admin`** → Panel de administracion de hostales
 - **Landing page** estatica en la ruta raiz
-- **Manifest** de Expo para dispositivos moviles
 - **Archivos estaticos** desde `/assets` y `/static-build`
 - **Logging** de peticiones API
 
 ---
 
-## 10. COMO EJECUTAR
+## 12. COMO EJECUTAR
 
 ### Requisitos
 - Node.js v20+
@@ -366,35 +334,32 @@ npm run expo:dev
 ```
 
 ### Acceso
-- **Web**: http://localhost:8081
-- **Movil**: Escanear codigo QR con Expo Go
+- **Sitio web principal**: http://localhost:8081
+- **Panel de administracion**: http://localhost:5000/admin
 
 ---
 
-## 11. COMPATIBILIDAD
+## 13. COMPATIBILIDAD
 
 | Plataforma | Estado | Notas |
 |------------|--------|-------|
-| Web (Chrome, Firefox, Safari) | Completo | Experiencia principal |
-| iOS (Expo Go) | Completo | Con liquid glass en iOS 26+ |
-| Android (Expo Go) | Completo | Material 3 tabs |
-
-### Responsividad Web
-- Layout adaptativo con ScrollView
-- Tarjetas con ancho relativo al viewport
-- Gradientes y modales responsivos
-- Insets de 67px top y 34px bottom para web
-- Tab bar con altura de 84px en web
+| Web Desktop (Chrome, Firefox, Safari) | Completo | Experiencia principal con contenido centrado |
+| Web Movil | Completo | Layout adaptativo a pantalla completa |
+| iOS (Expo Go) | Completo | Tab bar con iconos solamente |
+| Android (Expo Go) | Completo | Tab bar con iconos solamente |
 
 ---
 
-## 12. PERSONALIZACION
+## 14. PERSONALIZACION
 
 ### Cambiar colores
 Editar `constants/colors.ts` para modificar toda la paleta de colores.
 
 ### Cambiar contenido
 Editar `constants/data.ts` para modificar textos, descripciones, servicios, etc.
+
+### Cambiar imagenes
+Ver seccion 10 de este documento.
 
 ### Agregar nuevas secciones
 1. Crear nuevo archivo en `app/(tabs)/`
@@ -406,3 +371,4 @@ Editar `constants/data.ts` para modificar textos, descripciones, servicios, etc.
 *Documentacion generada para el proyecto Aldaba Trinidad*
 *Empresa: Aldaba - Gestion y promocion de servicios turisticos*
 *Ubicacion: Trinidad y Valle de los Ingenios, Cuba*
+*Desarrollado con el apoyo de la Universidad de las Ciencias Informaticas*
