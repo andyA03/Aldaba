@@ -204,30 +204,19 @@ export default function HomeScreen() {
           <HighlightCard key={item.title} item={item} />
         ))}
 
-        <View style={styles.welcomeCard}>
-          <LinearGradient
-            colors={[Colors.light.primary, Colors.light.primaryLight]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.welcomeGradient}
-          >
-            <Ionicons name="heart-outline" size={32} color={Colors.light.accentLight} />
-            <Text style={styles.welcomeTitle}>Bienvenidos a Trinidad</Text>
-            <Text style={styles.welcomeText}>
-              Descubra la magia de una ciudad donde cada calle cuenta una historia,
-              cada rincon guarda un tesoro y cada experiencia se convierte en un recuerdo inolvidable.
-            </Text>
-            <Pressable
-              onPress={() => {
-                if (Platform.OS !== "web") Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                router.push("/about" as any);
-              }}
-              style={({ pressed }) => [styles.welcomeCta, { opacity: pressed ? 0.8 : 1 }]}
-            >
-              <Text style={styles.welcomeCtaText}>Conocer mas</Text>
-              <Ionicons name="arrow-forward" size={16} color={Colors.light.accentLight} />
-            </Pressable>
-          </LinearGradient>
+        <View style={styles.footer}>
+          <View style={styles.footerDivider} />
+          <View style={styles.footerLogoWrap}>
+            <Text style={styles.footerLogo}>Aldaba</Text>
+          </View>
+          <Text style={styles.footerText}>{companyInfo.tagline}</Text>
+          <Text style={styles.footerLocation}>{companyInfo.location}</Text>
+          <View style={styles.footerSeparator} />
+          <View style={styles.footerUciWrap}>
+            <Ionicons name="school-outline" size={15} color={Colors.light.textTertiary} />
+            <Text style={styles.footerUci}>Universidad de las Ciencias Informaticas</Text>
+          </View>
+          <Text style={styles.footerCopy}>© Aldaba — Todos los derechos reservados</Text>
         </View>
       </View>
     </ScrollView>
@@ -424,38 +413,62 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.light.textSecondary,
   },
-  welcomeCard: {
-    marginTop: 24,
-    marginBottom: 8,
-    borderRadius: 20,
-    overflow: "hidden" as const,
+  footer: {
+    marginTop: 32,
+    alignItems: "center" as const,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
   },
-  welcomeGradient: {
-    padding: 28,
-    alignItems: "flex-start" as const,
+  footerDivider: {
+    height: 1,
+    backgroundColor: Colors.light.border,
+    width: "100%",
+    marginBottom: 28,
   },
-  welcomeTitle: {
-    fontFamily: "PlayfairDisplay_700Bold",
-    fontSize: 24,
-    color: "#FFFFFF",
-    marginTop: 16,
+  footerLogoWrap: {
     marginBottom: 10,
   },
-  welcomeText: {
+  footerLogo: {
+    fontFamily: "PlayfairDisplay_700Bold",
+    fontSize: 28,
+    color: Colors.light.primary,
+  },
+  footerText: {
     fontFamily: "DMSans_400Regular",
-    fontSize: 14,
-    color: "rgba(255,255,255,0.85)",
-    lineHeight: 22,
+    fontSize: 13,
+    color: Colors.light.textSecondary,
+    textAlign: "center" as const,
+    lineHeight: 20,
+    maxWidth: 320,
+  },
+  footerLocation: {
+    fontFamily: "DMSans_500Medium",
+    fontSize: 12,
+    color: Colors.light.secondary,
+    marginTop: 6,
     marginBottom: 20,
   },
-  welcomeCta: {
+  footerSeparator: {
+    height: 1,
+    backgroundColor: Colors.light.border,
+    width: "50%",
+    marginBottom: 16,
+  },
+  footerUciWrap: {
     flexDirection: "row" as const,
     alignItems: "center" as const,
     gap: 6,
+    marginBottom: 8,
   },
-  welcomeCtaText: {
-    fontFamily: "DMSans_600SemiBold",
-    fontSize: 14,
-    color: Colors.light.accentLight,
+  footerUci: {
+    fontFamily: "DMSans_500Medium",
+    fontSize: 12,
+    color: Colors.light.textSecondary,
+    textAlign: "center" as const,
+  },
+  footerCopy: {
+    fontFamily: "DMSans_400Regular",
+    fontSize: 11,
+    color: Colors.light.textTertiary,
   },
 });
