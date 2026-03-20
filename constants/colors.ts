@@ -16,7 +16,7 @@ const Colors = {
     textSecondary: '#4A6FA5',
     textTertiary: '#8BA7C7',
     border: '#BFDBF7',
-    borderLight: '#DBEEFF',
+    borderLight: '#A8C8E4',
     tint: '#1B4F8A',
     tabIconDefault: '#8BA7C7',
     tabIconSelected: '#1B4F8A',
