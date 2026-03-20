@@ -96,7 +96,7 @@ export default function HomeScreen() {
   const isWeb = Platform.OS === "web";
   const isDesktop = windowWidth >= 768;
   const contentMaxWidth = Math.min(windowWidth, 900);
-  const webTopInset = isWeb ? 67 : 0;
+  const webTopInset = isWeb ? 64 : 0;
   const topPadding = isWeb ? webTopInset : insets.top;
   const carouselRef = useRef<ScrollView>(null);
   const [activeSlide, setActiveSlide] = useState(0);

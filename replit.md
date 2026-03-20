@@ -7,7 +7,7 @@ Responsive web application for Aldaba, a tourism and cultural services company i
 - **Frontend**: Expo React Native Web with Expo Router (file-based routing), responsive desktop + mobile
 - **Backend**: Express.js serving API, landing page, and admin panel
 - **Admin Panel**: Standalone React HTML page at `/admin` (port 5000) for hostel CRUD
-- **Navigation**: 5 tabs with icons only (no labels) - Home, Services, Excursions, Events, About
+- **Navigation**: Web → top horizontal nav bar (logo left + text links right); Mobile → bottom icons-only tab bar
 - **State**: Local state only (no database needed, promotional content site)
 - **Admin State**: localStorage persistence for hostel data
 - **Fonts**: Playfair Display (headings) + DM Sans (body)

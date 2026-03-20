@@ -70,7 +70,7 @@ export default function AboutScreen() {
   const { width: windowWidth } = useWindowDimensions();
   const isWeb = Platform.OS === "web";
   const contentMaxWidth = Math.min(windowWidth, 900);
-  const webTopInset = isWeb ? 67 : 0;
+  const webTopInset = isWeb ? 64 : 0;
   const topPadding = isWeb ? webTopInset : insets.top;
 
   const handleEmail = () => {
