@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #C2D9EE;
+  color: #0C1524;
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea { font-family: inherit; }
+img { display: block; max-width: 100%; }
+
+.playfair { font-family: 'Playfair Display', serif; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #C2D9EE; }
+::-webkit-scrollbar-thumb { background: #BFDBF7; border-radius: 3px; }
+
+/* Nav link hover */
+.nav-link { transition: color 0.2s, background 0.2s; }
+.nav-link:hover { color: #1B4F8A !important; background: rgba(27,79,138,0.06); }
+
+/* Card hover */
+.hover-card { transition: transform 0.18s, box-shadow 0.18s; }
+.hover-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,79,138,0.14) !important; }
+
+/* Button */
+.btn-primary { transition: opacity 0.15s, transform 0.15s; }
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:active { transform: scale(0.97); }
+
+/* Input */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #BFDBF7;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.2s;
+  color: #0C1524;
+}
+.form-input:focus { border-color: #1B4F8A; }
+
+/* Tab active */
+.tab-active { background: #1B4F8A; color: #fff !important; }
+.tab-inactive { background: #fff; color: #4A6FA5; }
+.tab-inactive:hover { background: #f0f8ff; }
+
+/* Responsive grid */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+@media (max-width: 768px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .hide-mobile { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile menu */
+.mobile-nav { display: none; }
+@media (max-width: 768px) {
+  .desktop-nav { display: none !important; }
+  .mobile-nav { display: flex; }
+}
