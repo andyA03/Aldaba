@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.card,
     borderRadius: 20,
     padding: 24,
-    marginTop: -28,
+    marginTop: 16,
     borderWidth: 1.5,
     borderColor: Colors.light.border,
     shadowColor: Colors.light.primary,
