@@ -1,5 +1,5 @@
 Perfecto 👍
-Aquí tienes **TODO en un solo texto corrido**, sin títulos ni listas visibles, **listo para copiar y pegar directamente como prompt en Replit**, enfocado únicamente en **frontend con React**:
+Aquí tienes **TODO en un solo texto corrido**, sin títulos ni listas visibles, enfocado únicamente en **frontend con React**:
 
 ---
 

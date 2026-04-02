@@ -5,6 +5,7 @@ import Services from './pages/Services';
 import Excursions from './pages/Excursions';
 import Events from './pages/Events';
 import About from './pages/About';
+import Admin from './admin/AdminPanel';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/excursions" element={<Excursions />} />
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );

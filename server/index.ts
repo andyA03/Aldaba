@@ -17,13 +17,19 @@ function setupCors(app: express.Application) {
   app.use((req, res, next) => {
     const origins = new Set<string>();
 
-    if (process.env.REPLIT_DEV_DOMAIN) {
-      origins.add(`https://${process.env.REPLIT_DEV_DOMAIN}`);
+    if (process.env.EXPO_PUBLIC_DOMAIN) {
+      const host = process.env.EXPO_PUBLIC_DOMAIN.trim();
+      const isLocalhost =
+        host.startsWith("localhost") || host.startsWith("127.0.0.1");
+      origins.add(`${isLocalhost ? "http" : "https"}://${host}`);
     }
 
-    if (process.env.REPLIT_DOMAINS) {
-      process.env.REPLIT_DOMAINS.split(",").forEach((d) => {
-        origins.add(`https://${d.trim()}`);
+    if (process.env.APP_ALLOWED_ORIGINS) {
+      process.env.APP_ALLOWED_ORIGINS.split(",").forEach((d) => {
+        const origin = d.trim();
+        if (origin) {
+          origins.add(origin);
+        }
       });
     }
 
