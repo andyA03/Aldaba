@@ -16,7 +16,7 @@
   justify-content: center;
   background: #0f172a;
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 50%, rgba(27,79,138,0.18) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 20%, rgba(14,165,233,0.12) 0%, transparent 55%);
   font-family: 'Inter', -apple-system, sans-serif;
   padding: 1rem;
@@ -51,7 +51,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #2563eb;
+  background: #1B5CB8;
   margin-bottom: 2px;
 }
 
@@ -92,8 +92,8 @@
 }
 
 .login-field input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  border-color: #1B5CB8;
+  box-shadow: 0 0 0 3px rgba(27,79,138,0.12);
   background: #fff;
 }
 
@@ -111,7 +111,7 @@
 .login-btn {
   width: 100%;
   padding: 0.88rem;
-  background: #1d4ed8;
+  background: #1B4F8A;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -122,10 +122,10 @@
   margin-top: 0.3rem;
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.2px;
-  box-shadow: 0 4px 16px rgba(29,78,216,0.35);
+  box-shadow: 0 4px 16px rgba(27,79,138,0.32);
 }
 
-.login-btn:hover { background: #1e40af; box-shadow: 0 6px 20px rgba(29,78,216,0.4); }
+.login-btn:hover { background: #163e72; box-shadow: 0 6px 20px rgba(27,79,138,0.4); }
 .login-btn:active { transform: scale(0.98); }
 
 .login-hint {
@@ -180,7 +180,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #3b82f6;
+  background: #4E7EC4;
   flex-shrink: 0;
 }
 
@@ -237,8 +237,8 @@
 }
 
 .nav-item.active {
-  background: rgba(59,130,246,0.18);
-  color: #93c5fd;
+  background: rgba(27,79,138,0.15);
+  color: #a8c5e8;
   font-weight: 600;
 }
 
@@ -250,7 +250,7 @@
   transform: translateY(-50%);
   width: 3px;
   height: 60%;
-  background: #3b82f6;
+  background: #4E7EC4;
   border-radius: 0 2px 2px 0;
 }
 
@@ -375,7 +375,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+  background: linear-gradient(135deg, #1B4F8A, #0e7490);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -427,7 +427,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: var(--stat-color, #2563eb);
+  background: var(--stat-color, #1B5CB8);
   border-radius: 14px 14px 0 0;
 }
 
@@ -520,8 +520,8 @@
 .search-input::placeholder { color: #9ca3af; }
 
 .search-input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+  border-color: #1B5CB8;
+  box-shadow: 0 0 0 3px rgba(27,79,138,0.08);
 }
 
 /* ────────────────────────────
@@ -544,12 +544,12 @@
 }
 
 .btn-primary {
-  background: #1d4ed8;
+  background: #1B4F8A;
   color: #fff;
-  box-shadow: 0 2px 6px rgba(29,78,216,0.25);
+  box-shadow: 0 2px 6px rgba(27,79,138,0.22);
 }
 
-.btn-primary:hover { background: #1e40af; box-shadow: 0 4px 10px rgba(29,78,216,0.3); }
+.btn-primary:hover { background: #163e72; box-shadow: 0 4px 10px rgba(27,79,138,0.28); }
 .btn-primary:active { transform: scale(0.97); }
 
 .btn-secondary {
@@ -643,7 +643,7 @@ tbody tr:hover { background: #f8fafc; }
 .establishment-name {
   font-size: 0.83rem;
   font-weight: 600;
-  color: #1d4ed8;
+  color: #1B4F8A;
   max-width: 170px;
   display: block;
   white-space: nowrap;
@@ -707,7 +707,7 @@ tbody tr:hover { background: #f8fafc; }
 
 .icon-btn:hover { transform: none; }
 
-.view-btn:hover  { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
+.view-btn:hover  { background: #edf3fb; border-color: #b8d4f0; color: #1B5CB8; }
 .edit-btn:hover  { background: #fefce8; border-color: #fde68a; color: #ca8a04; }
 .del-btn:hover   { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
 
@@ -835,8 +835,8 @@ tbody tr:hover { background: #f8fafc; }
 
 .form-row input:focus,
 .form-row select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.09);
+  border-color: #1B5CB8;
+  box-shadow: 0 0 0 3px rgba(27,79,138,0.09);
   background: #fff;
 }
 
@@ -940,7 +940,7 @@ tbody tr:hover { background: #f8fafc; }
   }
 
   .nav-item.active::before { display: none; }
-  .nav-item.active { border-bottom: 2px solid #3b82f6; }
+  .nav-item.active { border-bottom: 2px solid #4E7EC4; }
 
   .content { padding: 1rem; }
   .topbar { padding: 0 1rem; }

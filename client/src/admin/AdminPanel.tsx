@@ -270,7 +270,7 @@ function HostalesSection() {
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Habitación</button>
       </div>
       <div className="stat-cards">
-        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+        <div className="stat-card" style={{"--stat-color": "#1B4F8A"} as React.CSSProperties}>
           <div className="stat-card-value">{data.length}</div>
           <div className="stat-card-label">Total habitaciones</div>
         </div>
@@ -496,7 +496,7 @@ function ExcursionesSection() {
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Excursión</button>
       </div>
       <div className="stat-cards">
-        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+        <div className="stat-card" style={{"--stat-color": "#1B4F8A"} as React.CSSProperties}>
           <div className="stat-card-value">{data.length}</div>
           <div className="stat-card-label">Total excursiones</div>
         </div>
@@ -722,7 +722,7 @@ function RestaurantesSection() {
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Mesa</button>
       </div>
       <div className="stat-cards">
-        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+        <div className="stat-card" style={{"--stat-color": "#1B4F8A"} as React.CSSProperties}>
           <div className="stat-card-value">{data.length}</div>
           <div className="stat-card-label">Total mesas</div>
         </div>
