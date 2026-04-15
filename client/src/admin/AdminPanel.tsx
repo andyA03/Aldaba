@@ -1,7 +1,6 @@
 import "./AdminPanel.css";
 
 import React, { useState, useEffect } from "react";
-import "./AdminPanel.css";
 
 const SECTIONS = [
   { key: "hostales", label: "Hostales", icon: "bed-outline" },
