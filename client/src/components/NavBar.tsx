@@ -5,6 +5,7 @@ import C from '../colors';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Inicio' },
+  { path: '/lugares', label: 'Lugares' },
   { path: '/services', label: 'Servicios' },
   { path: '/excursions', label: 'Excursiones' },
   { path: '/events', label: 'Eventos' },

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ChevronLeft, MapPin, Bed, UtensilsCrossed, Compass, Calendar, Info } from 'lucide-react';
+import { ChevronRight, ChevronLeft, MapPin, Bed, UtensilsCrossed, Compass, Calendar, Info, ArrowRight } from 'lucide-react';
 import C from '../colors';
 import Footer from '../components/Footer';
+import LUGARES from '../data/lugaresData';
 
 const SLIDES = [
   { uri: 'https://picsum.photos/seed/trinidad-plaza/1200/500', title: 'Plaza Mayor de Trinidad', subtitle: 'Corazón del Patrimonio de la Humanidad' },
@@ -190,6 +191,102 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginTop: 44 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 22, flexWrap: 'wrap', gap: 10 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
+                <MapPin size={14} color={C.secondary} />
+                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: C.secondary, fontWeight: 600, letterSpacing: 0.5 }}>
+                  TRINIDAD · CUBA
+                </span>
+              </div>
+              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 24, color: C.primary, marginBottom: 5 }}>
+                Lugares Turísticos Destacados
+              </h2>
+              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14, color: C.textSecondary }}>
+                Los rincones más emblemáticos de la ciudad Patrimonio de la Humanidad
+              </p>
+            </div>
+            <Link to="/lugares" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              textDecoration: 'none', color: C.primary,
+              fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700,
+              padding: '7px 14px', borderRadius: 999,
+              border: `1.5px solid ${C.border}`,
+              backgroundColor: C.card,
+              whiteSpace: 'nowrap',
+            }}>
+              Ver todos <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 18,
+          }} className="lugares-grid">
+            {LUGARES.slice(0, 6).map(lugar => (
+              <Link key={lugar.id} to={`/lugares/${lugar.slug}`} style={{ textDecoration: 'none' }}>
+                <div className="hover-card" style={{
+                  backgroundColor: C.card,
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  border: `1.5px solid ${C.border}`,
+                  boxShadow: '0 2px 10px rgba(27,79,138,0.07)',
+                  cursor: 'pointer',
+                }}>
+                  <div style={{ position: 'relative', height: 170, overflow: 'hidden' }}>
+                    <img
+                      src={lugar.foto}
+                      alt={lugar.nombre}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      background: 'linear-gradient(to top, rgba(12,21,36,0.55) 0%, transparent 55%)',
+                    }} />
+                    <div style={{
+                      position: 'absolute', top: 10, left: 10,
+                      backgroundColor: lugar.categoriaColor,
+                      color: '#fff', borderRadius: 999,
+                      padding: '2px 9px',
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 10, fontWeight: 700,
+                      letterSpacing: 0.4, textTransform: 'uppercase',
+                    }}>
+                      {lugar.categoria}
+                    </div>
+                  </div>
+                  <div style={{ padding: '14px 16px 16px' }}>
+                    <h3 style={{
+                      fontFamily: 'Playfair Display, serif', fontSize: 15, fontWeight: 700,
+                      color: C.text, marginBottom: 6, lineHeight: 1.3,
+                    }}>
+                      {lugar.nombre}
+                    </h3>
+                    <p style={{
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 12,
+                      color: C.textSecondary, lineHeight: 1.55, marginBottom: 10,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}>
+                      {lugar.resumen}
+                    </p>
+                    <div style={{
+                      display: 'flex', alignItems: 'center', gap: 5,
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 12,
+                      color: C.primary, fontWeight: 700,
+                    }}>
+                      <span>Descubrir</span>
+                      <ArrowRight size={12} />
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

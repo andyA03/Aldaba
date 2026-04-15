@@ -5,6 +5,8 @@ import Services from './pages/Services';
 import Excursions from './pages/Excursions';
 import Events from './pages/Events';
 import About from './pages/About';
+import Lugares from './pages/Lugares';
+import LugarDetalle from './pages/LugarDetalle';
 import Admin from './admin/AdminPanel';
 
 export default function App() {
@@ -20,6 +22,8 @@ export default function App() {
         <Route path="/excursions" element={<Excursions />} />
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
+        <Route path="/lugares" element={<Lugares />} />
+        <Route path="/lugares/:slug" element={<LugarDetalle />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </>

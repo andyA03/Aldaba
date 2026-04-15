@@ -63,10 +63,12 @@ img { display: block; max-width: 100%; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-2 { grid-template-columns: 1fr; }
   .hide-mobile { display: none !important; }
+  .lugares-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 @media (max-width: 480px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .lugares-grid { grid-template-columns: 1fr !important; }
 }
 
 /* Mobile menu */
