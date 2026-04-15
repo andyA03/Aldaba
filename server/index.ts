@@ -221,6 +221,16 @@ function configureExpoAndLanding(app: express.Application) {
   app.use("/assets", express.static(path.resolve(process.cwd(), "assets")));
   app.use(express.static(path.resolve(process.cwd(), "static-build")));
 
+  if (process.env.NODE_ENV === "production") {
+    const clientDist = path.resolve(process.cwd(), "client-dist");
+    if (fs.existsSync(clientDist)) {
+      app.use(express.static(clientDist));
+      app.get("*", (_req: Request, res: Response) => {
+        res.sendFile(path.join(clientDist, "index.html"));
+      });
+    }
+  }
+
   log("Expo routing: Checking expo-platform header on / and /manifest");
 }
 
