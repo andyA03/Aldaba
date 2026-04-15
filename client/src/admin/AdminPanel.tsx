@@ -103,7 +103,10 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   return (
     <div className="login-root">
       <div className="login-card">
-        <div className="login-brand">Aldaba</div>
+        <div className="login-logo">
+          <div className="login-dot" />
+          <div className="login-brand">Aldaba</div>
+        </div>
         <div className="login-subtitle">Panel de Administración</div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="login-field">
@@ -130,14 +133,20 @@ export default function AdminPanel() {
 
   if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />;
 
+  const activeSection = SECTIONS.find(s => s.key === section);
+
   return (
     <div className="admin-root">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <div className="sidebar-brand">Aldaba</div>
+          <div className="sidebar-brand-row">
+            <div className="sidebar-brand-dot" />
+            <div className="sidebar-brand">Aldaba</div>
+          </div>
           <div className="sidebar-subtitle">Panel de Administración</div>
         </div>
         <nav className="sidebar-nav">
+          <div className="nav-section-label">Gestión</div>
           {SECTIONS.map((s) => (
             <div key={s.key} className={"nav-item" + (section === s.key ? " active" : "")} onClick={() => setSection(s.key)}>
               <span className="nav-icon">{s.icon}</span>
@@ -146,17 +155,26 @@ export default function AdminPanel() {
           ))}
         </nav>
         <div className="sidebar-footer">
-          <button className="logout-btn" onClick={() => setAuthed(false)}>🔓 Cerrar sesión</button>
+          <button className="logout-btn" onClick={() => setAuthed(false)}>
+            <span>↩</span> Cerrar sesión
+          </button>
           <div className="sidebar-footer-copy">Aldaba Trinidad © 2025</div>
         </div>
       </aside>
       <main className="main">
         <div className="topbar">
-          <div className="topbar-title">
-            {SECTIONS.find(s => s.key === section)?.icon}{" "}
-            {SECTIONS.find(s => s.key === section)?.label}
+          <div className="topbar-left">
+            <span className="topbar-icon">{activeSection?.icon}</span>
+            <span className="topbar-title">Aldaba</span>
+            <span className="topbar-sep">/</span>
+            <span className="topbar-section">{activeSection?.label}</span>
           </div>
-          <div className="topbar-user">👤 Administrador</div>
+          <div className="topbar-right">
+            <div className="topbar-user">
+              <div className="topbar-avatar">AD</div>
+              <span className="topbar-user-name">Administrador</span>
+            </div>
+          </div>
         </div>
         <div className="content">
           {section === "hostales" && <HostalesSection />}
@@ -174,9 +192,9 @@ function ConfirmModal({ msg, onConfirm, onCancel }: { msg: string; onConfirm: ()
     <div className="modal-overlay">
       <div className="modal-box" style={{ maxWidth: 380 }}>
         <div className="modal-header"><span>Confirmar acción</span></div>
-        <div style={{ padding: "1.5rem 1.5rem 1rem" }}>
-          <p style={{ marginBottom: "1.5rem", color: "#444" }}>{msg}</p>
-          <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
+        <div className="modal-body">
+          <p style={{ marginBottom: "1.2rem", color: "#374151", fontSize: "0.9rem", lineHeight: 1.6 }}>{msg}</p>
+          <div className="modal-actions">
             <button className="btn btn-secondary" onClick={onCancel}>Cancelar</button>
             <button className="btn btn-danger" onClick={onConfirm}>Eliminar</button>
           </div>
@@ -238,12 +256,42 @@ function HostalesSection() {
     closeModal();
   };
 
+  const disponibles = data.filter(h => h.disponible).length;
+  const ocupadas = data.filter(h => !h.disponible).length;
+  const reservadas = data.filter(h => h.reserva && h.reserva !== "—").length;
+
   return (
     <section>
-      <div className="section-desc">Gestión de habitaciones, disponibilidad, precios y reservas de los hostales registrados.</div>
-      <div className="toolbar">
-        <input className="search-input" placeholder="🔍 Buscar por hostal, habitación, tipo..." value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="section-header-row">
+        <div className="section-header-left">
+          <div className="section-title-text">Gestión de Hostales</div>
+          <div className="section-desc">Habitaciones, disponibilidad, precios y reservas de los hostales registrados.</div>
+        </div>
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Habitación</button>
+      </div>
+      <div className="stat-cards">
+        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+          <div className="stat-card-value">{data.length}</div>
+          <div className="stat-card-label">Total habitaciones</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#16a34a"} as React.CSSProperties}>
+          <div className="stat-card-value">{disponibles}</div>
+          <div className="stat-card-label">Disponibles</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#dc2626"} as React.CSSProperties}>
+          <div className="stat-card-value">{ocupadas}</div>
+          <div className="stat-card-label">Ocupadas</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#d97706"} as React.CSSProperties}>
+          <div className="stat-card-value">{reservadas}</div>
+          <div className="stat-card-label">Reservadas</div>
+        </div>
+      </div>
+      <div className="toolbar">
+        <div className="search-wrap">
+          <span className="search-icon">🔍</span>
+          <input className="search-input" placeholder="Buscar por hostal, habitación, tipo..." value={search} onChange={e => setSearch(e.target.value)} />
+        </div>
       </div>
       <div className="table-wrap">
         <table>
@@ -276,9 +324,9 @@ function HostalesSection() {
                 <td>{h.reserva}</td>
                 <td>
                   <div className="action-btns">
-                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(h)}>👁</button>
-                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(h)}>✏️</button>
-                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(h.id)}>🗑</button>
+                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(h)}>Ver</button>
+                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(h)}>Editar</button>
+                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(h.id)}>Borrar</button>
                   </div>
                 </td>
               </tr>
@@ -434,12 +482,42 @@ function ExcursionesSection() {
     closeModal();
   };
 
+  const pendientes = data.filter(e => e.estado === "Pendiente").length;
+  const confirmadas = data.filter(e => e.estado === "Confirmada").length;
+  const canceladas = data.filter(e => e.estado === "Cancelada").length;
+
   return (
     <section>
-      <div className="section-desc">Control y registro de excursiones, cantidad de personas, destino, hora y precios.</div>
-      <div className="toolbar">
-        <input className="search-input" placeholder="🔍 Buscar por nombre, guía o estado..." value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="section-header-row">
+        <div className="section-header-left">
+          <div className="section-title-text">Gestión de Excursiones</div>
+          <div className="section-desc">Control y registro de excursiones, destinos, guías, horarios y precios.</div>
+        </div>
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Excursión</button>
+      </div>
+      <div className="stat-cards">
+        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+          <div className="stat-card-value">{data.length}</div>
+          <div className="stat-card-label">Total excursiones</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#d97706"} as React.CSSProperties}>
+          <div className="stat-card-value">{pendientes}</div>
+          <div className="stat-card-label">Pendientes</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#16a34a"} as React.CSSProperties}>
+          <div className="stat-card-value">{confirmadas}</div>
+          <div className="stat-card-label">Confirmadas</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#dc2626"} as React.CSSProperties}>
+          <div className="stat-card-value">{canceladas}</div>
+          <div className="stat-card-label">Canceladas</div>
+        </div>
+      </div>
+      <div className="toolbar">
+        <div className="search-wrap">
+          <span className="search-icon">🔍</span>
+          <input className="search-input" placeholder="Buscar por nombre, guía o estado..." value={search} onChange={e => setSearch(e.target.value)} />
+        </div>
       </div>
       <div className="table-wrap">
         <table>
@@ -472,9 +550,9 @@ function ExcursionesSection() {
                 <td><span className={"badge " + (e.estado === "Confirmada" ? "badge-green" : e.estado === "Cancelada" ? "badge-red" : "badge-yellow")}>{e.estado}</span></td>
                 <td>
                   <div className="action-btns">
-                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(e)}>👁</button>
-                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(e)}>✏️</button>
-                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(e.id)}>🗑</button>
+                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(e)}>Ver</button>
+                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(e)}>Editar</button>
+                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(e.id)}>Borrar</button>
                   </div>
                 </td>
               </tr>
@@ -630,12 +708,42 @@ function RestaurantesSection() {
     closeModal();
   };
 
+  const libres = data.filter(m => m.estado === "Libre").length;
+  const ocupadasM = data.filter(m => m.ocupada).length;
+  const reservadasM = data.filter(m => m.reserva && m.reserva !== "—").length;
+
   return (
     <section>
-      <div className="section-desc">Administración de mesas, reservas, pagos y estado de ocupación de los restaurantes.</div>
-      <div className="toolbar">
-        <input className="search-input" placeholder="🔍 Buscar por restaurante, mesa o estado..." value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="section-header-row">
+        <div className="section-header-left">
+          <div className="section-title-text">Gestión de Restaurantes</div>
+          <div className="section-desc">Administración de mesas, reservas, pagos y estado de ocupación.</div>
+        </div>
         <button className="btn btn-primary" onClick={openAdd}>+ Agregar Mesa</button>
+      </div>
+      <div className="stat-cards">
+        <div className="stat-card" style={{"--stat-color": "#2563eb"} as React.CSSProperties}>
+          <div className="stat-card-value">{data.length}</div>
+          <div className="stat-card-label">Total mesas</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#16a34a"} as React.CSSProperties}>
+          <div className="stat-card-value">{libres}</div>
+          <div className="stat-card-label">Libres</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#dc2626"} as React.CSSProperties}>
+          <div className="stat-card-value">{ocupadasM}</div>
+          <div className="stat-card-label">Ocupadas</div>
+        </div>
+        <div className="stat-card" style={{"--stat-color": "#d97706"} as React.CSSProperties}>
+          <div className="stat-card-value">{reservadasM}</div>
+          <div className="stat-card-label">Reservadas</div>
+        </div>
+      </div>
+      <div className="toolbar">
+        <div className="search-wrap">
+          <span className="search-icon">🔍</span>
+          <input className="search-input" placeholder="Buscar por restaurante, mesa o estado..." value={search} onChange={e => setSearch(e.target.value)} />
+        </div>
       </div>
       <div className="table-wrap">
         <table>
@@ -666,9 +774,9 @@ function RestaurantesSection() {
                 <td><b>{m.pago > 0 ? `$${m.pago}` : "—"}</b></td>
                 <td>
                   <div className="action-btns">
-                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(m)}>👁</button>
-                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(m)}>✏️</button>
-                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(m.id)}>🗑</button>
+                    <button className="icon-btn view-btn" title="Ver detalles" onClick={() => openView(m)}>Ver</button>
+                    <button className="icon-btn edit-btn" title="Editar" onClick={() => openEdit(m)}>Editar</button>
+                    <button className="icon-btn del-btn" title="Eliminar" onClick={() => setConfirmId(m.id)}>Borrar</button>
                   </div>
                 </td>
               </tr>
