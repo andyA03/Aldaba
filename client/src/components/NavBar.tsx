@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import C from '../colors';
@@ -15,25 +15,50 @@ const NAV_ITEMS = [
 export default function NavBar() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const isHome = location.pathname === '/';
+
+  useEffect(() => {
+    if (!isHome) { setScrolled(true); return; }
+    setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isHome]);
+
+  const transparent = isHome && !scrolled;
 
   return (
     <>
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, height: 64,
-        backgroundColor: '#fff',
-        borderBottom: `1px solid ${C.borderLight}`,
+        backgroundColor: transparent ? 'transparent' : '#fff',
+        borderBottom: transparent ? 'none' : `1px solid ${C.borderLight}`,
         zIndex: 100,
-        boxShadow: '0 2px 12px rgba(27,79,138,0.08)',
+        boxShadow: transparent ? 'none' : '0 2px 12px rgba(27,79,138,0.08)',
+        transition: 'background-color 0.3s, box-shadow 0.3s, border-color 0.3s',
       }}>
         <div style={{
           maxWidth: 1100, margin: '0 auto', height: '100%',
           display: 'flex', alignItems: 'center', padding: '0 24px',
         }}>
           <Link to="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 22, fontWeight: 700, color: C.primary, letterSpacing: 0.5 }}>
+            <div style={{
+              fontFamily: 'Playfair Display, serif', fontSize: 22, fontWeight: 700,
+              color: transparent ? '#fff' : C.primary,
+              letterSpacing: 0.5,
+              transition: 'color 0.3s',
+              textShadow: transparent ? '0 2px 8px rgba(0,0,0,0.3)' : 'none',
+            }}>
               Aldaba
             </div>
-            <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 10, color: C.secondary, letterSpacing: 0.8, marginTop: 1 }}>
+            <div style={{
+              fontFamily: 'DM Sans, sans-serif', fontSize: 10,
+              color: transparent ? 'rgba(255,255,255,0.75)' : C.secondary,
+              letterSpacing: 0.8, marginTop: 1,
+              transition: 'color 0.3s',
+            }}>
               Trinidad · Cuba
             </div>
           </Link>
@@ -52,11 +77,16 @@ export default function NavBar() {
                     fontFamily: 'DM Sans, sans-serif',
                     fontSize: 14,
                     fontWeight: active ? 600 : 500,
-                    color: active ? C.primary : C.textSecondary,
+                    color: transparent
+                      ? (active ? '#fff' : 'rgba(255,255,255,0.82)')
+                      : (active ? C.primary : C.textSecondary),
                     padding: '6px 14px',
                     borderRadius: 8,
-                    borderBottom: active ? `2.5px solid ${C.primary}` : '2.5px solid transparent',
+                    borderBottom: active
+                      ? `2.5px solid ${transparent ? '#fff' : C.primary}`
+                      : '2.5px solid transparent',
                     transition: 'all 0.18s',
+                    textShadow: transparent ? '0 1px 4px rgba(0,0,0,0.25)' : 'none',
                   }}
                 >
                   {item.label}
@@ -68,7 +98,7 @@ export default function NavBar() {
           <button
             className="mobile-nav"
             onClick={() => setMenuOpen(!menuOpen)}
-            style={{ padding: 8, color: C.primary }}
+            style={{ padding: 8, color: transparent ? '#fff' : C.primary }}
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
