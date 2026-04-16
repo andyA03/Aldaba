@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "Xns3LTWKhhOjVnIixYQKI"
+uri = "file://ALDABA.md"
+type = "text"
+title = "Aldaba — Documentación completa del proyecto"
