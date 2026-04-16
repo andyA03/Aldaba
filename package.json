@@ -3,38 +3,21 @@
   "main": "client/src/main.tsx",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "client:dev": "vite",
-    "build": "vite build && npm run server:build",
-    "preview": "vite preview",
-    "server:dev": "NODE_ENV=development PORT=3001 tsx server/index.ts",
-    "server:build": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=server_dist",
-    "server:prod": "NODE_ENV=production node server_dist/index.js",
-    "db:push": "drizzle-kit push"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
     "@vitejs/plugin-react-swc": "^4.3.0",
-    "drizzle-orm": "^0.39.3",
-    "drizzle-zod": "^0.7.0",
-    "express": "^5.0.1",
-    "http-proxy-middleware": "^3.0.5",
     "lucide-react": "^0.577.0",
-    "pg": "^8.16.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-router-dom": "^7.13.1",
-    "tsx": "^4.20.6",
-    "vite": "^8.0.1",
-    "ws": "^8.18.0",
-    "zod": "^3.24.2",
-    "zod-validation-error": "^3.4.0"
+    "vite": "^8.0.1"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
     "@types/react": "~19.1.10",
-    "concurrently": "^9.2.1",
-    "drizzle-kit": "^0.31.4",
     "eslint": "^9.31.0",
     "typescript": "~5.9.2"
   },

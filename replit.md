@@ -1,69 +1,60 @@
 # Aldaba Web
 
-A multi-platform tourism/cultural information app for Aldaba in Trinidad, Cuba. It serves information about local services, excursions, events, and historical heritage (UNESCO World Heritage sites).
+Plataforma web de gestión y promoción turística para Aldaba en Trinidad, Cuba. Información sobre alojamiento, gastronomía, excursiones, eventos y patrimonio cultural UNESCO.
 
-## Architecture
+## Arquitectura
 
-The project has two parts running concurrently in development:
+Proyecto frontend puro (React + Vite). El backend será provisto por una API Django REST Framework externa.
 
-1. **Vite Frontend** (React 19) — runs on port 5000
-2. **Express Backend** (Node.js/TypeScript) — runs on port 3001 in dev, proxied from Vite
+### Estructura del proyecto
 
-### Project Structure
+- `/client` — Frontend React (Vite, React Router 7, TanStack Query)
+  - `src/pages/` — Páginas de la aplicación
+  - `src/components/` — NavBar, Footer, Modal
+  - `src/admin/` — Panel de administración
+  - `src/data/` — Datos de lugares turísticos
+  - `src/styles/` — Estilos globales
+- `/constants` — Datos compartidos (hostales, restaurantes, excursiones, eventos)
 
-- `/client` — React web frontend (Vite, React Router 7, TanStack Query)
-- `/app` — Expo (React Native) mobile frontend
-- `/server` — Express backend (TypeScript)
-  - `index.ts` — Server entry point, CORS, routing
-  - `routes.ts` — API routes (prefix `/api`)
-  - `storage.ts` — Data access (in-memory MemStorage, Drizzle-ready)
-  - `templates/` — HTML templates for landing page and admin panel
-- `/shared` — Shared types and Drizzle schema
-- `/components` — Shared React components
-- `/constants` — Shared data and colors
-- `/lib` — Shared utilities (query client)
-- `/assets` — Static images and fonts
-- `/scripts` — Build scripts
-
-## Tech Stack
+## Stack técnico
 
 - **Frontend**: React 19, React Router 7, TanStack Query, Lucide React, Vite
-- **Mobile**: Expo, Expo Router, React Native
-- **Backend**: Express 5, Node.js, TypeScript, tsx
-- **Database**: Drizzle ORM + PostgreSQL (pg driver)
-- **Validation**: Zod, drizzle-zod
-- **Build**: Vite (frontend), esbuild (server), concurrently (dev)
+- **Backend (externo)**: Django REST Framework (a conectar)
 - **Package Manager**: npm
 
-## Development
+## Desarrollo
 
 ```bash
-npm run dev        # Start both frontend (port 5000) and backend (port 3001)
-npm run client:dev # Start only the Vite frontend
-npm run server:dev # Start only the Express backend (port 3001)
+npm run dev      # Inicia el frontend en puerto 5000
+npm run build    # Build de producción
+npm run preview  # Preview del build
 ```
 
-## Production Build
+## Conexión con Django
 
-```bash
-npm run build      # Build Vite frontend to client-dist/ + esbuild server to server_dist/
-node server_dist/index.js  # Run the production server (port 5000)
+El proxy de Vite redirige `/api` → `http://localhost:8000` (puerto por defecto de Django).
+
+Configurado en `vite.config.ts`:
+```ts
+proxy: {
+  '/api': 'http://localhost:8000',
+}
 ```
 
-In production, the Express server:
-1. Serves the landing page at `/`
-2. Serves the React SPA from `client-dist/`
-3. Serves Expo mobile manifests for iOS/Android
-4. Handles all `/api` routes
+## Páginas
 
-## Deployment
+| Ruta | Descripción |
+|---|---|
+| `/` | Landing con hero pantalla completa y carrusel |
+| `/lugares` | 8 lugares turísticos con filtros por categoría |
+| `/lugares/:slug` | Detalle de cada lugar |
+| `/services` | Alojamiento y gastronomía |
+| `/excursions` | Excursiones guiadas |
+| `/events` | Eventos y cultura |
+| `/about` | Nosotros y contacto |
+| `/admin` | Panel de administración (admin / admin123) |
 
-- **Target**: Autoscale
-- **Build**: `npm run build`
-- **Run**: `node server_dist/index.js`
+## Despliegue
 
-## Key Config
-
-- `vite.config.ts` — Frontend config, proxies `/api` to `localhost:3001`, `allowedHosts: true`
-- `drizzle.config.ts` — Database ORM config
-- `tsconfig.json` — Path aliases: `@/*` → root, `@shared/*` → `./shared/*`
+- **Build**: `npm run build` → genera `client-dist/`
+- **Servir**: cualquier servidor estático apuntando a `client-dist/`
