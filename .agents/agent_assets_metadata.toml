@@ -6,3 +6,9 @@ id = "Xns3LTWKhhOjVnIixYQKI"
 uri = "file://ALDABA.md"
 type = "text"
 title = "Aldaba — Documentación completa del proyecto"
+
+[[outputs]]
+id = "gdPy6DGOwwDH4bIJpc2BY"
+uri = "file://DJANGO_API.md"
+type = "text"
+title = "Guía de conexión Django ↔ React"
