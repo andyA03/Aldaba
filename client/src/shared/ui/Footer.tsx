@@ -1,4 +1,4 @@
-import C from '../colors';
+import C from '@shared/theme/colors';
 
 export default function Footer() {
   return (

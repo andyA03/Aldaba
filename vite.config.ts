@@ -7,7 +7,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@constants': path.resolve(__dirname, 'constants'),
+      '@app': path.resolve(__dirname, 'client/src/app'),
+      '@pages': path.resolve(__dirname, 'client/src/pages'),
+      '@features': path.resolve(__dirname, 'client/src/features'),
+      '@shared': path.resolve(__dirname, 'client/src/shared'),
+      '@entities': path.resolve(__dirname, 'client/src/entities'),
     },
   },
   server: {

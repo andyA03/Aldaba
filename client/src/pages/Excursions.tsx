@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { MapPin, Clock, ChevronRight, Navigation, Star } from 'lucide-react';
-import { excursions } from '@constants/data';
-import C from '../colors';
-import Modal from '../components/Modal';
-import Footer from '../components/Footer';
+import { excursions } from '@shared/data/siteData';
+import C from '@shared/theme/colors';
+import Modal from '@shared/ui/Modal';
+import Footer from '@shared/ui/Footer';
 
 const EXCURSION_IMAGES: Record<string, string> = {
   '1': 'https://picsum.photos/seed/centro-historico-trinidad/500/280',

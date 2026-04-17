@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import C from '../colors';
+import C from '@shared/theme/colors';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Inicio' },

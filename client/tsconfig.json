@@ -13,7 +13,11 @@
     "jsx": "react-jsx",
     "strict": false,
     "paths": {
-      "@constants/*": ["../constants/*"]
+      "@app/*": ["./src/app/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@features/*": ["./src/features/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@entities/*": ["./src/entities/*"]
     }
   },
   "include": ["src"]

@@ -1,13 +1,13 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import Excursions from './pages/Excursions';
-import Events from './pages/Events';
-import About from './pages/About';
-import Lugares from './pages/Lugares';
-import LugarDetalle from './pages/LugarDetalle';
-import Admin from './admin/AdminPanel';
+import NavBar from '@features/navigation/NavBar';
+import Home from '@pages/Home';
+import Services from '@pages/Services';
+import Excursions from '@pages/Excursions';
+import Events from '@pages/Events';
+import About from '@pages/About';
+import Lugares from '@pages/Lugares';
+import LugarDetalle from '@pages/LugarDetalle';
+import Admin from '@features/admin/AdminPanel';
 
 export default function App() {
   const location = useLocation();

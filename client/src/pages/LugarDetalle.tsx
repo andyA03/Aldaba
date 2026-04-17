@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Clock, Ticket, Navigation, ChevronRight, ArrowLeft, Lightbulb } from 'lucide-react';
-import C from '../colors';
-import Footer from '../components/Footer';
-import LUGARES from '../data/lugaresData';
+import C from '@shared/theme/colors';
+import Footer from '@shared/ui/Footer';
+import LUGARES from '@entities/lugares/model/lugaresData';
 
 export default function LugarDetalle() {
   const { slug } = useParams<{ slug: string }>();

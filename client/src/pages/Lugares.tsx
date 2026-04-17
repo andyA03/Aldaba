@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, Search } from 'lucide-react';
-import C from '../colors';
-import Footer from '../components/Footer';
-import LUGARES from '../data/lugaresData';
+import C from '@shared/theme/colors';
+import Footer from '@shared/ui/Footer';
+import LUGARES from '@entities/lugares/model/lugaresData';
 
 const CATEGORIAS = ['Todos', 'Patrimonio', 'UNESCO', 'Naturaleza', 'Cultura', 'Costa'] as const;
 

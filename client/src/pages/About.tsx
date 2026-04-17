@@ -1,7 +1,7 @@
 import { MapPin, Phone, Mail, Shield, Leaf, Users, Star, GraduationCap } from 'lucide-react';
-import { companyInfo, communityProjects } from '@constants/data';
-import C from '../colors';
-import Footer from '../components/Footer';
+import { companyInfo, communityProjects } from '@shared/data/siteData';
+import C from '@shared/theme/colors';
+import Footer from '@shared/ui/Footer';
 
 const VALUE_ICONS: Record<string, JSX.Element> = {
   'Preservación del patrimonio': <Shield size={22} color={C.primary} />,

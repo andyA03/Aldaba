@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ChevronLeft, MapPin, Bed, UtensilsCrossed, Compass, Calendar, ArrowRight, Phone } from 'lucide-react';
-import C from '../colors';
-import Footer from '../components/Footer';
-import LUGARES from '../data/lugaresData';
+import C from '@shared/theme/colors';
+import Footer from '@shared/ui/Footer';
+import LUGARES from '@entities/lugares/model/lugaresData';
 
 const SLIDES = [
   {
@@ -97,7 +97,7 @@ export default function Home() {
                 position: 'absolute', bottom: 120, left: 0, right: 0,
                 padding: '0 48px',
                 maxWidth: 760,
-              }}>
+              }} className="home-hero-content">
                 <div style={{
                   display: 'inline-flex', alignItems: 'center', gap: 6,
                   background: 'rgba(255,255,255,0.12)',
@@ -167,35 +167,43 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Tarjetas de acceso rápido superpuestas al fondo del hero */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          width: '100%', maxWidth: 900,
-          padding: '0 20px',
-          display: 'flex', gap: 12,
+      </div>
+
+      {/* Quick access ancho completo */}
+      <div style={{
+        width: '100%',
+        padding: '0 24px',
+        marginTop: 16,
+        marginBottom: 48,
+      }}>
+        <div className="quick-access-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+          gap: 12,
+          width: '100%',
         }}>
           {QUICK_ACCESS.map(item => (
-            <Link key={item.label} to={item.path} style={{ textDecoration: 'none', flex: 1 }}>
+            <Link key={item.label} to={item.path} style={{ textDecoration: 'none' }}>
               <div style={{
-                backgroundColor: 'rgba(255,255,255,0.12)',
+                backgroundColor: 'rgba(255,255,255,0.28)',
                 backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.22)',
-                borderBottom: 'none',
-                borderRadius: '14px 14px 0 0',
-                padding: '16px 14px',
+                border: '1px solid rgba(168,200,228,0.6)',
+                borderRadius: 14,
+                padding: '18px 14px',
                 textAlign: 'center',
                 cursor: 'pointer',
-                transition: 'background 0.2s',
+                transition: 'all 0.2s',
+                boxShadow: '0 8px 24px rgba(27,79,138,0.12)',
               }}
-              className="hero-quick-card"
+              className="quick-solid-card"
               >
-                <div style={{ color: '#fff', display: 'flex', justifyContent: 'center', marginBottom: 8, opacity: 0.9 }}>
+                <div style={{ color: C.primary, display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
                   {item.icon}
                 </div>
-                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 2 }}>
+                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 15, fontWeight: 700, color: C.text, marginBottom: 3 }}>
                   {item.label}
                 </div>
-                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>
+                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: C.textSecondary }}>
                   {item.sub}
                 </div>
               </div>
@@ -205,45 +213,7 @@ export default function Home() {
       </div>
 
       {/* ─── CONTENIDO PRINCIPAL ─── */}
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 20px' }}>
-
-        {/* Quick access sólido debajo del hero */}
-        <div style={{
-          backgroundColor: C.card,
-          borderRadius: '0 0 20px 20px',
-          border: `1.5px solid ${C.border}`,
-          borderTop: 'none',
-          boxShadow: '0 8px 32px rgba(27,79,138,0.12)',
-          display: 'flex',
-          overflow: 'hidden',
-          marginBottom: 48,
-        }}>
-          {QUICK_ACCESS.map((item, idx) => (
-            <Link key={item.label} to={item.path} style={{
-              textDecoration: 'none', flex: 1,
-              borderRight: idx < QUICK_ACCESS.length - 1 ? `1px solid ${C.borderLight}` : 'none',
-            }}>
-              <div style={{
-                padding: '18px 12px',
-                textAlign: 'center',
-                cursor: 'pointer',
-                transition: 'background 0.18s',
-              }}
-              className="quick-solid-card"
-              >
-                <div style={{ color: C.primary, display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
-                  {item.icon}
-                </div>
-                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: C.text, marginBottom: 2 }}>
-                  {item.label}
-                </div>
-                <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: C.textTertiary }}>
-                  {item.sub}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+      <div style={{ width: '100%', margin: '0 auto', padding: '0 24px' }} className="home-main-content">
 
         {/* ─── LO QUE NOS DISTINGUE ─── */}
         <div style={{ marginBottom: 56 }}>
@@ -266,9 +236,9 @@ export default function Home() {
           </div>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
             gap: 16,
-          }}>
+          }} className="highlights-grid">
             {HIGHLIGHTS.map(h => (
               <div key={h.title} className="hover-card" style={{
                 backgroundColor: C.card,
@@ -324,7 +294,7 @@ export default function Home() {
           </div>
 
           {/* Grid principal: 1 tarjeta grande + 2 pequeñas */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="lugares-featured-grid">
             {/* Tarjeta grande */}
             <LugarCardGrande lugar={LUGARES[0]} />
 
@@ -337,7 +307,7 @@ export default function Home() {
 
           {/* Grid de 3 tarjetas medianas */}
           <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+            display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
             gap: 16, marginTop: 16,
           }} className="lugares-grid">
             {LUGARES.slice(3, 6).map(lugar => (
@@ -355,7 +325,7 @@ export default function Home() {
             display: 'flex', flexWrap: 'wrap', gap: 24,
             alignItems: 'center', justifyContent: 'space-between',
             position: 'relative', overflow: 'hidden',
-          }}>
+          }} className="home-cta">
             <div style={{
               position: 'absolute', right: -40, top: -40,
               width: 200, height: 200, borderRadius: '50%',

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import C from '../colors';
+import C from '@shared/theme/colors';
 
 interface Props {
   visible: boolean;
