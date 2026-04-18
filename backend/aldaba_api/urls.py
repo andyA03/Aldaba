@@ -10,14 +10,18 @@ from .views import (
     ExcursionPublicViewSet,
     GastronomiaAdminViewSet,
     GastronomiaPublicViewSet,
+    HabitacionAdminViewSet,
     InformacionEmpresaAdminViewSet,
     InformacionEmpresaPublicViewSet,
     LugarTuristicoAdminViewSet,
     LugarTuristicoPublicViewSet,
+    MesaAdminViewSet,
     OtroServicioAdminViewSet,
     OtroServicioPublicViewSet,
     ProyectoComunitarioAdminViewSet,
     ProyectoComunitarioPublicViewSet,
+    ReservaExcursionAdminViewSet,
+    ReservaPublicViewSet,
     ServicioCulturalAdminViewSet,
     ServicioCulturalPublicViewSet,
 )
@@ -32,6 +36,7 @@ public_router.register(r"eventos", EspacioEventoPublicViewSet, basename="eventos
 public_router.register(r"servicios/culturales", ServicioCulturalPublicViewSet, basename="servicios-culturales-public")
 public_router.register(r"servicios/otros", OtroServicioPublicViewSet, basename="otros-servicios-public")
 public_router.register(r"proyectos/comunitarios", ProyectoComunitarioPublicViewSet, basename="proyectos-comunitarios-public")
+public_router.register(r"reservas", ReservaPublicViewSet, basename="reservas-public")
 
 
 admin_router = DefaultRouter()
@@ -43,6 +48,9 @@ admin_router.register(r"admin/eventos", EspacioEventoAdminViewSet, basename="eve
 admin_router.register(r"admin/servicios/culturales", ServicioCulturalAdminViewSet, basename="servicios-culturales-admin")
 admin_router.register(r"admin/servicios/otros", OtroServicioAdminViewSet, basename="otros-servicios-admin")
 admin_router.register(r"admin/proyectos/comunitarios", ProyectoComunitarioAdminViewSet, basename="proyectos-comunitarios-admin")
+admin_router.register(r"admin/habitaciones", HabitacionAdminViewSet, basename="habitaciones-admin")
+admin_router.register(r"admin/excursiones-reservas", ReservaExcursionAdminViewSet, basename="excursiones-reservas-admin")
+admin_router.register(r"admin/mesas", MesaAdminViewSet, basename="mesas-admin")
 
 
 urlpatterns = [

@@ -1,27 +1,38 @@
+from django.db.models import Count, Sum
 from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from .models import (
     Alojamiento,
     EspacioEvento,
     Excursion,
+    Habitacion,
     Gastronomia,
     InformacionEmpresa,
     LugarTuristico,
+    Mesa,
     OtroServicio,
     ProyectoComunitario,
+    Reserva,
+    ReservaExcursion,
     ServicioCultural,
 )
-from .permissions import IsStaffUser
+from .permissions import AllowCreateAnyOtherwiseStaff, IsStaffUser
 from .serializers import (
     AlojamientoSerializer,
     EspacioEventoSerializer,
     ExcursionSerializer,
+    HabitacionSerializer,
     GastronomiaSerializer,
     InformacionEmpresaSerializer,
     LugarTuristicoSerializer,
+    MesaSerializer,
     OtroServicioSerializer,
     ProyectoComunitarioSerializer,
+    ReservaExcursionSerializer,
+    ReservaSerializer,
     ServicioCulturalSerializer,
 )
 
@@ -146,3 +157,68 @@ class ProyectoComunitarioAdminViewSet(AdminModelViewSet):
 class InformacionEmpresaAdminViewSet(AdminModelViewSet):
     queryset = InformacionEmpresa.objects.all()
     serializer_class = InformacionEmpresaSerializer
+
+
+class ReservaPublicViewSet(viewsets.ModelViewSet):
+    queryset = Reserva.objects.all()
+    serializer_class = ReservaSerializer
+    permission_classes = [AllowCreateAnyOtherwiseStaff]
+    http_method_names = ["post", "get", "head", "options"]
+    ordering_fields = ["id", "created_at", "estado", "tipo"]
+
+
+class HabitacionAdminViewSet(AdminModelViewSet):
+    queryset = Habitacion.objects.all()
+    serializer_class = HabitacionSerializer
+
+    @action(detail=False, methods=["get"], url_path="estadisticas")
+    def estadisticas(self, request):
+        total = Habitacion.objects.count()
+        disponibles = Habitacion.objects.filter(disponible=True).count()
+        ocupadas = Habitacion.objects.filter(disponible=False).count()
+        reservadas = Habitacion.objects.exclude(reserva="—").count()
+        return Response(
+            {
+                "total": total,
+                "disponibles": disponibles,
+                "ocupadas": ocupadas,
+                "reservadas": reservadas,
+            }
+        )
+
+
+class ReservaExcursionAdminViewSet(AdminModelViewSet):
+    queryset = ReservaExcursion.objects.all()
+    serializer_class = ReservaExcursionSerializer
+
+    @action(detail=False, methods=["get"], url_path="estadisticas")
+    def estadisticas(self, request):
+        total = ReservaExcursion.objects.count()
+        por_estado = dict(
+            ReservaExcursion.objects.values_list("estado")
+            .annotate(total=Count("id"))
+            .values_list("estado", "total")
+        )
+        return Response({"total": total, "por_estado": por_estado})
+
+
+class MesaAdminViewSet(AdminModelViewSet):
+    queryset = Mesa.objects.all()
+    serializer_class = MesaSerializer
+
+    @action(detail=False, methods=["get"], url_path="estadisticas")
+    def estadisticas(self, request):
+        total = Mesa.objects.count()
+        libres = Mesa.objects.filter(estado="Libre").count()
+        ocupadas = Mesa.objects.filter(estado="Ocupada").count()
+        reservadas = Mesa.objects.filter(estado="Reservada").count()
+        ingresos = Mesa.objects.aggregate(total=Sum("pago"))["total"] or 0
+        return Response(
+            {
+                "total": total,
+                "libres": libres,
+                "ocupadas": ocupadas,
+                "reservadas": reservadas,
+                "ingresos": ingresos,
+            }
+        )

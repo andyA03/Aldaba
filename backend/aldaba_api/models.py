@@ -73,6 +73,7 @@ class Excursion(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     descripcion = models.TextField()
     caracteristicas = ArrayField(models.CharField(max_length=220), default=list, blank=True)
+    duracion = models.CharField(max_length=50, blank=True)
     foto = models.URLField(max_length=500, blank=True)
     icono = models.CharField(max_length=80, blank=True)
 
@@ -153,3 +154,104 @@ class InformacionEmpresa(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.nombre
+
+
+class Reserva(TimeStampedModel):
+    TIPOS = [
+        ("alojamiento", "Alojamiento"),
+        ("gastronomia", "Gastronomia"),
+        ("excursion", "Excursion"),
+        ("evento", "Evento"),
+    ]
+    ESTADOS = [
+        ("pendiente", "Pendiente"),
+        ("confirmada", "Confirmada"),
+        ("cancelada", "Cancelada"),
+    ]
+
+    tipo = models.CharField(max_length=20, choices=TIPOS)
+    establecimiento = models.CharField(max_length=200)
+    nombre_cliente = models.CharField(max_length=200)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=30, blank=True)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField(null=True, blank=True)
+    personas = models.PositiveIntegerField(default=1)
+    mensaje = models.TextField(blank=True)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="pendiente")
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return f"{self.nombre_cliente} — {self.tipo} ({self.estado})"
+
+
+class Habitacion(TimeStampedModel):
+    TIPOS = [
+        ("Simple", "Simple"),
+        ("Doble", "Doble"),
+        ("Triple", "Triple"),
+        ("Suite", "Suite"),
+    ]
+
+    hostal = models.CharField(max_length=200)
+    foto = models.URLField(max_length=500, blank=True)
+    numero = models.CharField(max_length=10)
+    tipo = models.CharField(max_length=20, choices=TIPOS)
+    huespedes = models.PositiveIntegerField()
+    disponible = models.BooleanField(default=True)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    reserva = models.CharField(max_length=200, default="—")
+
+    class Meta:
+        ordering = ["id"]
+
+    def __str__(self) -> str:
+        return f"{self.hostal} — Hab. {self.numero}"
+
+
+class ReservaExcursion(TimeStampedModel):
+    ESTADOS = [
+        ("Pendiente", "Pendiente"),
+        ("Confirmada", "Confirmada"),
+        ("Cancelada", "Cancelada"),
+    ]
+
+    nombre = models.CharField(max_length=200)
+    foto = models.URLField(max_length=500, blank=True)
+    fecha = models.DateField()
+    hora = models.TimeField()
+    personas = models.PositiveIntegerField()
+    guia = models.CharField(max_length=200)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="Pendiente")
+
+    class Meta:
+        ordering = ["-fecha", "-hora"]
+
+    def __str__(self) -> str:
+        return f"{self.nombre} — {self.fecha}"
+
+
+class Mesa(TimeStampedModel):
+    ESTADOS = [
+        ("Libre", "Libre"),
+        ("Ocupada", "Ocupada"),
+        ("Reservada", "Reservada"),
+    ]
+
+    restaurante = models.CharField(max_length=200)
+    foto = models.URLField(max_length=500, blank=True)
+    numero = models.PositiveIntegerField()
+    capacidad = models.PositiveIntegerField()
+    ocupada = models.BooleanField(default=False)
+    reserva = models.CharField(max_length=200, default="—")
+    pago = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="Libre")
+
+    class Meta:
+        ordering = ["id"]
+
+    def __str__(self) -> str:
+        return f"{self.restaurante} — Mesa {self.numero}"

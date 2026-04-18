@@ -4,11 +4,15 @@ from .models import (
     Alojamiento,
     EspacioEvento,
     Excursion,
+    Habitacion,
     Gastronomia,
     InformacionEmpresa,
     LugarTuristico,
+    Mesa,
     OtroServicio,
     ProyectoComunitario,
+    Reserva,
+    ReservaExcursion,
     ServicioCultural,
 )
 
@@ -64,4 +68,28 @@ class ProyectoComunitarioSerializer(serializers.ModelSerializer):
 class InformacionEmpresaSerializer(serializers.ModelSerializer):
     class Meta:
         model = InformacionEmpresa
+        fields = "__all__"
+
+
+class ReservaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reserva
+        fields = "__all__"
+
+
+class HabitacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Habitacion
+        fields = "__all__"
+
+
+class ReservaExcursionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReservaExcursion
+        fields = "__all__"
+
+
+class MesaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mesa
         fields = "__all__"

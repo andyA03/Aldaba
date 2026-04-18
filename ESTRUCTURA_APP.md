@@ -116,16 +116,21 @@ Configuración principal del proyecto Django.
 Aplicación principal del dominio Aldaba.
 
 - `models.py`: modelos de base de datos.
+	Incluye catálogo público (lugares, servicios, empresa, proyectos) y operación admin (habitaciones, reservas de excursiones, mesas, reservas generales).
 - `serializers.py`: serializers DRF.
 - `permissions.py`: permisos personalizados.
 - `views.py`: viewsets públicos y de administración.
 - `urls.py`: rutas del API agrupadas por dominio.
 - `__init__.py`: marca la carpeta como paquete Python.
+- `admin.py`: registro de modelos para el panel de Django Admin.
+- `apps.py`: configuración de la app Django.
 
 ### `backend/aldaba_api/migrations/`
 Carpeta de migraciones de Django para controlar cambios del esquema de base de datos.
 
 - `__init__.py`: marca la carpeta como paquete de migraciones.
+- `0001_initial.py`: migración inicial del catálogo público.
+- `0002_habitacion_mesa_reserva_reservaexcursion_and_more.py`: migración de modelos operativos de administración y campo de duración en excursiones.
 
 ---
 
