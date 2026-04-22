@@ -51,7 +51,7 @@ export const accommodations: Accommodation[] = [
   {
     id: '1',
     name: 'Hostal Academico "La Merced"',
-    description: 'Ubicado en el corazon del centro historico de Trinidad, este hostal combina la elegancia colonial con el confort moderno. Un espacio ideal para quienes buscan vivir la autenticidad de la ciudad patrimonio.',
+    description: 'Ubicado en el corazón del centro histórico de Trinidad, este hostal combina la elegancia colonial con el confort moderno. Un espacio ideal para quienes buscan vivir la autenticidad de la ciudad patrimonio.',
     amenities: [
       'Habitaciones climatizadas',
       'Camas personales y matrimoniales',
@@ -67,10 +67,10 @@ export const accommodations: Accommodation[] = [
   {
     id: '2',
     name: 'Casa de Eventos "Amargura #85"',
-    description: 'Una casona colonial restaurada con esmero que sirve como espacio de alojamiento y sede de eventos exclusivos. Su arquitectura y ambientacion transportan a los huespedes a la Trinidad de antano.',
+    description: 'Una casona colonial restaurada con esmero que sirve como espacio de alojamiento y sede de eventos exclusivos. Su arquitectura y ambientación transportan a los huéspedes a la Trinidad de antaño.',
     amenities: [
       'Habitaciones climatizadas',
-      'Banera',
+      'Bañera',
       'Television',
       'Minibar',
       'Servicio personalizado',
@@ -86,9 +86,9 @@ export const gastronomyVenues: GastronomyVenue[] = [
   {
     id: '1',
     name: 'Centro Cultural Patio Becquer',
-    description: 'Espacio gastronomico y cultural donde la cocina tradicional cubana se fusiona con musica en vivo y espectaculos. Un lugar emblematico de la noche trinitaria.',
+    description: 'Espacio gastronómico y cultural donde la cocina tradicional cubana se fusiona con música en vivo y espectáculos. Un lugar emblemático de la noche trinitaria.',
     offerings: [
-      'Cocteleria cubana: mojito, daiquiri, cuba libre, pina colada, canchanchara',
+      'Coctelería cubana: mojito, daiquiri, cuba libre, piña colada, canchánchara',
       'Cocina criolla tradicional',
       'Musica en vivo',
       'Ron, aguardiente y cervezas',
@@ -122,7 +122,7 @@ export const gastronomyVenues: GastronomyVenue[] = [
   {
     id: '4',
     name: 'Bar Cafeteria San Isidro de los Destiladeros',
-    description: 'En el corazon del Valle de los Ingenios, este establecimiento ofrece una pausa gastronomica rodeada de paisajes patrimonio de la humanidad.',
+    description: 'En el corazón del Valle de los Ingenios, este establecimiento ofrece una pausa gastronómica rodeada de paisajes patrimonio de la humanidad.',
     offerings: [
       'Cafe de la region',
       'Bebidas refrescantes',
@@ -148,7 +148,7 @@ export const gastronomyVenues: GastronomyVenue[] = [
 export const excursions: Excursion[] = [
   {
     id: '1',
-    name: 'Centro Historico de Trinidad',
+    name: 'Centro Histórico de Trinidad',
     description: 'Recorrido especializado por las calles empedradas, plazas y edificaciones coloniales de Trinidad, ciudad declarada Patrimonio de la Humanidad por la UNESCO en 1988.',
     features: [
       'Guia especializado en patrimonio',
@@ -167,7 +167,7 @@ export const excursions: Excursion[] = [
       'Transporte incluido',
       'Visita a torres de vigilancia',
       'Almuerzo criollo disponible',
-      'Guia historico-cultural',
+      'Guía histórico-cultural',
       'Duracion: 5-6 horas',
     ],
     icon: 'trail-sign-outline',
@@ -175,9 +175,9 @@ export const excursions: Excursion[] = [
   {
     id: '3',
     name: 'Casa Hacienda Guaimaro',
-    description: 'Visita a la historica hacienda Guaimaro, joya del patrimonio rural trinitario. Interpretacion historico-cultural del antiguo ingenio azucarero y su legado.',
+    description: 'Visita a la histórica hacienda Guaimaro, joya del patrimonio rural trinitario. Interpretación histórico-cultural del antiguo ingenio azucarero y su legado.',
     features: [
-      'Interpretacion historico-cultural',
+      'Interpretación histórico-cultural',
       'Arquitectura colonial rural',
       'Fotografia profesional disponible',
       'Acceso a areas restauradas',
@@ -223,19 +223,19 @@ export const culturalServices: CulturalService[] = [
   {
     id: '1',
     name: 'Casa Hacienda Guaimaro',
-    description: 'Servicio de interpretacion historico-cultural en una de las haciendas mas significativas del Valle de los Ingenios.',
+    description: 'Servicio de interpretación histórico-cultural en una de las haciendas más significativas del Valle de los Ingenios.',
     icon: 'library-outline',
   },
   {
     id: '2',
     name: 'Centro Cultural Patio Becquer',
-    description: 'Espacio de musica tradicional cubana en vivo con presentaciones de artistas locales y eventos culturales regulares.',
+    description: 'Espacio de música tradicional cubana en vivo con presentaciones de artistas locales y eventos culturales regulares.',
     icon: 'musical-note-outline',
   },
   {
     id: '3',
     name: 'Taberna Guanahuac',
-    description: 'Ambientacion historica que recrea la atmosfera de la epoca colonial con elementos decorativos y gastronomicos autenticos.',
+    description: 'Ambientación histórica que recrea la atmósfera de la época colonial con elementos decorativos y gastronómicos auténticos.',
     icon: 'time-outline',
   },
   {
@@ -255,20 +255,20 @@ export const otherServices = [
   },
   {
     id: '2',
-    name: 'Papeleria turistica',
-    description: 'Venta de mapas, guias turisticas y material informativo sobre Trinidad y el Valle de los Ingenios.',
+    name: 'Papelería turística',
+    description: 'Venta de mapas, guías turísticas y material informativo sobre Trinidad y el Valle de los Ingenios.',
     icon: 'map-outline',
   },
   {
     id: '3',
     name: 'Artesania local',
-    description: 'Diseno y venta de articulos artesanales elaborados por artesanos locales, souvenirs unicos de Trinidad.',
+    description: 'Diseño y venta de artículos artesanales elaborados por artesanos locales, souvenirs únicos de Trinidad.',
     icon: 'color-palette-outline',
   },
   {
     id: '4',
-    name: 'Servicio de guias turisticos',
-    description: 'Guias profesionales especializados en patrimonio, historia y cultura trinitaria.',
+    name: 'Servicio de guías turísticos',
+    description: 'Guías profesionales especializados en patrimonio, historia y cultura trinitaria.',
     icon: 'person-outline',
   },
 ];
@@ -276,8 +276,8 @@ export const otherServices = [
 export const communityProjects: CommunityProject[] = [
   {
     id: '1',
-    title: 'Talleres con ninos',
-    description: 'Programas educativos y recreativos para ninos de la comunidad, fomentando el conocimiento del patrimonio local.',
+    title: 'Talleres con niños',
+    description: 'Programas educativos y recreativos para niños de la comunidad, fomentando el conocimiento del patrimonio local.',
     year: '2023',
     icon: 'school-outline',
   },
@@ -290,8 +290,8 @@ export const communityProjects: CommunityProject[] = [
   },
   {
     id: '3',
-    title: 'Concursos gastronomicos',
-    description: 'Competencias culinarias que rescatan y promueven las recetas tradicionales de la region.',
+    title: 'Concursos gastronómicos',
+    description: 'Competencias culinarias que rescatan y promueven las recetas tradicionales de la región.',
     year: '2024',
     icon: 'restaurant-outline',
   },
@@ -313,19 +313,19 @@ export const communityProjects: CommunityProject[] = [
 
 export const companyInfo = {
   name: 'Aldaba',
-  tagline: 'Gestion y promocion de servicios turisticos, culturales, patrimoniales y gastronomicos',
+  tagline: 'Gestión y promoción de servicios turísticos, culturales, patrimoniales y gastronómicos',
   location: 'Trinidad y Valle de los Ingenios, Cuba',
-  description: 'Aldaba es una empresa dedicada a la gestion y promocion de servicios turisticos, culturales, patrimoniales y gastronomicos en la ciudad de Trinidad y el Valle de los Ingenios. Nuestro compromiso es preservar y difundir el rico patrimonio cultural e historico de esta region, declarada Patrimonio de la Humanidad por la UNESCO.',
-  mission: 'Promover el desarrollo turistico sostenible de Trinidad, preservando su patrimonio cultural e historico, y contribuyendo al bienestar de la comunidad local.',
+  description: 'Aldaba es una empresa dedicada a la gestión y promoción de servicios turísticos, culturales, patrimoniales y gastronómicos en la ciudad de Trinidad y el Valle de los Ingenios. Nuestro compromiso es preservar y difundir el rico patrimonio cultural e histórico de esta región, declarada Patrimonio de la Humanidad por la UNESCO.',
+  mission: 'Promover el desarrollo turístico sostenible de Trinidad, preservando su patrimonio cultural e histórico, y contribuyendo al bienestar de la comunidad local.',
   values: [
-    'Preservacion del patrimonio',
+    'Preservación del patrimonio',
     'Desarrollo comunitario',
     'Excelencia en el servicio',
     'Autenticidad cultural',
     'Sostenibilidad',
   ],
   contact: {
-    address: 'Centro Historico, Trinidad, Sancti Spiritus, Cuba',
+    address: 'Centro Histórico, Trinidad, Sancti Spíritus, Cuba',
     phone: '+53 41 99 XXXX',
     email: 'info@aldaba.cu',
   },
