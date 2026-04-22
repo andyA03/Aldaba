@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
@@ -43,7 +42,7 @@ class LugarTuristico(TimeStampedModel):
 class Alojamiento(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     descripcion = models.TextField()
-    amenidades = ArrayField(models.CharField(max_length=180), default=list, blank=True)
+    amenidades = models.JSONField(default=list, blank=True)
     habitaciones = models.CharField(max_length=100)
     foto = models.URLField(max_length=500)
     icono = models.CharField(max_length=80, blank=True)
@@ -58,7 +57,7 @@ class Alojamiento(TimeStampedModel):
 class Gastronomia(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     descripcion = models.TextField()
-    oferta = ArrayField(models.CharField(max_length=220), default=list, blank=True)
+    oferta = models.JSONField(default=list, blank=True)
     foto = models.URLField(max_length=500)
     icono = models.CharField(max_length=80, blank=True)
 
@@ -72,7 +71,7 @@ class Gastronomia(TimeStampedModel):
 class Excursion(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     descripcion = models.TextField()
-    caracteristicas = ArrayField(models.CharField(max_length=220), default=list, blank=True)
+    caracteristicas = models.JSONField(default=list, blank=True)
     duracion = models.CharField(max_length=50, blank=True)
     foto = models.URLField(max_length=500, blank=True)
     icono = models.CharField(max_length=80, blank=True)
@@ -88,7 +87,7 @@ class EspacioEvento(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     capacidad = models.CharField(max_length=80)
     descripcion = models.TextField()
-    tipos_evento = ArrayField(models.CharField(max_length=120), default=list, blank=True)
+    tipos_evento = models.JSONField(default=list, blank=True)
     foto = models.URLField(max_length=500, blank=True)
     icono = models.CharField(max_length=80, blank=True)
 
@@ -143,7 +142,7 @@ class InformacionEmpresa(TimeStampedModel):
     ubicacion = models.CharField(max_length=255)
     descripcion = models.TextField()
     mision = models.TextField()
-    valores = ArrayField(models.CharField(max_length=120), default=list, blank=True)
+    valores = models.JSONField(default=list, blank=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=80)
     email = models.EmailField(max_length=255)

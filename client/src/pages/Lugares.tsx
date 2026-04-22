@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, Search } from 'lucide-react';
 import C from '@shared/theme/colors';
 import Footer from '@shared/ui/Footer';
 import LUGARES from '@entities/lugares/model/lugaresData';
+import { fetchLugares, type LugarCardData } from '@shared/api/aldabaApi';
 
 const CATEGORIAS = ['Todos', 'Patrimonio', 'UNESCO', 'Naturaleza', 'Cultura', 'Costa'] as const;
 
 export default function Lugares() {
   const [categoria, setCategoria] = useState<string>('Todos');
   const [busqueda, setBusqueda] = useState('');
+  const [remoteLugares, setRemoteLugares] = useState<LugarCardData[] | null>(null);
+  const lugares = remoteLugares ?? LUGARES;
 
-  const filtrados = LUGARES.filter(l => {
+  useEffect(() => {
+    fetchLugares().then(setRemoteLugares).catch(() => setRemoteLugares(null));
+  }, []);
+
+  const filtrados = lugares.filter(l => {
     const matchCat = categoria === 'Todos' || l.categoria === categoria;
     const matchSearch = !busqueda ||
       l.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -136,7 +143,7 @@ export default function Lugares() {
               color: C.textTertiary, textAlign: 'right',
               marginBottom: 48,
             }}>
-              {filtrados.length} de {LUGARES.length} lugares
+              {filtrados.length} de {lugares.length} lugares
             </p>
           </>
         )}
@@ -147,7 +154,7 @@ export default function Lugares() {
   );
 }
 
-function LugarCard({ lugar }: { lugar: typeof LUGARES[number] }) {
+function LugarCard({ lugar }: { lugar: LugarCardData }) {
   return (
     <Link to={`/lugares/${lugar.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <div className="hover-card" style={{

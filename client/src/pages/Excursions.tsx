@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapPin, Clock, ChevronRight, Navigation, Star } from 'lucide-react';
 import { excursions } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
 import Modal from '@shared/ui/Modal';
 import Footer from '@shared/ui/Footer';
+import { fetchExcursiones, type ExcursionData } from '@shared/api/aldabaApi';
 
 const EXCURSION_IMAGES: Record<string, string> = {
   '1': 'https://picsum.photos/seed/centro-historico-trinidad/500/280',
@@ -20,8 +21,21 @@ const DURATION_MAP: Record<string, string> = {
 export default function Excursions() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [remoteExcursiones, setRemoteExcursiones] = useState<ExcursionData[] | null>(null);
+  const items = remoteExcursiones ?? excursions.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    features: item.features,
+    icon: item.icon,
+    duration: item.features.find(feature => feature.toLowerCase().includes('duracion'))?.split(':').slice(1).join(':').trim() ?? '',
+  }));
 
   const openModal = (title: string) => { setModalTitle(title); setModalOpen(true); };
+
+  useEffect(() => {
+    fetchExcursiones().then(setRemoteExcursiones).catch(() => setRemoteExcursiones(null));
+  }, []);
 
   return (
     <div style={{ paddingTop: 64, backgroundColor: C.background, minHeight: '100vh' }}>
@@ -68,7 +82,7 @@ export default function Excursions() {
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, marginBottom: 40 }}>
-          {excursions.map(exc => (
+          {items.map(exc => (
             <div key={exc.id} className="hover-card" style={{
               backgroundColor: C.card,
               borderRadius: 20,
@@ -90,7 +104,7 @@ export default function Excursions() {
                 }}>
                   <Clock size={11} color={C.secondaryLight} />
                   <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 11, color: '#fff', fontWeight: 600 }}>
-                    {DURATION_MAP[exc.id]}
+                    {exc.duration || DURATION_MAP[exc.id]}
                   </span>
                 </div>
               </div>

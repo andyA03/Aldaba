@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Users, Sparkles, ChevronRight, Car, Map, Palette, UserCheck } from 'lucide-react';
 import { eventSpaces, culturalServices, otherServices } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
 import Modal from '@shared/ui/Modal';
 import Footer from '@shared/ui/Footer';
+import { fetchEspaciosEvento, fetchServiciosCulturales, fetchOtrosServicios, type EventSpaceData, type CulturalServiceData, type OtherServiceData } from '@shared/api/aldabaApi';
 
 const EVENT_IMAGES: Record<string, string> = {
   '1': 'https://picsum.photos/seed/patio-becquer-event/500/260',
@@ -17,17 +18,47 @@ const CULTURAL_IMAGES: Record<string, string> = {
 };
 
 const OTHER_ICONS: Record<string, JSX.Element> = {
-  'car-outline': <Car size={22} color={C.primary} />,
-  'map-outline': <Map size={22} color={C.primary} />,
-  'color-palette-outline': <Palette size={22} color={C.primary} />,
-  'person-outline': <UserCheck size={22} color={C.primary} />,
+  car: <Car size={22} color={C.primary} />,
+  map: <Map size={22} color={C.primary} />,
+  palette: <Palette size={22} color={C.primary} />,
+  'shield-check': <UserCheck size={22} color={C.primary} />,
+  mic: <Sparkles size={22} color={C.primary} />,
 };
 
 export default function Events() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [remoteEventSpaces, setRemoteEventSpaces] = useState<EventSpaceData[] | null>(null);
+  const [remoteCulturalServices, setRemoteCulturalServices] = useState<CulturalServiceData[] | null>(null);
+  const [remoteOtherServices, setRemoteOtherServices] = useState<OtherServiceData[] | null>(null);
+  const spaces = remoteEventSpaces ?? eventSpaces.map(item => ({
+    id: item.id,
+    name: item.name,
+    capacity: item.capacity,
+    description: item.description,
+    eventTypes: item.eventTypes,
+    icon: item.icon,
+  }));
+  const cultures = remoteCulturalServices ?? culturalServices.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    icon: item.icon,
+  }));
+  const others = remoteOtherServices ?? otherServices.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    icon: item.icon,
+  }));
 
   const openModal = (title: string) => { setModalTitle(title); setModalOpen(true); };
+
+  useEffect(() => {
+    fetchEspaciosEvento().then(setRemoteEventSpaces).catch(() => setRemoteEventSpaces(null));
+    fetchServiciosCulturales().then(setRemoteCulturalServices).catch(() => setRemoteCulturalServices(null));
+    fetchOtrosServicios().then(setRemoteOtherServices).catch(() => setRemoteOtherServices(null));
+  }, []);
 
   return (
     <div style={{ paddingTop: 64, backgroundColor: C.background, minHeight: '100vh' }}>
@@ -63,7 +94,7 @@ export default function Events() {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
-            {eventSpaces.map(space => (
+            {spaces.map(space => (
               <div key={space.id} className="hover-card" style={{
                 backgroundColor: C.card,
                 borderRadius: 20,
@@ -125,7 +156,7 @@ export default function Events() {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
-            {culturalServices.map(service => (
+            {cultures.map(service => (
               <div key={service.id} className="hover-card" style={{
                 backgroundColor: C.card,
                 borderRadius: 16,
@@ -161,7 +192,7 @@ export default function Events() {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 14 }}>
-            {otherServices.map(service => (
+            {others.map(service => (
               <div key={service.id} className="hover-card" style={{
                 backgroundColor: C.card,
                 border: `1.5px solid ${C.border}`,

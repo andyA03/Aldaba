@@ -4,6 +4,7 @@ import { ChevronRight, ChevronLeft, MapPin, Bed, UtensilsCrossed, Compass, Calen
 import C from '@shared/theme/colors';
 import Footer from '@shared/ui/Footer';
 import LUGARES from '@entities/lugares/model/lugaresData';
+import { fetchLugares, type LugarCardData } from '@shared/api/aldabaApi';
 
 const SLIDES = [
   {
@@ -54,7 +55,9 @@ const HIGHLIGHTS = [
 
 export default function Home() {
   const [active, setActive] = useState(0);
+  const [remoteLugares, setRemoteLugares] = useState<LugarCardData[] | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lugares = remoteLugares ?? LUGARES;
 
   const resetTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -63,6 +66,7 @@ export default function Home() {
 
   useEffect(() => {
     resetTimer();
+    fetchLugares().then(setRemoteLugares).catch(() => setRemoteLugares(null));
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
 
@@ -296,12 +300,12 @@ export default function Home() {
           {/* Grid principal: 1 tarjeta grande + 2 pequeñas */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="lugares-featured-grid">
             {/* Tarjeta grande */}
-            <LugarCardGrande lugar={LUGARES[0]} />
+            <LugarCardGrande lugar={lugares[0]} />
 
             {/* Columna de 2 pequeñas */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <LugarCardSmall lugar={LUGARES[1]} />
-              <LugarCardSmall lugar={LUGARES[2]} />
+              <LugarCardSmall lugar={lugares[1]} />
+              <LugarCardSmall lugar={lugares[2]} />
             </div>
           </div>
 
@@ -310,7 +314,7 @@ export default function Home() {
             display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
             gap: 16, marginTop: 16,
           }} className="lugares-grid">
-            {LUGARES.slice(3, 6).map(lugar => (
+            {lugares.slice(3, 6).map(lugar => (
               <LugarCardMedium key={lugar.id} lugar={lugar} />
             ))}
           </div>
@@ -378,7 +382,7 @@ export default function Home() {
   );
 }
 
-function LugarCardGrande({ lugar }: { lugar: typeof LUGARES[number] }) {
+function LugarCardGrande({ lugar }: { lugar: LugarCardData }) {
   return (
     <Link to={`/lugares/${lugar.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <div className="hover-card" style={{
@@ -424,7 +428,7 @@ function LugarCardGrande({ lugar }: { lugar: typeof LUGARES[number] }) {
   );
 }
 
-function LugarCardSmall({ lugar }: { lugar: typeof LUGARES[number] }) {
+function LugarCardSmall({ lugar }: { lugar: LugarCardData }) {
   return (
     <Link to={`/lugares/${lugar.slug}`} style={{ textDecoration: 'none', display: 'block', flex: 1 }}>
       <div className="hover-card" style={{
@@ -456,7 +460,7 @@ function LugarCardSmall({ lugar }: { lugar: typeof LUGARES[number] }) {
   );
 }
 
-function LugarCardMedium({ lugar }: { lugar: typeof LUGARES[number] }) {
+function LugarCardMedium({ lugar }: { lugar: LugarCardData }) {
   return (
     <Link to={`/lugares/${lugar.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <div className="hover-card" style={{

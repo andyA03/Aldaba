@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bed, UtensilsCrossed, Wifi, Tv, Coffee, Star, ChevronRight } from 'lucide-react';
 import { accommodations, gastronomyVenues } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
 import Modal from '@shared/ui/Modal';
 import Footer from '@shared/ui/Footer';
+import { fetchAlojamientos, fetchGastronomia, type AccommodationData, type GastronomyData } from '@shared/api/aldabaApi';
 
 const ACCOMMODATION_IMAGES: Record<string, string> = {
   '1': 'https://picsum.photos/seed/hostal-colonial-trinidad/400/220',
@@ -21,8 +22,30 @@ export default function Services() {
   const [tab, setTab] = useState<'alojamiento' | 'gastronomia'>('alojamiento');
   const [modalTitle, setModalTitle] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [remoteAlojamientos, setRemoteAlojamientos] = useState<AccommodationData[] | null>(null);
+  const [remoteGastronomia, setRemoteGastronomia] = useState<GastronomyData[] | null>(null);
+  const alojamientos = remoteAlojamientos ?? accommodations.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    amenities: item.amenities,
+    rooms: item.rooms,
+    icon: item.icon,
+  }));
+  const gastronomia = remoteGastronomia ?? gastronomyVenues.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    offerings: item.offerings,
+    icon: item.icon,
+  }));
 
   const openModal = (title: string) => { setModalTitle(title); setModalOpen(true); };
+
+  useEffect(() => {
+    fetchAlojamientos().then(setRemoteAlojamientos).catch(() => setRemoteAlojamientos(null));
+    fetchGastronomia().then(setRemoteGastronomia).catch(() => setRemoteGastronomia(null));
+  }, []);
 
   return (
     <div style={{ paddingTop: 64, backgroundColor: C.background, minHeight: '100vh' }}>
@@ -76,7 +99,7 @@ export default function Services() {
 
         {tab === 'alojamiento' && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20, marginBottom: 40 }}>
-            {accommodations.map(item => (
+            {alojamientos.map(item => (
               <div key={item.id} className="hover-card" style={{
                 backgroundColor: C.card,
                 borderRadius: 18,
@@ -131,7 +154,7 @@ export default function Services() {
 
         {tab === 'gastronomia' && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20, marginBottom: 40 }}>
-            {gastronomyVenues.map(item => (
+            {gastronomia.map(item => (
               <div key={item.id} className="hover-card" style={{
                 backgroundColor: C.card,
                 borderRadius: 18,

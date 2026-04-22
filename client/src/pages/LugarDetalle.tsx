@@ -1,12 +1,20 @@
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Clock, Ticket, Navigation, ChevronRight, ArrowLeft, Lightbulb } from 'lucide-react';
 import C from '@shared/theme/colors';
 import Footer from '@shared/ui/Footer';
 import LUGARES from '@entities/lugares/model/lugaresData';
+import { fetchLugares, type LugarCardData } from '@shared/api/aldabaApi';
 
 export default function LugarDetalle() {
   const { slug } = useParams<{ slug: string }>();
-  const lugar = LUGARES.find(l => l.slug === slug);
+  const [remoteLugares, setRemoteLugares] = useState<LugarCardData[] | null>(null);
+  const lugares = remoteLugares ?? LUGARES;
+  const lugar = lugares.find(l => l.slug === slug);
+
+  useEffect(() => {
+    fetchLugares().then(setRemoteLugares).catch(() => setRemoteLugares(null));
+  }, []);
 
   if (!lugar) {
     return (
@@ -24,7 +32,7 @@ export default function LugarDetalle() {
     );
   }
 
-  const otros = LUGARES.filter(l => l.slug !== slug).slice(0, 3);
+  const otros = lugares.filter(l => l.slug !== slug).slice(0, 3);
 
   return (
     <div style={{ paddingTop: 64, backgroundColor: C.background, minHeight: '100vh' }}>

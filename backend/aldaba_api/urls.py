@@ -32,7 +32,6 @@ public_router.register(r"lugares", LugarTuristicoPublicViewSet, basename="lugare
 public_router.register(r"servicios/alojamiento", AlojamientoPublicViewSet, basename="alojamiento-public")
 public_router.register(r"servicios/gastronomia", GastronomiaPublicViewSet, basename="gastronomia-public")
 public_router.register(r"excursiones", ExcursionPublicViewSet, basename="excursiones-public")
-public_router.register(r"eventos", EspacioEventoPublicViewSet, basename="eventos-public")
 public_router.register(r"servicios/culturales", ServicioCulturalPublicViewSet, basename="servicios-culturales-public")
 public_router.register(r"servicios/otros", OtroServicioPublicViewSet, basename="otros-servicios-public")
 public_router.register(r"proyectos/comunitarios", ProyectoComunitarioPublicViewSet, basename="proyectos-comunitarios-public")
@@ -56,6 +55,7 @@ admin_router.register(r"admin/mesas", MesaAdminViewSet, basename="mesas-admin")
 urlpatterns = [
     path("", include(public_router.urls)),
     path("", include(admin_router.urls)),
+    path("eventos/", EspacioEventoPublicViewSet.as_view({"get": "list"}), name="eventos-public"),
     path("empresa/", InformacionEmpresaPublicViewSet.as_view({"get": "list"}), name="empresa-public"),
     path("empresa/proyectos/", ProyectoComunitarioPublicViewSet.as_view({"get": "list"}), name="empresa-proyectos-public"),
     path("eventos/espacios/", EspacioEventoPublicViewSet.as_view({"get": "list"}), name="eventos-espacios-public"),

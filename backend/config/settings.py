@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.postgres",
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -72,14 +71,14 @@ ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": get_env("POSTGRES_DB", "aldaba_db"),
+        "NAME": get_env("POSTGRES_DB", "Aldaba"),
         "USER": get_env("POSTGRES_USER", "postgres"),
-        "PASSWORD": get_env("POSTGRES_PASSWORD", "postgres"),
+        "PASSWORD": get_env("POSTGRES_PASSWORD", "aldaba"),
         "HOST": get_env("POSTGRES_HOST", "127.0.0.1"),
         "PORT": get_env("POSTGRES_PORT", "5432"),
         "CONN_MAX_AGE": int(get_env("POSTGRES_CONN_MAX_AGE", "60")),
+    },
     }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
