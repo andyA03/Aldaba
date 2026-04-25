@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B4F8A"/>
+      <stop offset="55%" stop-color="#0F2744"/>
+      <stop offset="100%" stop-color="#6D8FB0"/>
+    </linearGradient>
+    <radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1120 230) rotate(90) scale(360 520)">
+      <stop stop-color="#F8D99A" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#F8D99A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <circle cx="1180" cy="220" r="320" fill="url(#r)"/>
+  <path d="M248 700C372 612 480 595 624 632C744 663 848 708 976 705C1110 702 1248 646 1386 570V900H248V700Z" fill="#ECDCC0" fill-opacity="0.18"/>
+  <path d="M308 760C430 690 548 670 666 700C785 730 892 770 1043 760C1167 752 1288 706 1428 626" stroke="#E9D3A0" stroke-width="6" stroke-linecap="round" stroke-opacity="0.32"/>
+  <circle cx="800" cy="450" r="170" fill="#F2C46D" fill-opacity="0.14" stroke="#F2C46D" stroke-opacity="0.25" stroke-width="18"/>
+  <path d="M785 360c-44 0-79 35-79 79 0 26 12 49 31 63l-15 103c-4 25 9 49 31 58 22 9 47 1 61-19l44-61 44 61c14 20 39 28 61 19 22-9 35-33 31-58l-15-103c19-14 31-37 31-63 0-44-35-79-79-79-17 0-33 5-45 14-18-12-40-19-63-19-23 0-45 7-63 19-12-9-28-14-45-14Z" fill="#F7E3B2" opacity="0.96"/>
+  <text x="92" y="140" fill="#FFF7EA" font-family="Georgia, serif" font-size="64" font-weight="700">Aldaba Trinidad</text>
+  <text x="92" y="198" fill="#D9E5F2" font-family="Arial, sans-serif" font-size="26" letter-spacing="4">TURISMO • HISTORIA • SERVICIOS</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" fill="none">
+  <rect width="600" height="360" rx="24" fill="#204D7D"/>
+  <rect x="24" y="24" width="552" height="312" rx="20" fill="#17385F" fill-opacity="0.75" stroke="#E7C37E" stroke-opacity="0.2"/>
+  <circle cx="444" cy="118" r="74" fill="#F6D89A" fill-opacity="0.12"/>
+  <circle cx="444" cy="118" r="52" fill="none" stroke="#F6D89A" stroke-width="8" opacity="0.85"/>
+  <path d="M246 106c-24 0-43 19-43 43 0 14 6 26 16 34l-8 57c-2 14 6 27 18 33 13 5 27 1 35-11l24-33 24 33c8 12 22 16 35 11 12-6 20-19 18-33l-8-57c10-8 16-20 16-34 0-24-19-43-43-43-9 0-17 3-25 7-10-7-21-10-32-10-12 0-23 3-32 10-8-4-16-7-25-7Z" fill="#F3E0B4"/>
+  <text x="40" y="286" fill="#FFF8EC" font-family="Georgia, serif" font-size="34" font-weight="700">Aldaba Servicios</text>
+  <text x="40" y="318" fill="#DCE7F1" font-family="Arial, sans-serif" font-size="16" letter-spacing="1.8">FOTO LOCAL TEMPORAL</text>
+</svg>

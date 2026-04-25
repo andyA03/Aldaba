@@ -7,9 +7,9 @@ import Footer from '@shared/ui/Footer';
 import { fetchExcursiones, type ExcursionData } from '@shared/api/aldabaApi';
 
 const EXCURSION_IMAGES: Record<string, string> = {
-  '1': 'https://picsum.photos/seed/centro-historico-trinidad/500/280',
-  '2': 'https://picsum.photos/seed/valle-ingenios-excursion/500/280',
-  '3': 'https://picsum.photos/seed/hacienda-guaimaro-cuba/500/280',
+  '1': '/images/lugar-plaza-mayor.jpg',
+  '2': '/images/excursion-manaca-iznaga.jpg',
+  '3': '/images/excursion-guaimaro.jpg',
 };
 
 const DURATION_MAP: Record<string, string> = {
@@ -41,7 +41,7 @@ export default function Excursions() {
     <div style={{ paddingTop: 64, backgroundColor: C.background, minHeight: '100vh' }}>
       <div style={{
         position: 'relative', height: 280,
-        backgroundImage: 'url(https://picsum.photos/seed/excursiones-header-cuba/1200/400)',
+        backgroundImage: 'url(/images/lugar-el-nicho-hero.jpg)',
         backgroundSize: 'cover', backgroundPosition: 'center',
       }}>
         <div style={{

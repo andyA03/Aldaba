@@ -40,8 +40,8 @@ export default function NavBar() {
         transition: 'background-color 0.3s, box-shadow 0.3s, border-color 0.3s',
       }}>
         <div style={{
-          maxWidth: 1100, margin: '0 auto', height: '100%',
-          display: 'flex', alignItems: 'center', padding: '0 24px',
+          width: '100%', margin: '0 auto', height: '100%',
+          display: 'flex', alignItems: 'center', padding: '0 18px',
         }}>
           <Link to="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
             <div style={{

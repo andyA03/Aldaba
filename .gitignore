@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+attached_assets/
 
 # Expo
 .expo/
@@ -38,6 +39,12 @@ yarn-error.*
 *.tsbuildinfo
 .vercel
 client-dist/
+client/dist/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/.coverage
+backend/htmlcov/
 
 .env
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { Users, Sparkles, ChevronRight, Car, Map, Palette, UserCheck } from 'lucide-react';
 import { eventSpaces, culturalServices, otherServices } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
@@ -17,7 +17,7 @@ const CULTURAL_IMAGES: Record<string, string> = {
   '4': 'https://picsum.photos/seed/acuario-educativo/400/200',
 };
 
-const OTHER_ICONS: Record<string, JSX.Element> = {
+const OTHER_ICONS: Record<string, ReactElement> = {
   car: <Car size={22} color={C.primary} />,
   map: <Map size={22} color={C.primary} />,
   palette: <Palette size={22} color={C.primary} />,

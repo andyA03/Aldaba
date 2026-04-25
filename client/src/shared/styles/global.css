@@ -18,10 +18,23 @@ img { display: block; max-width: 100%; }
 
 .playfair { font-family: 'Playfair Display', serif; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #C2D9EE; }
-::-webkit-scrollbar-thumb { background: #BFDBF7; border-radius: 3px; }
+/* Scrollbar simple, visible y acorde al tema */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4A6FA5 #D7E6F3;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track {
+  background: #D7E6F3;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4A6FA5 0%, #1B4F8A 100%);
+  border-radius: 10px;
+  border: 2px solid #D7E6F3;
+}
+::-webkit-scrollbar-thumb:hover { background: #1B4F8A; }
 
 /* Nav link hover */
 .nav-link { transition: color 0.2s, background 0.2s; }

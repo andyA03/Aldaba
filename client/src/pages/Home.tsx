@@ -8,31 +8,31 @@ import { fetchLugares, type LugarCardData } from '@shared/api/aldabaApi';
 
 const SLIDES = [
   {
-    uri: 'https://picsum.photos/seed/trinidad-plaza-main/1600/900',
+    uri: '/images/home-trinidad-carrusel.jpg',
     label: 'TRINIDAD · PATRIMONIO UNESCO',
     title: 'Bienvenidos a Trinidad',
     subtitle: 'La ciudad más bella del Caribe, detenida en el tiempo',
   },
   {
-    uri: 'https://picsum.photos/seed/valle-ingenios-hero/1600/900',
+    uri: '/images/home-valle-carrusel.jpg',
     label: 'VALLE DE LOS INGENIOS',
     title: 'Historia entre cañaverales',
     subtitle: 'Paisaje cultural único declarado Patrimonio de la Humanidad',
   },
   {
-    uri: 'https://picsum.photos/seed/playa-ancon-hero/1600/900',
+    uri: '/images/home-ancon-carrusel.jpg',
     label: 'PLAYA ANCÓN',
     title: 'El Caribe a tus pies',
     subtitle: 'Aguas cristalinas a 12 km del centro histórico',
   },
   {
-    uri: 'https://picsum.photos/seed/gastronomia-cuba-hero/1600/900',
+    uri: '/images/home-gastronomia-carrusel.jpg',
     label: 'GASTRONOMÍA CUBANA',
     title: 'Sabores que cuentan historia',
     subtitle: 'Cocina criolla auténtica en espacios coloniales únicos',
   },
   {
-    uri: 'https://picsum.photos/seed/trinidad-noche-hero/1600/900',
+    uri: '/images/home-cultura-carrusel.jpg',
     label: 'CULTURA Y TRADICIÓN',
     title: 'Trinidad de noche',
     subtitle: 'Música, arte y tradición bajo las estrellas del Caribe',
