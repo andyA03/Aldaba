@@ -7,6 +7,7 @@ import Events from '@pages/Events';
 import About from '@pages/About';
 import Lugares from '@pages/Lugares';
 import LugarDetalle from '@pages/LugarDetalle';
+import ServicioDetalle from '@pages/ServicioDetalle';
 import Admin from '@features/admin/AdminPanel';
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/lugares" element={<Lugares />} />
         <Route path="/lugares/:slug" element={<LugarDetalle />} />
+        <Route path="/services/:slug" element={<ServicioDetalle />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </>

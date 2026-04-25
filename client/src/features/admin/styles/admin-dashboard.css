@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import "./partials/base.css";
+@import "./partials/login.css";
+@import "./partials/layout.css";
+@import "./partials/sidebar.css";
+@import "./partials/topbar.css";
+@import "./partials/stats-toolbar.css";
+@import "./partials/buttons.css";
+@import "./partials/table.css";
+@import "./partials/modal.css";
+@import "./partials/responsive.css";
