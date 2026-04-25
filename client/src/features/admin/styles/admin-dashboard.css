@@ -1,3 +1,4 @@
+/* Entry point: este archivo solo centraliza imports de estilos del panel admin. */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "./partials/base.css";
 @import "./partials/login.css";
