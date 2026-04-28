@@ -97,10 +97,15 @@ export default function Lugares() {
           flexWrap: 'wrap',
           justifyContent: 'center',
         }}>
+          <div style={{ width: '100%', textAlign: 'center', fontFamily: 'DM Sans, sans-serif', fontSize: 12, fontWeight: 700, color: C.textSecondary, letterSpacing: 0.6, marginBottom: 4 }}>
+            Filtrar por categoría
+          </div>
           {CATEGORIAS.map(cat => (
             <button
               key={cat}
               onClick={() => setCategoria(cat)}
+              title={`Filtro: ${cat}`}
+              aria-label={`Filtrar lugares por ${cat}`}
               style={{
                 padding: '8px 18px',
                 borderRadius: 999,

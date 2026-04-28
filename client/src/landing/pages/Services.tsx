@@ -47,8 +47,11 @@ export default function Services() {
           padding: 6, border: `1.5px solid ${C.border}`,
           width: 'fit-content', flexWrap: 'wrap',
         }}>
+          <div style={{ width: '100%', textAlign: 'center', fontFamily: 'DM Sans, sans-serif', fontSize: 12, fontWeight: 700, color: C.textSecondary, letterSpacing: 0.6, marginBottom: 4 }}>
+            Filtros de servicios
+          </div>
           {SECTIONS.map(section => (
-            <button key={section.key} onClick={() => setActiveSection(section.key)} style={{
+            <button key={section.key} onClick={() => setActiveSection(section.key)} title={`Filtro: ${section.label}`} aria-label={`Filtrar servicios por ${section.label}`} style={{
               padding: '10px 18px',
               borderRadius: 10,
               fontFamily: 'DM Sans, sans-serif',
