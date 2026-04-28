@@ -116,14 +116,14 @@ export default function ServicioDetalle() {
             <div style={{ backgroundColor: C.card, border: `1.5px solid ${C.border}`, borderRadius: 20, padding: 18, boxShadow: '0 10px 30px rgba(27,79,138,0.08)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
                 <MapPin size={15} color={C.primary} />
-                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: C.text }}>Contacto para reservas</span>
+                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700, color: C.text }}>Contacto</span>
               </div>
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: C.textSecondary, lineHeight: 1.7, marginBottom: 14 }}>
                 {service.contact}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: C.primary, fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 700 }}>
                 <Phone size={15} />
-                Reservas directas
+                Contáctenos
               </div>
             </div>
           </aside>

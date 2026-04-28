@@ -130,7 +130,7 @@ export default function About() {
           </div>
         </div>
 
-        <div style={{ marginBottom: 48 }}>
+        <div id="contacto" style={{ marginBottom: 48 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
             <div style={{ width: 4, height: 26, backgroundColor: C.secondary, borderRadius: 2 }} />
             <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 22, color: C.primary }}>Contacto</h2>

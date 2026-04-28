@@ -1,8 +1,7 @@
 import { useEffect, useState, type ReactElement } from 'react';
-import { Users, Sparkles, ChevronRight, Car, Map, Palette, UserCheck } from 'lucide-react';
+import { Users, Sparkles, Phone, Car, Map, Palette, UserCheck } from 'lucide-react';
 import { eventSpaces, culturalServices, otherServices } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
-import Modal from '@shared/ui/Modal';
 import Footer from '@shared/ui/Footer';
 import { fetchEspaciosEvento, fetchServiciosCulturales, fetchOtrosServicios, type EventSpaceData, type CulturalServiceData, type OtherServiceData } from '@shared/api/aldabaApi';
 
@@ -26,8 +25,6 @@ const OTHER_ICONS: Record<string, ReactElement> = {
 };
 
 export default function Events() {
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
   const [remoteEventSpaces, setRemoteEventSpaces] = useState<EventSpaceData[] | null>(null);
   const [remoteCulturalServices, setRemoteCulturalServices] = useState<CulturalServiceData[] | null>(null);
   const [remoteOtherServices, setRemoteOtherServices] = useState<OtherServiceData[] | null>(null);
@@ -51,8 +48,6 @@ export default function Events() {
     description: item.description,
     icon: item.icon,
   }));
-
-  const openModal = (title: string) => { setModalTitle(title); setModalOpen(true); };
 
   useEffect(() => {
     fetchEspaciosEvento().then(setRemoteEventSpaces).catch(() => setRemoteEventSpaces(null));
@@ -134,14 +129,15 @@ export default function Events() {
                       </span>
                     ))}
                   </div>
-                  <button onClick={() => openModal(space.name)} className="btn-primary" style={{
+                  <a href="/about#contacto" className="btn-primary" style={{
                     width: '100%', backgroundColor: C.primary, color: '#fff',
                     padding: '11px 0', borderRadius: 10,
                     fontFamily: 'DM Sans, sans-serif', fontSize: 13, fontWeight: 600,
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    textDecoration: 'none',
                   }}>
-                    Reservar espacio <ChevronRight size={14} />
-                  </button>
+                    Contáctenos <Phone size={14} />
+                  </a>
                 </div>
               </div>
             ))}
@@ -214,7 +210,6 @@ export default function Events() {
       </div>
 
       <Footer />
-      <Modal visible={modalOpen} onClose={() => setModalOpen(false)} title={modalTitle} />
     </div>
   );
 }

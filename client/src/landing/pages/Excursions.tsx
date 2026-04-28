@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { MapPin, Clock, ChevronRight, Navigation, Star } from 'lucide-react';
+import { MapPin, Clock, Phone, Navigation, Star } from 'lucide-react';
 import { excursions } from '@shared/data/siteData';
 import C from '@shared/theme/colors';
-import Modal from '@shared/ui/Modal';
 import Footer from '@shared/ui/Footer';
 import { fetchExcursiones, type ExcursionData } from '@shared/api/aldabaApi';
 
@@ -19,8 +18,6 @@ const DURATION_MAP: Record<string, string> = {
 };
 
 export default function Excursions() {
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
   const [remoteExcursiones, setRemoteExcursiones] = useState<ExcursionData[] | null>(null);
   const items = remoteExcursiones ?? excursions.map(item => ({
     id: item.id,
@@ -30,8 +27,6 @@ export default function Excursions() {
     icon: item.icon,
     duration: item.features.find(feature => feature.toLowerCase().includes('duracion'))?.split(':').slice(1).join(':').trim() ?? '',
   }));
-
-  const openModal = (title: string) => { setModalTitle(title); setModalOpen(true); };
 
   useEffect(() => {
     fetchExcursiones().then(setRemoteExcursiones).catch(() => setRemoteExcursiones(null));
@@ -126,14 +121,15 @@ export default function Excursions() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => openModal(exc.name)} className="btn-primary" style={{
+                <a href="/about#contacto" className="btn-primary" style={{
                   width: '100%', backgroundColor: C.primary, color: '#fff',
                   padding: '12px 0', borderRadius: 12,
                   fontFamily: 'DM Sans, sans-serif', fontSize: 14, fontWeight: 600,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  textDecoration: 'none',
                 }}>
-                  Reservar excursión <ChevronRight size={15} />
-                </button>
+                  Contáctenos <Phone size={15} />
+                </a>
               </div>
             </div>
           ))}
@@ -141,7 +137,6 @@ export default function Excursions() {
       </div>
 
       <Footer />
-      <Modal visible={modalOpen} onClose={() => setModalOpen(false)} title={modalTitle} />
     </div>
   );
 }
