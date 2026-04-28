@@ -6,7 +6,7 @@ import Footer from '@shared/ui/Footer';
 import LUGARES from '@entities/lugares/model/lugaresData';
 import { fetchLugares, type LugarCardData } from '@shared/api/aldabaApi';
 
-const CATEGORIAS = ['Todos', 'Patrimonio', 'UNESCO', 'Naturaleza', 'Cultura', 'Costa'] as const;
+const CATEGORIAS = ['Todos', 'Patrimonio', 'Naturaleza', 'Cultura', 'Costa'] as const;
 
 export default function Lugares() {
   const [categoria, setCategoria] = useState<string>('Todos');
@@ -92,7 +92,7 @@ export default function Lugares() {
         <div style={{
           display: 'flex',
           gap: 8,
-          marginTop: -28,
+          marginTop: 18,
           marginBottom: 32,
           flexWrap: 'wrap',
           justifyContent: 'center',
