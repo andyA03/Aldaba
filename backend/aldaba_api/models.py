@@ -9,6 +9,16 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
+ROOM_TABLE_STATES = [
+    ("Libre", "Libre"),
+    ("Ocupada", "Ocupada"),
+    ("Reservada", "Reservada"),
+]
+
+
+# ====== FRONTEND MODELS (Catalogos y contenido publico) ======
+
+
 class LugarTuristico(TimeStampedModel):
     CATEGORIAS = [
         ("Patrimonio", "Patrimonio"),
@@ -41,9 +51,6 @@ class LugarTuristico(TimeStampedModel):
 
 class Alojamiento(TimeStampedModel):
     nombre = models.CharField(max_length=180)
-    descripcion = models.TextField()
-    amenidades = models.JSONField(default=list, blank=True)
-    habitaciones = models.CharField(max_length=100)
     foto = models.URLField(max_length=500)
     icono = models.CharField(max_length=80, blank=True)
 
@@ -54,11 +61,8 @@ class Alojamiento(TimeStampedModel):
         return self.nombre
 
 
-class Gastronomia(TimeStampedModel):
+class Restaurante(TimeStampedModel):
     nombre = models.CharField(max_length=180)
-    descripcion = models.TextField()
-    oferta = models.JSONField(default=list, blank=True)
-    foto = models.URLField(max_length=500)
     icono = models.CharField(max_length=80, blank=True)
 
     class Meta:
@@ -69,18 +73,18 @@ class Gastronomia(TimeStampedModel):
 
 
 class Excursion(TimeStampedModel):
-    nombre = models.CharField(max_length=180)
-    descripcion = models.TextField()
-    caracteristicas = models.JSONField(default=list, blank=True)
+    destino = models.CharField(max_length=180)
     duracion = models.CharField(max_length=50, blank=True)
     foto = models.URLField(max_length=500, blank=True)
     icono = models.CharField(max_length=80, blank=True)
+    precio = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    personas = models.PositiveIntegerField(default=1)
 
     class Meta:
         ordering = ["id"]
 
     def __str__(self) -> str:
-        return self.nombre
+        return self.destino
 
 
 class EspacioEvento(TimeStampedModel):
@@ -148,6 +152,7 @@ class InformacionEmpresa(TimeStampedModel):
     email = models.EmailField(max_length=255)
 
     class Meta:
+        ordering = ["id"]
         verbose_name = "Informacion de la empresa"
         verbose_name_plural = "Informacion de la empresa"
 
@@ -155,35 +160,7 @@ class InformacionEmpresa(TimeStampedModel):
         return self.nombre
 
 
-class Reserva(TimeStampedModel):
-    TIPOS = [
-        ("alojamiento", "Alojamiento"),
-        ("gastronomia", "Gastronomia"),
-        ("excursion", "Excursion"),
-        ("evento", "Evento"),
-    ]
-    ESTADOS = [
-        ("pendiente", "Pendiente"),
-        ("confirmada", "Confirmada"),
-        ("cancelada", "Cancelada"),
-    ]
-
-    tipo = models.CharField(max_length=20, choices=TIPOS)
-    establecimiento = models.CharField(max_length=200)
-    nombre_cliente = models.CharField(max_length=200)
-    email = models.EmailField()
-    telefono = models.CharField(max_length=30, blank=True)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField(null=True, blank=True)
-    personas = models.PositiveIntegerField(default=1)
-    mensaje = models.TextField(blank=True)
-    estado = models.CharField(max_length=20, choices=ESTADOS, default="pendiente")
-
-    class Meta:
-        ordering = ["-created_at"]
-
-    def __str__(self) -> str:
-        return f"{self.nombre_cliente} — {self.tipo} ({self.estado})"
+# ====== BACKEND MODELS (Gestion interna del panel admin) ======
 
 
 class Habitacion(TimeStampedModel):
@@ -194,20 +171,22 @@ class Habitacion(TimeStampedModel):
         ("Suite", "Suite"),
     ]
 
-    hostal = models.CharField(max_length=200)
     foto = models.URLField(max_length=500, blank=True)
-    numero = models.CharField(max_length=10)
+    hostal = models.ForeignKey(
+        "Alojamiento",
+        on_delete=models.PROTECT,
+        related_name="habitaciones",
+    )
+    numero = models.CharField(max_length=3, unique=True)
     tipo = models.CharField(max_length=20, choices=TIPOS)
-    huespedes = models.PositiveIntegerField()
-    disponible = models.BooleanField(default=True)
+    estado = models.CharField(max_length=20, choices=ROOM_TABLE_STATES, default="Libre")
     precio = models.DecimalField(max_digits=8, decimal_places=2)
-    reserva = models.CharField(max_length=200, default="—")
 
     class Meta:
         ordering = ["id"]
 
     def __str__(self) -> str:
-        return f"{self.hostal} — Hab. {self.numero}"
+        return f"Habitacion {self.numero}"
 
 
 class ReservaExcursion(TimeStampedModel):
@@ -234,23 +213,27 @@ class ReservaExcursion(TimeStampedModel):
 
 
 class Mesa(TimeStampedModel):
+    restaurante = models.ForeignKey(
+        "Restaurante",
+        on_delete=models.PROTECT,
+        related_name="mesas",
+    )
+    
     ESTADOS = [
         ("Libre", "Libre"),
         ("Ocupada", "Ocupada"),
-        ("Reservada", "Reservada"),
+        
     ]
-
-    restaurante = models.CharField(max_length=200)
+   
     foto = models.URLField(max_length=500, blank=True)
-    numero = models.PositiveIntegerField()
+    numero = models.PositiveIntegerField(unique=True)
     capacidad = models.PositiveIntegerField()
-    ocupada = models.BooleanField(default=False)
-    reserva = models.CharField(max_length=200, default="—")
     pago = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    precio = models.FloatField(default=0)
     estado = models.CharField(max_length=20, choices=ESTADOS, default="Libre")
 
     class Meta:
         ordering = ["id"]
 
     def __str__(self) -> str:
-        return f"{self.restaurante} — Mesa {self.numero}"
+        return f"{self.restaurante.nombre} — Mesa {self.numero}"

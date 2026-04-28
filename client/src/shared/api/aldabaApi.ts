@@ -56,11 +56,9 @@ export type LugarCardData = {
 export type ApiAccommodation = {
   id: number;
   nombre: string;
-  descripcion: string;
-  amenidades: string[];
-  habitaciones: string;
   foto: string;
   icono: string;
+  habitaciones_count?: number;
 };
 
 export type AccommodationData = {
@@ -75,10 +73,8 @@ export type AccommodationData = {
 export type ApiGastronomy = {
   id: number;
   nombre: string;
-  descripcion: string;
-  oferta: string[];
-  foto: string;
   icono: string;
+  mesas_count?: number;
 };
 
 export type GastronomyData = {
@@ -91,12 +87,12 @@ export type GastronomyData = {
 
 export type ApiExcursion = {
   id: number;
-  nombre: string;
-  descripcion: string;
-  caracteristicas: string[];
+  destino: string;
   duracion: string;
   foto: string;
   icono: string;
+  precio: number;
+  personas: number;
 };
 
 export type ExcursionData = {
@@ -176,32 +172,41 @@ export function toLugarCardData(item: ApiLugar): LugarCardData {
 }
 
 export function toAccommodationData(item: ApiAccommodation): AccommodationData {
+  const roomCount = item.habitaciones_count ?? 0;
+  const roomText = roomCount > 0 ? `${roomCount} habitaciones disponibles` : 'Sin habitaciones registradas';
+
   return {
     id: String(item.id),
     name: item.nombre,
-    description: item.descripcion,
-    amenities: item.amenidades,
-    rooms: item.habitaciones,
+    description: roomText,
+    amenities: [roomText],
+    rooms: roomCount > 0 ? `${roomCount}` : '-',
     icon: item.icono,
   };
 }
 
 export function toGastronomyData(item: ApiGastronomy): GastronomyData {
+  const tableCount = item.mesas_count ?? 0;
+  const tableText = tableCount > 0 ? `${tableCount} mesas disponibles` : 'Sin mesas registradas';
+
   return {
     id: String(item.id),
     name: item.nombre,
-    description: item.descripcion,
-    offerings: item.oferta,
+    description: tableText,
+    offerings: [tableText],
     icon: item.icono,
   };
 }
 
 export function toExcursionData(item: ApiExcursion): ExcursionData {
+  const priceLabel = `Precio: $${item.precio}`;
+  const peopleLabel = `Personas: ${item.personas}`;
+
   return {
     id: String(item.id),
-    name: item.nombre,
-    description: item.descripcion,
-    features: item.caracteristicas,
+    name: item.destino,
+    description: `${priceLabel} · ${peopleLabel}`,
+    features: [priceLabel, peopleLabel],
     duration: item.duracion,
     icon: item.icono,
   };

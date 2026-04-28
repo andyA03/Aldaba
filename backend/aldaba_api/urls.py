@@ -8,8 +8,8 @@ from .views import (
     EspacioEventoPublicViewSet,
     ExcursionAdminViewSet,
     ExcursionPublicViewSet,
-    GastronomiaAdminViewSet,
-    GastronomiaPublicViewSet,
+    RestauranteAdminViewSet,
+    RestaurantePublicViewSet,
     HabitacionAdminViewSet,
     InformacionEmpresaAdminViewSet,
     InformacionEmpresaPublicViewSet,
@@ -21,7 +21,6 @@ from .views import (
     ProyectoComunitarioAdminViewSet,
     ProyectoComunitarioPublicViewSet,
     ReservaExcursionAdminViewSet,
-    ReservaPublicViewSet,
     ServicioCulturalAdminViewSet,
     ServicioCulturalPublicViewSet,
 )
@@ -30,18 +29,17 @@ from .views import (
 public_router = DefaultRouter()
 public_router.register(r"lugares", LugarTuristicoPublicViewSet, basename="lugares-public")
 public_router.register(r"servicios/alojamiento", AlojamientoPublicViewSet, basename="alojamiento-public")
-public_router.register(r"servicios/gastronomia", GastronomiaPublicViewSet, basename="gastronomia-public")
+public_router.register(r"servicios/gastronomia", RestaurantePublicViewSet, basename="gastronomia-public")
 public_router.register(r"excursiones", ExcursionPublicViewSet, basename="excursiones-public")
 public_router.register(r"servicios/culturales", ServicioCulturalPublicViewSet, basename="servicios-culturales-public")
 public_router.register(r"servicios/otros", OtroServicioPublicViewSet, basename="otros-servicios-public")
 public_router.register(r"proyectos/comunitarios", ProyectoComunitarioPublicViewSet, basename="proyectos-comunitarios-public")
-public_router.register(r"reservas", ReservaPublicViewSet, basename="reservas-public")
 
 
 admin_router = DefaultRouter()
 admin_router.register(r"admin/lugares", LugarTuristicoAdminViewSet, basename="lugares-admin")
 admin_router.register(r"admin/servicios/alojamiento", AlojamientoAdminViewSet, basename="alojamiento-admin")
-admin_router.register(r"admin/servicios/gastronomia", GastronomiaAdminViewSet, basename="gastronomia-admin")
+admin_router.register(r"admin/servicios/gastronomia", RestauranteAdminViewSet, basename="gastronomia-admin")
 admin_router.register(r"admin/excursiones", ExcursionAdminViewSet, basename="excursiones-admin")
 admin_router.register(r"admin/eventos", EspacioEventoAdminViewSet, basename="eventos-admin")
 admin_router.register(r"admin/servicios/culturales", ServicioCulturalAdminViewSet, basename="servicios-culturales-admin")

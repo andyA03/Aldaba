@@ -38,7 +38,6 @@ export default function AdminLogin({ onLogin }: LoginScreenProps) {
           {error && <div className="login-error">{error}</div>}
           <button type="submit" className="login-btn">Iniciar sesión</button>
         </form>
-        <div className="login-hint">Usuario: <b>admin</b> · Contraseña: <b>admin123</b></div>
       </div>
     </div>
   );

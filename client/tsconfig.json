@@ -14,8 +14,8 @@
     "strict": false,
     "paths": {
       "@app/*": ["./src/app/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@features/*": ["./src/features/*"],
+      "@admin/*": ["./src/admin/*"],
+      "@landing/*": ["./src/landing/*"],
       "@shared/*": ["./src/shared/*"],
       "@entities/*": ["./src/entities/*"]
     }

@@ -5,16 +5,18 @@ from .models import (
     EspacioEvento,
     Excursion,
     Habitacion,
-    Gastronomia,
+    Restaurante,
     InformacionEmpresa,
     LugarTuristico,
     Mesa,
     OtroServicio,
     ProyectoComunitario,
-    Reserva,
     ReservaExcursion,
     ServicioCultural,
 )
+
+
+# ====== FRONTEND SERIALIZERS (Catalogos y contenido publico) ======
 
 
 class LugarTuristicoSerializer(serializers.ModelSerializer):
@@ -41,31 +43,37 @@ class LugarTuristicoSerializer(serializers.ModelSerializer):
 
 
 class AlojamientoSerializer(serializers.ModelSerializer):
+    habitaciones_count = serializers.SerializerMethodField()
+
+    def get_habitaciones_count(self, obj):
+        return obj.habitaciones.count()
+
     class Meta:
         model = Alojamiento
         fields = (
             "id",
             "nombre",
-            "descripcion",
-            "amenidades",
-            "habitaciones",
             "foto",
             "icono",
+            "habitaciones_count",
             "created_at",
             "updated_at",
         )
 
 
-class GastronomiaSerializer(serializers.ModelSerializer):
+class RestauranteSerializer(serializers.ModelSerializer):
+    mesas_count = serializers.SerializerMethodField()
+
+    def get_mesas_count(self, obj):
+        return obj.mesas.count()
+
     class Meta:
-        model = Gastronomia
+        model = Restaurante
         fields = (
             "id",
             "nombre",
-            "descripcion",
-            "oferta",
-            "foto",
             "icono",
+            "mesas_count",
             "created_at",
             "updated_at",
         )
@@ -76,12 +84,12 @@ class ExcursionSerializer(serializers.ModelSerializer):
         model = Excursion
         fields = (
             "id",
-            "nombre",
-            "descripcion",
-            "caracteristicas",
+            "destino",
             "duracion",
             "foto",
             "icono",
+            "precio",
+            "personas",
             "created_at",
             "updated_at",
         )
@@ -163,39 +171,45 @@ class InformacionEmpresaSerializer(serializers.ModelSerializer):
         )
 
 
-class ReservaSerializer(serializers.ModelSerializer):
+# ====== BACKEND SERIALIZERS (Gestion interna del panel admin) ======
+
+
+class HabitacionSerializer(serializers.ModelSerializer):
+    hostal_id = serializers.IntegerField(source="hostal.id", read_only=True)
+    hostal_nombre = serializers.CharField(source="hostal.nombre", read_only=True)
+
     class Meta:
-        model = Reserva
+        model = Habitacion
         fields = (
             "id",
+            "foto",
+            "hostal_id",
+            "hostal_nombre",
+            "numero",
             "tipo",
-            "establecimiento",
-            "nombre_cliente",
-            "email",
-            "telefono",
-            "fecha_inicio",
-            "fecha_fin",
-            "personas",
-            "mensaje",
             "estado",
+            "precio",
             "created_at",
             "updated_at",
         )
 
 
-class HabitacionSerializer(serializers.ModelSerializer):
+class MesaSerializer(serializers.ModelSerializer):
+    restaurante_id = serializers.IntegerField(source="restaurante.id", read_only=True)
+    restaurante_nombre = serializers.CharField(source="restaurante.nombre", read_only=True)
+
     class Meta:
-        model = Habitacion
+        model = Mesa
         fields = (
             "id",
-            "hostal",
+            "restaurante_id",
+            "restaurante_nombre",
             "foto",
             "numero",
-            "tipo",
-            "huespedes",
-            "disponible",
+            "capacidad",
+            "pago",
             "precio",
-            "reserva",
+            "estado",
             "created_at",
             "updated_at",
         )
@@ -213,24 +227,6 @@ class ReservaExcursionSerializer(serializers.ModelSerializer):
             "personas",
             "guia",
             "precio",
-            "estado",
-            "created_at",
-            "updated_at",
-        )
-
-
-class MesaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Mesa
-        fields = (
-            "id",
-            "restaurante",
-            "foto",
-            "numero",
-            "capacidad",
-            "ocupada",
-            "reserva",
-            "pago",
             "estado",
             "created_at",
             "updated_at",

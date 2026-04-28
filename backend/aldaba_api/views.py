@@ -9,30 +9,28 @@ from .models import (
     EspacioEvento,
     Excursion,
     Habitacion,
-    Gastronomia,
+    Restaurante,
     InformacionEmpresa,
     LugarTuristico,
     Mesa,
     OtroServicio,
     ProyectoComunitario,
-    Reserva,
     ReservaExcursion,
     ServicioCultural,
 )
-from .permissions import AllowCreateAnyOtherwiseStaff, IsStaffUser
+from .permissions import IsStaffUser
 from .serializers import (
     AlojamientoSerializer,
     EspacioEventoSerializer,
     ExcursionSerializer,
     HabitacionSerializer,
-    GastronomiaSerializer,
+    RestauranteSerializer,
     InformacionEmpresaSerializer,
     LugarTuristicoSerializer,
     MesaSerializer,
     OtroServicioSerializer,
     ProyectoComunitarioSerializer,
     ReservaExcursionSerializer,
-    ReservaSerializer,
     ServicioCulturalSerializer,
 )
 
@@ -52,22 +50,22 @@ class LugarTuristicoPublicViewSet(PublicReadOnlyViewSet):
 class AlojamientoPublicViewSet(PublicReadOnlyViewSet):
     queryset = Alojamiento.objects.all()
     serializer_class = AlojamientoSerializer
-    search_fields = ["nombre", "descripcion"]
+    search_fields = ["nombre"]
     ordering_fields = ["id", "nombre"]
 
 
-class GastronomiaPublicViewSet(PublicReadOnlyViewSet):
-    queryset = Gastronomia.objects.all()
-    serializer_class = GastronomiaSerializer
-    search_fields = ["nombre", "descripcion"]
+class RestaurantePublicViewSet(PublicReadOnlyViewSet):
+    queryset = Restaurante.objects.all()
+    serializer_class = RestauranteSerializer
+    search_fields = ["nombre"]
     ordering_fields = ["id", "nombre"]
 
 
 class ExcursionPublicViewSet(PublicReadOnlyViewSet):
     queryset = Excursion.objects.all()
     serializer_class = ExcursionSerializer
-    search_fields = ["nombre", "descripcion"]
-    ordering_fields = ["id", "nombre"]
+    search_fields = ["destino"]
+    ordering_fields = ["id", "destino"]
 
 
 class EspacioEventoPublicViewSet(PublicReadOnlyViewSet):
@@ -124,9 +122,9 @@ class AlojamientoAdminViewSet(AdminModelViewSet):
     serializer_class = AlojamientoSerializer
 
 
-class GastronomiaAdminViewSet(AdminModelViewSet):
-    queryset = Gastronomia.objects.all()
-    serializer_class = GastronomiaSerializer
+class RestauranteAdminViewSet(AdminModelViewSet):
+    queryset = Restaurante.objects.all()
+    serializer_class = RestauranteSerializer
 
 
 class ExcursionAdminViewSet(AdminModelViewSet):
@@ -159,14 +157,6 @@ class InformacionEmpresaAdminViewSet(AdminModelViewSet):
     serializer_class = InformacionEmpresaSerializer
 
 
-class ReservaPublicViewSet(viewsets.ModelViewSet):
-    queryset = Reserva.objects.all()
-    serializer_class = ReservaSerializer
-    permission_classes = [AllowCreateAnyOtherwiseStaff]
-    http_method_names = ["post", "get", "head", "options"]
-    ordering_fields = ["id", "created_at", "estado", "tipo"]
-
-
 class HabitacionAdminViewSet(AdminModelViewSet):
     queryset = Habitacion.objects.all()
     serializer_class = HabitacionSerializer
@@ -174,13 +164,13 @@ class HabitacionAdminViewSet(AdminModelViewSet):
     @action(detail=False, methods=["get"], url_path="estadisticas")
     def estadisticas(self, request):
         total = Habitacion.objects.count()
-        disponibles = Habitacion.objects.filter(disponible=True).count()
-        ocupadas = Habitacion.objects.filter(disponible=False).count()
-        reservadas = Habitacion.objects.exclude(reserva="—").count()
+        libres = Habitacion.objects.filter(estado="Libre").count()
+        ocupadas = Habitacion.objects.filter(estado="Ocupada").count()
+        reservadas = Habitacion.objects.filter(estado="Reservada").count()
         return Response(
             {
                 "total": total,
-                "disponibles": disponibles,
+                "libres": libres,
                 "ocupadas": ocupadas,
                 "reservadas": reservadas,
             }
@@ -212,7 +202,7 @@ class MesaAdminViewSet(AdminModelViewSet):
         libres = Mesa.objects.filter(estado="Libre").count()
         ocupadas = Mesa.objects.filter(estado="Ocupada").count()
         reservadas = Mesa.objects.filter(estado="Reservada").count()
-        ingresos = Mesa.objects.aggregate(total=Sum("pago"))["total"] or 0
+        ingresos = Mesa.objects.aggregate(total=Sum("precio"))["total"] or 0
         return Response(
             {
                 "total": total,

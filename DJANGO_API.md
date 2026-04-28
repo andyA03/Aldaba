@@ -479,39 +479,22 @@ GET /api/empresa/proyectos/
 
 ---
 
-### 3.10 Reservas (desde los modales)
+### 3.10 Reservas
 
-**Usado en:** `/services`, `/excursions`, `/events` — botón "Solicitar reserva"
+Actualmente no existe endpoint publico `POST /api/reservas/` en el backend.
+
+El flujo de reservas vigente en API esta enfocado en administracion de reservas de excursiones mediante:
 
 ```
-POST /api/reservas/
+GET    /api/admin/excursiones-reservas/
+POST   /api/admin/excursiones-reservas/
+GET    /api/admin/excursiones-reservas/{id}/
+PUT    /api/admin/excursiones-reservas/{id}/
+PATCH  /api/admin/excursiones-reservas/{id}/
+DELETE /api/admin/excursiones-reservas/{id}/
 ```
 
-**Body:**
-```json
-{
-  "tipo": "alojamiento",
-  "establecimiento": "Hostal Académico \"La Merced\"",
-  "nombre_cliente": "Juan Pérez",
-  "email": "juan@email.com",
-  "telefono": "+1234567890",
-  "fecha_inicio": "2026-06-15",
-  "fecha_fin": "2026-06-20",
-  "personas": 2,
-  "mensaje": "Habitación doble con vista al patio"
-}
-```
-
-**Campo `tipo` puede ser:** `alojamiento`, `gastronomia`, `excursion`, `evento`
-
-**Respuesta esperada:**
-```json
-{
-  "id": 42,
-  "estado": "pendiente",
-  "mensaje": "Reserva recibida. Nos pondremos en contacto en breve."
-}
-```
+Todos estos endpoints requieren autenticacion de usuario staff.
 
 ---
 
