@@ -177,13 +177,16 @@ class Habitacion(TimeStampedModel):
         on_delete=models.PROTECT,
         related_name="habitaciones",
     )
-    numero = models.CharField(max_length=3, unique=True)
+    numero = models.CharField(max_length=3)
     tipo = models.CharField(max_length=20, choices=TIPOS)
     estado = models.CharField(max_length=20, choices=ROOM_TABLE_STATES, default="Libre")
     precio = models.DecimalField(max_digits=8, decimal_places=2)
 
     class Meta:
         ordering = ["id"]
+        constraints = [
+            models.UniqueConstraint(fields=["hostal", "numero"], name="unique_habitacion_hostal_numero"),
+        ]
 
     def __str__(self) -> str:
         return f"Habitacion {self.numero}"
@@ -226,7 +229,7 @@ class Mesa(TimeStampedModel):
     ]
    
     foto = models.URLField(max_length=500, blank=True)
-    numero = models.PositiveIntegerField(unique=True)
+    numero = models.PositiveIntegerField()
     capacidad = models.PositiveIntegerField()
     pago = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     precio = models.FloatField(default=0)
@@ -234,6 +237,9 @@ class Mesa(TimeStampedModel):
 
     class Meta:
         ordering = ["id"]
+        constraints = [
+            models.UniqueConstraint(fields=["restaurante", "numero"], name="unique_mesa_restaurante_numero"),
+        ]
 
     def __str__(self) -> str:
         return f"{self.restaurante.nombre} — Mesa {self.numero}"
