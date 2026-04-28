@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import (
-    Alojamiento,
+    Hostal,
     EspacioEvento,
     Excursion,
     Habitacion,
@@ -20,7 +20,7 @@ from .models import (
 )
 from .permissions import IsStaffUser
 from .serializers import (
-    AlojamientoSerializer,
+    HostalSerializer,
     EspacioEventoSerializer,
     ExcursionSerializer,
     HabitacionSerializer,
@@ -48,8 +48,8 @@ class LugarTuristicoPublicViewSet(PublicReadOnlyViewSet):
 
 
 class AlojamientoPublicViewSet(PublicReadOnlyViewSet):
-    queryset = Alojamiento.objects.all()
-    serializer_class = AlojamientoSerializer
+    queryset = Hostal.objects.all()
+    serializer_class = HostalSerializer
     search_fields = ["nombre"]
     ordering_fields = ["id", "nombre"]
 
@@ -118,8 +118,8 @@ class LugarTuristicoAdminViewSet(AdminModelViewSet):
 
 
 class AlojamientoAdminViewSet(AdminModelViewSet):
-    queryset = Alojamiento.objects.all()
-    serializer_class = AlojamientoSerializer
+    queryset = Hostal.objects.all()
+    serializer_class = HostalSerializer
 
 
 class RestauranteAdminViewSet(AdminModelViewSet):

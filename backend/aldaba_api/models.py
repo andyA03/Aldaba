@@ -49,7 +49,7 @@ class LugarTuristico(TimeStampedModel):
         return self.nombre
 
 
-class Alojamiento(TimeStampedModel):
+class Hostal(TimeStampedModel):
     nombre = models.CharField(max_length=180)
     foto = models.URLField(max_length=500)
     icono = models.CharField(max_length=80, blank=True)
@@ -173,7 +173,7 @@ class Habitacion(TimeStampedModel):
 
     foto = models.URLField(max_length=500, blank=True)
     hostal = models.ForeignKey(
-        "Alojamiento",
+        "Hostal",
         on_delete=models.PROTECT,
         related_name="habitaciones",
     )

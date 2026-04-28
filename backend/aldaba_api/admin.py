@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    Alojamiento,
+    Hostal,
     EspacioEvento,
     Excursion,
     Restaurante,
@@ -25,7 +25,7 @@ class LugarTuristicoAdmin(admin.ModelAdmin):
 
 admin.site.register(
     [
-        Alojamiento,
+        Hostal,
         Restaurante,
         Excursion,
         EspacioEvento,

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import (
-    Alojamiento,
+    Hostal,
     EspacioEvento,
     Excursion,
     Habitacion,
@@ -42,14 +42,14 @@ class LugarTuristicoSerializer(serializers.ModelSerializer):
         )
 
 
-class AlojamientoSerializer(serializers.ModelSerializer):
+class HostalSerializer(serializers.ModelSerializer):
     habitaciones_count = serializers.SerializerMethodField()
 
     def get_habitaciones_count(self, obj):
         return obj.habitaciones.count()
 
     class Meta:
-        model = Alojamiento
+        model = Hostal
         fields = (
             "id",
             "nombre",
